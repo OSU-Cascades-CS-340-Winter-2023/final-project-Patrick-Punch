@@ -154,6 +154,7 @@ create table "products_test"
     product_type = varchar(40) not null,
     primary key (product_id)
 );
+\copy products_test(product_id, product_name, product_brand, product_type) from 'File Path' delimiter '|' csv
 
 -- creating table services
 create table "services"
@@ -174,3 +175,5 @@ create table "services_test"
     service_catagory = varchar(50)
     primary key(service_id)
 );
+
+\copy services_test(service_id, service_name, service_brand, service_catagory) from 'File Path' delimiter ',' csv
