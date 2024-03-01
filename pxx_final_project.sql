@@ -2,7 +2,7 @@ create database pxx_final_project
 -- access the database -> \c pxx_final_project
 
 -- build tables off of the relational model
-create table user
+create table "user"
     (
         usr_id      serial     not null,
         usr_email       varchar(25)     not null,
@@ -21,7 +21,7 @@ create table user
 -- copy from temp table to actual table -- 
 
 -- Loading Data  --
-        create table test
+        create table "test"
         (
             first_name   varchar(15), 
             last_name   varchar(15), 
