@@ -109,3 +109,28 @@ select max(usr_id) from test;
 -- SELECT * FROM test ORDER BY username DESC LIMIT 5;
 -- select * from test where username = (select max(length(username)) from test);
 -- SELECT * FROM test ORDER BY first_name DESC LIMIT 5;
+
+
+-- Email filters 
+--Selects from the emails we have and checks to see 
+--if the start has proper values then checks after the @ symbol
+SELECT email
+FROM test
+WHERE email !~* '^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$';
+--ads a CONSTRAINT to the emails where all emails must be UNIQUE
+ALTER TABLE test ADD CONSTRAINT unique_usr_email UNIQUE (email);
+--finds the non unique emaisl that already exist and emails that valilate the code above
+SELECT email, COUNT(*)
+FROM test
+GROUP BY email
+HAVING COUNT(*) > 1;
+
+
+--Name fixer
+--checks to see if the name is already capitalized then uses the INITCAP function 
+-- to change the first letter to a capitalized letter.
+-- changes data from first_name to ProperFirstName and last_name to ProperLastName
+SELECT INITCAP(first_name) as ProperFirstName, 
+       INITCAP(last_name) as ProperLastName
+FROM test;
+
