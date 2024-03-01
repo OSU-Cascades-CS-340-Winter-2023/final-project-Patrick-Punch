@@ -134,3 +134,23 @@ SELECT INITCAP(first_name) as ProperFirstName,
        INITCAP(last_name) as ProperLastName
 FROM test;
 
+
+-- creating the products tables
+create table "products"
+(
+    product_id = varchar(40) not null,
+    product_name = varchar(150) not null,
+    product_brand = varchar(40) not null,
+    product_type = varchar(40) not null,
+    primary key (product_id)
+);
+
+-- creating table services
+create table "services"
+(
+    service_id = varchar(50)
+    service_name= varchar(100)
+    service_brand = varchar(50)
+    service_catagory = varchar(50)
+    primary key(service_id)
+);
