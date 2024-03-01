@@ -145,8 +145,28 @@ create table "products"
     primary key (product_id)
 );
 
+--test tables
+create table "products_test"
+(
+    product_id = varchar(40) not null,
+    product_name = varchar(150) not null,
+    product_brand = varchar(40) not null,
+    product_type = varchar(40) not null,
+    primary key (product_id)
+);
+
 -- creating table services
 create table "services"
+(
+    service_id = varchar(50)
+    service_name= varchar(100)
+    service_brand = varchar(50)
+    service_catagory = varchar(50)
+    primary key(service_id)
+);
+
+--test table
+create table "services_test"
 (
     service_id = varchar(50)
     service_name= varchar(100)
