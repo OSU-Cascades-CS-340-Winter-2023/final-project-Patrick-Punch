@@ -80,7 +80,7 @@ create table discount
 
 create table user_interests
     (
-        usr_id       varchar(50)     not null,
+        usr_id      serial     not null,
         usr_interest varchar(50)     not null,
         primary key (usr_id, usr_interest),
         foreign key (usr_id) references user(usr_id)
@@ -88,7 +88,7 @@ create table user_interests
 
 create table user_item_preference
     (
-        usr_id       varchar(50)     not null,
+        usr_id      serial     not null,
         item_id      varchar(50)     not null,
         primary key (usr_id, item_id),
         foreign key (usr_id) references user(usr_id),
@@ -97,7 +97,7 @@ create table user_item_preference
 
 create table user_company_preference
     (
-        usr_id      varchar(50)     not null,
+        usr_id      serial     not null,
         preference_company_id   varchar(50)     not null,
         primary key (usr_id, preference_company_id),
         foreign key (usr_id) references user(usr_id),
@@ -106,7 +106,7 @@ create table user_company_preference
 
 create table user_location_preference
     (
-        usr_id                      varchar(50)     not null,
+        usr_id                      serial     not null,
         preference_location_city    varchar(20)     not null,
         preference_location_state   varchar(15)     not null,
         primary key(usr_id, preference_location_city, preference_location_state)
@@ -141,7 +141,7 @@ create table company_item
 create table user_company_review
     (
         company_id      varchar(50)     not null,
-        usr_id          varchar(50)     not null,
+        usr_id          serial     not null,
         rating_score    int,
         comments        varchar(1000),
         foreign key(company_id) references company(company_id),
@@ -152,7 +152,7 @@ create table user_checkin
     (
         checkin_id      varchar(50)     not null,
         checkin_date    date,
-        usr_id          varchar(50)     not null,
+        usr_id          serial     not null,
         company_id      varchar(50)     not null,
         item_id         varchar(50)     not null,
         discount_id     varchar(50)     not null,
