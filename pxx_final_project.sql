@@ -4,7 +4,7 @@ create database pxx_final_project
 
 
 -- build tables off of the relational model
-create table user
+create table "user"
     (
         usr_id      serial     not null,
         usr_email       varchar(25)     not null,
