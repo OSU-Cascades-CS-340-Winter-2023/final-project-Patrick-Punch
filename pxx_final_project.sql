@@ -83,7 +83,7 @@ create table user_interests
         usr_id      serial     not null,
         usr_interest varchar(50)     not null,
         primary key (usr_id, usr_interest),
-        foreign key (usr_id) references user(usr_id)
+        foreign key (usr_id) references "user"(usr_id)
     );
 
 create table user_item_preference
@@ -91,7 +91,7 @@ create table user_item_preference
         usr_id      serial     not null,
         item_id      varchar(50)     not null,
         primary key (usr_id, item_id),
-        foreign key (usr_id) references user(usr_id),
+        foreign key (usr_id) references "user"(usr_id),
         foreign key (item_id) references item(item_id)
     );
 
@@ -100,7 +100,7 @@ create table user_company_preference
         usr_id      serial     not null,
         preference_company_id   varchar(50)     not null,
         primary key (usr_id, preference_company_id),
-        foreign key (usr_id) references user(usr_id),
+        foreign key (usr_id) references "user"(usr_id),
         foreign key (preference_company_id) references company(company_id)
     );
 
@@ -109,8 +109,8 @@ create table user_location_preference
         usr_id                      serial     not null,
         preference_location_city    varchar(20)     not null,
         preference_location_state   varchar(15)     not null,
-        primary key(usr_id, preference_location_city, preference_location_state)
-        foreign key (usr_id) references user(usr_id)
+        primary key(usr_id, preference_location_city, preference_location_state),
+        foreign key (usr_id) references "user"(usr_id)
     );
 
 create table company_location
@@ -145,7 +145,7 @@ create table user_company_review
         rating_score    int,
         comments        varchar(1000),
         foreign key(company_id) references company(company_id),
-        foreign key (usr_id) references user(usr_id)
+        foreign key (usr_id) references "user"(usr_id)
     );
 
 create table user_checkin
@@ -169,8 +169,11 @@ create table company_transaction
         charge_type         varchar(50),
         transaction_amount  float,
         surcharge           float,
-        total_charge        (transaction_amount + surcharge),
-        is_paid             boolean,
+        total_charge        float GENERATED ALWAYS AS 
+                            (CASE WHEN transaction_amount IS NULL THEN surcharge
+                                WHEN surcharge IS NULL THEN transaction_amount
+                                ELSE transaction_amount + surcharge END) STORED,
+        tx_is_paid             boolean,
         paid_date           date,
         company_id      varchar(50)     not null,
         primary key(transaction_id),
