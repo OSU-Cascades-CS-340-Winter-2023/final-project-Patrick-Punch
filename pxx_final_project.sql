@@ -4,8 +4,7 @@ create database pxx_final_project
 
 
 -- build tables off of the relational model
--- create user table --
-create table user
+create table "user"
     (
         usr_id      serial     not null,
         usr_email       varchar(25)     not null,
@@ -192,19 +191,19 @@ create table company_transaction_checkin
 -- make temp tables, modify data in temp table --
 -- copy from temp table to actual table, AFTER CLEANING DATA -- 
 
--- test tables -- 
-create table user_test
-    (
-        first_name   varchar(15), 
-        last_name   varchar(15), 
-        username   varchar(30),
-        email   varchar(50), 
-        street_address   varchar(50), 
-        city_address   varchar(15), 
-        state_address   varchar(15),
-        usr_id      serial      not null,
-        primary key (usr_id)
-    );
+-- Loading Data  --
+        create table test
+        (
+            first_name   varchar(15), 
+            last_name   varchar(15), 
+            username   varchar(30),
+            email   varchar(50), 
+            street_address   varchar(50), 
+            city_address   varchar(15), 
+            state_address   varchar(15),
+            usr_id      serial      not null,
+            primary key (usr_id)
+        );
 
 -- load data iinto user_test table --
 \copy user_test(first_name, last_name, username, email, street_address, city_address, state_address) from 'FilePath' delimiter ',' csv
@@ -329,3 +328,71 @@ HAVING COUNT(*) > 1;
 SELECT  INITCAP(first_name) as ProperFirstName, 
         INITCAP(last_name) as ProperLastName
 FROM test;
+
+
+-- Email filters 
+--Selects from the emails we have and checks to see 
+--if the start has proper values then checks after the @ symbol
+SELECT email
+FROM test
+WHERE email !~* '^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$';
+--ads a CONSTRAINT to the emails where all emails must be UNIQUE
+ALTER TABLE test ADD CONSTRAINT unique_usr_email UNIQUE (email);
+--finds the non unique emaisl that already exist and emails that valilate the code above
+SELECT email, COUNT(*)
+FROM test
+GROUP BY email
+HAVING COUNT(*) > 1;
+
+
+--Name fixer
+--checks to see if the name is already capitalized then uses the INITCAP function 
+-- to change the first letter to a capitalized letter.
+-- changes data from first_name to ProperFirstName and last_name to ProperLastName
+SELECT INITCAP(first_name) as ProperFirstName, 
+       INITCAP(last_name) as ProperLastName
+FROM test;
+
+
+-- creating the products tables
+create table "products"
+(
+    product_id = varchar(40) not null,
+    product_name = varchar(150) not null,
+    product_brand = varchar(40) not null,
+    product_type = varchar(40) not null,
+    primary key (product_id)
+);
+
+--test tables
+create table "products_test"
+(
+    product_id = varchar(40) not null,
+    product_name = varchar(150) not null,
+    product_brand = varchar(40) not null,
+    product_type = varchar(40) not null,
+    primary key (product_id)
+);
+\copy products_test(product_id, product_name, product_brand, product_type) from 'File Path' delimiter '|' csv
+
+-- creating table services
+create table "services"
+(
+    service_id = varchar(50)
+    service_name= varchar(100)
+    service_brand = varchar(50)
+    service_catagory = varchar(50)
+    primary key(service_id)
+);
+
+--test table
+create table "services_test"
+(
+    service_id = varchar(50)
+    service_name= varchar(100)
+    service_brand = varchar(50)
+    service_catagory = varchar(50)
+    primary key(service_id)
+);
+
+\copy services_test(service_id, service_name, service_brand, service_catagory) from 'File Path' delimiter ',' csv
