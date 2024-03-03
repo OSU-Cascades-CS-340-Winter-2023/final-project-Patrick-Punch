@@ -324,6 +324,32 @@ GROUP BY email
 HAVING COUNT(*) > 1;
 
 
+---State/city name fixer
+SELECT INITCAP(state_address) AS ProperState_address
+FROM test;
+UPDATE test
+SET state_address = INITCAP(state_address);
+ALTER TABLE test ADD CONSTRAINT unique_state UNIQUE (state_address);
+SELECT state_address, COUNT(*)
+FROM test
+GROUP BY state_address
+HAVING COUNT(*) > 1;
+
+SELECT INITCAP(city_address) AS ProperCity_address
+FROM test;
+UPDATE test
+SET city_address = INITCAP(city_address);
+ALTER TABLE test ADD CONSTRAINT unique_city UNIQUE (city_address);
+SELECT city_address, COUNT(*)
+FROM test
+GROUP BY city_address
+HAVING COUNT(*) > 1;
+
+
+
+
+
+
 --Name fixer
 --checks to see if the name is already capitalized then uses the INITCAP function 
 -- to change the first letter to a capitalized letter.
