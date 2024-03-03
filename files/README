@@ -23,11 +23,11 @@ easily in linux.  I want you to practice doing this in
 postgres using sql.
 
 What do you need to clean:
-- Standardize capitalization across fields that need it
+- Standardize capitalization across fields that need it _che
 - If fields should be numeric, only numeric values should be in the results.
-- Emails should have a '@' and a valid domain (e.g. .com or .edu)
-- You do not need to clean typos
-- You should standarize capitalization if it makes sense. For example, states.
+- Emails should have a '@' and a valid domain (e.g. .com or .edu) _check
+- You do not need to clean typos 
+- You should standarize capitalization if it makes sense. For example, states. _check
 
 users.csv - These are people who are using the site.
 FIELDS: first_name,last_name,username,email,street_address,city,state

@@ -314,7 +314,7 @@ select max(usr_id) from user_test;
 --if the start has proper values then checks after the @ symbol
 SELECT email
 FROM test
-WHERE email !~* '^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$';
+WHERE email !~*?# '^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$';
 --ads a CONSTRAINT to the emails where all emails must be UNIQUE
 ALTER TABLE test ADD CONSTRAINT unique_usr_email UNIQUE (email);
 --finds the non unique emails that already exist and emails that violate the code above
