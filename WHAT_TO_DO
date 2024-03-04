@@ -23,6 +23,8 @@ Create a view that returns a sorted list of products.
 
 for part d
 Write a trigger that adds a record to an archive table whenever an item is updated.
+
+
 For indices (part e), you should:
 
 Analyze query patterns to determine which columns may benefit from indexing.
