@@ -1,0 +1,13 @@
+What we have already finished:
+Emails should have a '@' and a valid domain (e.g. .com or .edu)
+You should standarize capitalization if it makes sense. For example, states.
+    added:
+    products.csv - The products that different companies sell
+    product id|product name|brand/company name|product category
+    services.csv - The services that different companies offer
+    service id|service name|brand/company name|service category
+populate the tables that have data in this directory
+foreign keys
+
+What to work ok:
+incert here please.
