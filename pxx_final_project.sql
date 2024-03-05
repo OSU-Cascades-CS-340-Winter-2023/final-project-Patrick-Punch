@@ -347,9 +347,6 @@ HAVING COUNT(*) > 1;
 
 
 
-
-
-
 --Name fixer
 --checks to see if the name is already capitalized then uses the INITCAP function 
 -- to change the first letter to a capitalized letter.
@@ -358,7 +355,7 @@ SELECT  INITCAP(first_name) as ProperFirstName,
         INITCAP(last_name) as ProperLastName
 FROM test;
 
-
+------------------------------------------------------------------------------------
 -- Email filters 
 --Selects from the emails we have and checks to see 
 --if the start has proper values then checks after the @ symbol
