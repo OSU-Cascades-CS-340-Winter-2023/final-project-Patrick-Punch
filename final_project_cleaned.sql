@@ -1,6 +1,7 @@
 CREATE DATABASE pxx_final_project;
 -- Remember to connect to the database using the appropriate command in your SQL client, e.g., \c pxx_final_project
 
+--Creates User table
 CREATE TABLE "user" (
     usr_id SERIAL NOT NULL,
     usr_email VARCHAR(255) NOT NULL,
@@ -11,28 +12,32 @@ CREATE TABLE "user" (
     usr_city VARCHAR(50),
     usr_state VARCHAR(50),
     usr_zip VARCHAR(20),
+    --key variable
     PRIMARY KEY (usr_id)
 );
 
 
-
+--creates product table
 CREATE TABLE products (
     product_id VARCHAR(40) NOT NULL,
     product_name VARCHAR(150) NOT NULL,
     product_brand VARCHAR(40),
     product_type VARCHAR(40),
+    --key variable
     PRIMARY KEY (product_id)
 );
 
-
+--creates service table
 CREATE TABLE services (
     services_id VARCHAR(50) NOT NULL,
     services_name VARCHAR(100),
     services_brand VARCHAR(50),
     services_category VARCHAR(50),
+    --key varable
     PRIMARY KEY (services_id)
 );
 
+--creates company table
 CREATE TABLE company (
     company_id VARCHAR(50) NOT NULL,
     company_name VARCHAR(50),
@@ -40,10 +45,12 @@ CREATE TABLE company (
     phone VARCHAR(50),
     company_email VARCHAR(100),
     company_url VARCHAR(100),
+    --key varable
     PRIMARY KEY (company_id)
 );
 
-create table item
+--creates item table
+Create Table item
     (
         item_id     varchar(50)     not null,
         item_type   varchar(50),
@@ -51,6 +58,7 @@ create table item
         item_description varchar(1000),
         item_price  float,
         item_picture    bytea,
+        --key varable
         primary key(item_id)
     );
 
