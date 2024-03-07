@@ -50,7 +50,7 @@ CREATE TABLE company (
 );
 
 --creates item table
-Create Table item
+CREATE TABLE item
     (
         item_id     varchar(50)     not null,
         item_type   varchar(50),
@@ -62,7 +62,7 @@ Create Table item
         primary key(item_id)
     );
 
-create table employee
+CREATE TABLE employee
     (
         emp_id         varchar(50)     not null,
         emp_email      varchar(50),
@@ -77,7 +77,7 @@ create table employee
         primary key(emp_id)
     );
 
-create table discount
+CREATE TABLE discount
     (
         discount_id     varchar(50)     not null,
         discount_type   varchar(50),
@@ -88,7 +88,7 @@ create table discount
         primary key(discount_id)
     );
 
-create table user_interests
+CREATE TABLE user_interests
     (
         usr_id      serial     not null,
         usr_interest varchar(50)     not null,
@@ -96,7 +96,7 @@ create table user_interests
         foreign key (usr_id) references "user"(usr_id)
     );
 
-create table user_item_preference
+CREATE TABLE user_item_preference
     (
         usr_id      serial     not null,
         item_id      varchar(50)     not null,
@@ -105,7 +105,7 @@ create table user_item_preference
         foreign key (item_id) references item(item_id)
     );
 
-create table user_company_preference
+CREATE TABLE user_company_preference
     (
         usr_id      serial     not null,
         preference_company_id   varchar(50)     not null,
@@ -114,7 +114,7 @@ create table user_company_preference
         foreign key (preference_company_id) references company(company_id)
     );
 
-create table user_location_preference
+CREATE TABLE user_location_preference
     (
         usr_id                      serial     not null,
         preference_location_city    varchar(20)     not null,
@@ -123,7 +123,7 @@ create table user_location_preference
         foreign key (usr_id) references "user"(usr_id)
     );
 
-create table company_location
+CREATE TABLE company_location
     (
         company_id      varchar(50)     not null,
         location_id     varchar(50)     not null,
@@ -136,7 +136,7 @@ create table company_location
         foreign key(company_id) references company(company_id)
     );
 
-create table company_item
+CREATE TABLE company_item
     (
         company_id      varchar(50)     not null,
         item_id         varchar(50)     not null,
@@ -148,7 +148,7 @@ create table company_item
         foreign key(discount_id) references discount(discount_id)
     );
 
-create table user_company_review
+CREATE TABLE user_company_review
     (
         company_id      varchar(50)     not null,
         usr_id          serial     not null,
@@ -158,7 +158,7 @@ create table user_company_review
         foreign key (usr_id) references "user"(usr_id)
     );
 
-create table user_checkin
+CREATE TABLE user_checkin
     (
         checkin_id      varchar(50)     not null,
         checkin_date    date,
@@ -172,7 +172,7 @@ create table user_checkin
         foreign key(discount_id) references discount(discount_id)
     );
 
-create table company_transaction
+CREATE TABLE company_transaction
     (
         transaction_id      varchar(50)     not null,
         transaction_date    date,
@@ -190,7 +190,7 @@ create table company_transaction
         foreign key(company_id) references company(company_id)
     );
 
-create table company_transaction_checkin
+CREATE TABLE company_transaction_checkin
     (
         transaction_id      varchar(50)     not null,
         checkin_id          varchar(50)     not null,
@@ -203,86 +203,86 @@ create table company_transaction_checkin
 --file additions
 
 --loads user data into the test table
-\copy test(first_name, last_name, username, email, street_address, city_address, state_address) FROM 'FilePath' WITH (FORMAT csv, DELIMITER ',');
+\COPY test(first_name, last_name, username, email, street_address, city_address, state_address) FROM 'FilePath' WITH (FORMAT csv, DELIMITER ',');
 --load data into service_test table
-\copy services_test(services_id, services_name, services_brand, services_catagory) from 'FilePath' delimiter ',' csv
+\COPY services_test(services_id, services_name, services_brand, services_catagory) FROM 'FilePath' delimiter ',' csv
 --load data into products_test table --
-\copy products_test(product_id, product_name, product_brand, product_type) from 'FilePath' delimiter '|' csv
+\COPY products_test(product_id, product_name, product_brand, product_type) FROM 'FilePath' delimiter '|' csv
 
 
 --Determining data values for the tables
 -- Determine max length of first_name attribute
-select max(length(first_name)) as max_first_name_length from user_test;
+select max(length(first_name)) as max_first_name_length FROM user_test;
 -- Shows the names of the users with the longest first name
 select t.first_name, x.max_first_name_length
-from user_test as t
+FROM user_test as t
 join(
 SELECT max(length(first_name)) AS max_first_name_length FROM user_test) as x
 on length(t.first_name) = x.max_first_name_length;
 
 -- Determine max length of last_name attribute
-select max(length(last_name)) as max_last_name_length from user_test;
+select max(length(last_name)) as max_last_name_length FROM user_test;
 -- Shows the names of the users with the longest last name
 select t.first_name, t.last_name, x.max_last_name_length
-from user_test as t
+FROM user_test as t
 join(
 SELECT max(length(last_name)) AS max_last_name_length FROM user_test) as x
 on length(t.last_name) = x.max_last_name_length;
 
 -- Determine max length of username attribute
-select max(length(username)) as max_username_length from user_test;
+select max(length(username)) as max_username_length FROM user_test;
 -- Shows the usernames of the users with the longest username
 select t.first_name, t.last_name, t.username, x.max_username_length
-from user_test as t
+FROM user_test as t
 join(
 SELECT max(length(username)) AS max_username_length FROM user_test) as x
 on length(t.username) = x.max_username_length;
 
 -- Determine max length of email attribute
-select max(length(email)) as max_email_length from user_test;
+select max(length(email)) as max_email_length FROM user_test;
 -- Shows the usernames of the users with the longest email
 select t.first_name, t.last_name, t.email, x.max_email_length
-from user_test as t
+FROM user_test as t
 join(
 SELECT max(length(email)) AS max_email_length FROM user_test) as x
 on length(t.email) = x.max_email_length;
 
 -- Determine max length of street_address attribute
-select max(length(street_address)) as max_street_address_length from user_test;
+select max(length(street_address)) as max_street_address_length FROM user_test;
 -- Shows the usernames of the users with the longest street_address
 select t.first_name, t.last_name, t.street_address, x.max_street_address_length
-from user_test as t
+FROM user_test as t
 join(
 SELECT max(length(street_address)) AS max_street_address_length FROM user_test) as x
 on length(t.street_address) = x.max_street_address_length;
 
 -- Determine max length of city_address attribute
-select max(length(city_address)) as max_city_address_length from user_test;
+select max(length(city_address)) as max_city_address_length FROM user_test;
 -- Shows the usernames of the users with the longest city_address
 select t.first_name, t.last_name, t.city_address, x.max_city_address_length
-from user_test as t
+FROM user_test as t
 join(
 SELECT max(length(city_address)) AS max_city_address_length FROM user_test) as x
 on length(t.city_address) = x.max_city_address_length;
 
 -- Determine max length of state_address attribute
-select max(length(state_address)) as max_state_address_length from user_test;
+select max(length(state_address)) as max_state_address_length FROM user_test;
 -- Shows the usernames of the users with the longest state_address
 select t.first_name, t.last_name, t.state_address, x.max_state_address_length
-from user_test as t
+FROM user_test as t
 join(
 SELECT max(length(state_address)) AS max_state_address_length FROM user_test) as x
 on length(t.state_address) = x.max_state_address_length;
 
-select max(usr_id) from user_test;
+select max(usr_id) FROM user_test;
 
 --cleans up names labled 'first_name'
-delete from test
+delete FROM test
 where first_name = 'first_name';
 
 --Cleaning data/ data scraping
 -- Email filters 
---Selects from the emails we have and checks to see 
+--Selects FROM the emails we have and checks to see 
 --if the start has proper values then checks after the @ symbol
 SELECT email
 FROM test
@@ -322,7 +322,7 @@ HAVING COUNT(*) > 1;
 --Name fixer
 --checks to see if the name is already capitalized then uses the INITCAP function 
 -- to change the first letter to a capitalized letter.
--- changes data from first_name to ProperFirstName and last_name to ProperLastName
+-- changes data FROM first_name to ProperFirstName and last_name to ProperLastName
 SELECT  INITCAP(first_name) as ProperFirstName, 
         INITCAP(last_name) as ProperLastName
 FROM test;
