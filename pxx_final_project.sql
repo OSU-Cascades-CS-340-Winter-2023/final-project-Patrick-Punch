@@ -421,4 +421,20 @@ create table "services_test"
     primary key(service_id)
 );
 
+
+-- build tables off of the relational model
+create table "test"
+    (
+        usr_id      serial     not null,
+        usr_email       varchar(25)     not null,
+        usr_password        varchar(25),
+        usr_fname       varchar(15),
+        usr_lname       varchar(15),
+        usr_address_num       varchar(15),
+        usr_city        varchar(15),
+        usr_state       varchar(15),
+        usr_zip         varchar(12),
+        primary key (usr_id)
+    );
+
 \copy services_test(service_id, service_name, service_brand, service_catagory) from 'File Path' delimiter ',' csv
