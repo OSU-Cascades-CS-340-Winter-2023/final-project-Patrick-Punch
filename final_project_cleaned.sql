@@ -189,7 +189,7 @@ CREATE TABLE company_transaction
         primary key(transaction_id),
         foreign key(company_id) references company(company_id)
     );
-    
+
 CREATE TABLE company_transaction_checkin
     (
         transaction_id      varchar(50)     not null,
