@@ -286,14 +286,21 @@ where first_name = 'first_name';
 --if the start has proper values then checks after the @ symbol
 SELECT email
 FROM test
-WHERE email !~*?# '^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$';
---ads a CONSTRAINT to the emails where all emails must be UNIQUE
-ALTER TABLE test ADD CONSTRAINT unique_usr_email UNIQUE (email);
+WHERE email !~* '^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$';
+
 --finds the non unique emails that already exist and emails that violate the code above
 SELECT email, COUNT(*)
 FROM test
 GROUP BY email
 HAVING COUNT(*) > 1;
+
+-- Update invalid emails with a new, formatted email address
+UPDATE test
+SET email = MD5(random()::text || clock_timestamp()::text)
+WHERE email !~* '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$';
+
+--ads a CONSTRAINT to the emails where all emails must be UNIQUE
+ALTER TABLE test ADD CONSTRAINT unique_usr_email UNIQUE (email);
 
 
 ---State/city name fixers
