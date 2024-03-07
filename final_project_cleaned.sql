@@ -57,7 +57,7 @@ CREATE TABLE item
         item_name   VARCHAR(50),
         item_description VARCHAR(1000),
         item_price  FLOAT,
-        item_picture    bytea,
+        item_picture    BYTEA,
         --key varable
         PRIMARY KEY(item_id)
     );
