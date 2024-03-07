@@ -300,6 +300,8 @@ WHERE email !~* '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$';
 
 --ads a CONSTRAINT to the emails where all emails must be UNIQUE
 ALTER TABLE test ADD CONSTRAINT unique_usr_email UNIQUE (email);
+--try to add a filter for duplicates, it will be hard to add due to limitations unless adding
+--a python file to this to filter the duplicates.
 
 
 ---State/city name fixers
