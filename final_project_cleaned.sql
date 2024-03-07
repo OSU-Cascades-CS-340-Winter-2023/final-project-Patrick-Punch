@@ -69,7 +69,7 @@ CREATE TABLE employee
         emp_first_name VARCHAR(50),
         emp_last_name  VARCHAR(50),
         job_category   VARCHAR(50),
-        salary         int,
+        salary         INT,
         street_address  VARCHAR(100),
         emp_city       VARCHAR(20),
         emp_state      VARCHAR(15),
@@ -88,11 +88,11 @@ CREATE TABLE discount
         PRIMARY KEY(discount_id)
     );
 
-CREATE TABLE user_interests
+CREATE TABLE user_INTerests
     (
         usr_id      SERIAL     NOT NULL,
-        usr_interest VARCHAR(50)     NOT NULL,
-        PRIMARY KEY (usr_id, usr_interest),
+        usr_INTerest VARCHAR(50)     NOT NULL,
+        PRIMARY KEY (usr_id, usr_INTerest),
         FOREIGN KEY (usr_id) REFERENCES "user"(usr_id)
     );
 
@@ -152,7 +152,7 @@ CREATE TABLE user_company_review
     (
         company_id      VARCHAR(50)     NOT NULL,
         usr_id          SERIAL     NOT NULL,
-        rating_score    int,
+        rating_score    INT,
         comments        VARCHAR(1000),
         FOREIGN KEY(company_id) REFERENCES company(company_id),
         FOREIGN KEY (usr_id) REFERENCES "user"(usr_id)
@@ -202,11 +202,11 @@ CREATE TABLE company_transaction_checkin
 
 --file additions
 
---loads user data into the test table
+--loads user data INTo the test table
 \COPY test(first_name, last_name, username, email, street_address, city_address, state_address) FROM 'FilePath' WITH (FORMAT csv, DELIMITER ',');
---load data into service_test table
+--load data INTo service_test table
 \COPY services_test(services_id, services_name, services_brand, services_catagory) FROM 'FilePath' delimiter ',' csv
---load data into products_test table --
+--load data INTo products_test table --
 \COPY products_test(product_id, product_name, product_brand, product_type) FROM 'FilePath' delimiter '|' csv
 
 
