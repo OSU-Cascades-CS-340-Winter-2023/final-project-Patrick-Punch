@@ -282,6 +282,9 @@ WHERE first_name = 'first_name';
 
 --Cleaning data/ data scraping
 -- Email filters 
+--DO NOT USE YET
+--if you use the email filter anytime after 3/7 you will need to 
+--reupload the data into the tables by deleating everything!
 
 --finds the non unique emails that already exist and emails that violate the code above
 SELECT email, COUNT(*)
