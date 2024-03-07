@@ -282,9 +282,6 @@ WHERE first_name = 'first_name';
 
 --Cleaning data/ data scraping
 -- Email filters 
---DO NOT USE YET
---if you use the email filter anytime after 3/7 you will need to 
---reupload the data into the tables by deleating everything!
 
 --finds the non unique emails that already exist and emails that violate the code above
 SELECT email, COUNT(*)
@@ -292,10 +289,8 @@ FROM test
 GROUP BY email
 HAVING COUNT(*) > 1;
 
--- Update invalid emails with a new, formatted email address
-UPDATE test
---REGEXP_REPLACE to remove unwanted characters from the emails. 
-SET email = REGEXP_REPLACE(email, '[^A-Za-z0-9._%+-@]', '', 'g')
+
+DELETE from test
 --Selects FROM the emails we have and checks to see 
 --if the start has proper values then checks after the @ symbol
 --!~* operator is used for case-insensitive negation of a regular expression match
@@ -303,8 +298,6 @@ WHERE email !~* '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$';
 
 --ads a CONSTRAINT to the emails where all emails must be UNIQUE
 ALTER TABLE test ADD CONSTRAINT unique_usr_email UNIQUE (email);
---try to add a filter for duplicates, it will be hard to add due to limitations unless adding
---a python file to this to filter the duplicates.
 
 
 ---State/city name fixers
