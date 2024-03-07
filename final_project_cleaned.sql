@@ -282,11 +282,6 @@ WHERE first_name = 'first_name';
 
 --Cleaning data/ data scraping
 -- Email filters 
---Selects FROM the emails we have and checks to see 
---if the start has proper values then checks after the @ symbol
-SELECT email
-FROM test
-WHERE email !~* '^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$';
 
 --finds the non unique emails that already exist and emails that violate the code above
 SELECT email, COUNT(*)
@@ -296,7 +291,11 @@ HAVING COUNT(*) > 1;
 
 -- Update invalid emails with a new, formatted email address
 UPDATE test
+--REGEXP_REPLACE to remove unwanted characters from the emails. 
 SET email = REGEXP_REPLACE(email, '[^A-Za-z0-9._%+-@]', '', 'g')
+--Selects FROM the emails we have and checks to see 
+--if the start has proper values then checks after the @ symbol
+--!~* operator is used for case-insensitive negation of a regular expression match
 WHERE email !~* '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$';
 
 --ads a CONSTRAINT to the emails where all emails must be UNIQUE
