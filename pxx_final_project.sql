@@ -2,194 +2,6 @@ create database pxx_final_project
 -- access the database -> \c pxx_final_project -- 
 -- copying data into a table: \copy table_name(attribute, columns, from, csv, file) from 'File Path' delimiter ',' csv
 
-
--- build tables off of the relational model
-create table "user"
-    (
-        usr_id      serial     not null,
-        usr_email       varchar(25)     not null,
-        usr_password        varchar(25),
-        usr_fname       varchar(15),
-        usr_lname       varchar(15),
-        usr_address_num       varchar(15),
-        usr_city        varchar(15),
-        usr_state       varchar(15),
-        usr_zip         varchar(12),
-        primary key (usr_id)
-    );
-
--- creating table services
-create table services
-    (
-        services_id  varchar(50)
-        services_name  varchar(100)
-        services_brand   varchar(50)
-        services_catagory  varchar(50)
-        primary key(services_id)
-    );
-
--- RELATIONAL MODEL TABLES --
-
-create table company
-    (
-        company_id      varchar(50)     not null,
-        company_name    varchar(50),
-        contact         varchar(50),
-        phone           varchar(50),
-        company_email   varchar(100),
-        company_url     varchar(100),
-        primary key(company_id)
-    );
-
-create table item
-    (
-        item_id     varchar(50)     not null,
-        item_type   varchar(50),
-        item_name   varchar(50),
-        item_description varchar(1000),
-        item_price  float,
-        item_picture    bytea,
-        primary key(item_id)
-    );
-
-create table employee
-    (
-        emp_id         varchar(50)     not null,
-        emp_email      varchar(50),
-        emp_first_name varchar(50),
-        emp_last_name  varchar(50),
-        job_category   varchar(50),
-        salary         int,
-        street_address  varchar(100),
-        emp_city       varchar(20),
-        emp_state      varchar(15),
-        emp_zip_code   varchar(10),
-        primary key(emp_id)
-    );
-
-create table discount
-    (
-        discount_id     varchar(50)     not null,
-        discount_type   varchar(50),
-        discount_amount varchar(50),
-        discount_description varchar(50),
-        discount_start_date date,
-        discount_end_date   date,
-        primary key(discount_id)
-    );
-
-create table user_interests
-    (
-        usr_id      serial     not null,
-        usr_interest varchar(50)     not null,
-        primary key (usr_id, usr_interest),
-        foreign key (usr_id) references "user"(usr_id)
-    );
-
-create table user_item_preference
-    (
-        usr_id      serial     not null,
-        item_id      varchar(50)     not null,
-        primary key (usr_id, item_id),
-        foreign key (usr_id) references "user"(usr_id),
-        foreign key (item_id) references item(item_id)
-    );
-
-create table user_company_preference
-    (
-        usr_id      serial     not null,
-        preference_company_id   varchar(50)     not null,
-        primary key (usr_id, preference_company_id),
-        foreign key (usr_id) references "user"(usr_id),
-        foreign key (preference_company_id) references company(company_id)
-    );
-
-create table user_location_preference
-    (
-        usr_id                      serial     not null,
-        preference_location_city    varchar(20)     not null,
-        preference_location_state   varchar(15)     not null,
-        primary key(usr_id, preference_location_city, preference_location_state),
-        foreign key (usr_id) references "user"(usr_id)
-    );
-
-create table company_location
-    (
-        company_id      varchar(50)     not null,
-        location_id     varchar(50)     not null,
-        company_address varchar(100),
-        company_city    varchar(20),
-        company_state   varchar(15),
-        company_zip     varchar(10),
-        company_pnum    varchar(15),
-        primary key(location_id),
-        foreign key(company_id) references company(company_id)
-    );
-
-create table company_item
-    (
-        company_id      varchar(50)     not null,
-        item_id         varchar(50)     not null,
-        discount_id     varchar(50)     not null,
-        is_discounted   boolean,
-        primary key(company_id, item_id),
-        foreign key(company_id) references company(company_id),
-        foreign key(item_id) references item(item_id),
-        foreign key(discount_id) references discount(discount_id)
-    );
-
-create table user_company_review
-    (
-        company_id      varchar(50)     not null,
-        usr_id          serial     not null,
-        rating_score    int,
-        comments        varchar(1000),
-        foreign key(company_id) references company(company_id),
-        foreign key (usr_id) references "user"(usr_id)
-    );
-
-create table user_checkin
-    (
-        checkin_id      varchar(50)     not null,
-        checkin_date    date,
-        usr_id          serial     not null,
-        company_id      varchar(50)     not null,
-        item_id         varchar(50)     not null,
-        discount_id     varchar(50)     not null,
-        primary key(checkin_id),
-        foreign key(company_id) references company(company_id),
-        foreign key(item_id) references item(item_id),
-        foreign key(discount_id) references discount(discount_id)
-    );
-
-create table company_transaction
-    (
-        transaction_id      varchar(50)     not null,
-        transaction_date    date,
-        charge_type         varchar(50),
-        transaction_amount  float,
-        surcharge           float,
-        total_charge        float GENERATED ALWAYS AS 
-                            (CASE WHEN transaction_amount IS NULL THEN surcharge
-                                WHEN surcharge IS NULL THEN transaction_amount
-                                ELSE transaction_amount + surcharge END) STORED,
-        tx_is_paid             boolean,
-        paid_date           date,
-        company_id      varchar(50)     not null,
-        primary key(transaction_id),
-        foreign key(company_id) references company(company_id)
-    );
-
-create table company_transaction_checkin
-    (
-        transaction_id      varchar(50)     not null,
-        checkin_id          varchar(50)     not null,
-        checkin_charge      float,
-        primary key(transaction_id, checkin_id),
-        foreign key(transaction_id) references company_transaction(transaction_id),
-        foreign key(checkin_id) references user_checkin(checkin_id)
-    );
-
 --CLEAN DATA--
 -- make temp tables, modify data in temp table --
 -- copy from temp table to actual table, AFTER CLEANING DATA -- 
@@ -438,3 +250,190 @@ create table "test"
     );
 
 \copy services_test(service_id, service_name, service_brand, service_catagory) from 'File Path' delimiter ',' csv
+
+-- build tables off of the relational model
+create table "user"
+    (
+        usr_id      serial     not null,
+        usr_email       varchar(25)     not null,
+        usr_password        varchar(25),
+        usr_fname       varchar(15),
+        usr_lname       varchar(15),
+        usr_address_num       varchar(15),
+        usr_city        varchar(15),
+        usr_state       varchar(15),
+        usr_zip         varchar(12),
+        primary key (usr_id)
+    );
+
+-- creating table services
+create table services
+    (
+        services_id  varchar(50)
+        services_name  varchar(100)
+        services_brand   varchar(50)
+        services_catagory  varchar(50)
+        primary key(services_id)
+    );
+
+-- RELATIONAL MODEL TABLES --
+
+create table company
+    (
+        company_id      varchar(50)     not null,
+        company_name    varchar(50),
+        contact         varchar(50),
+        phone           varchar(50),
+        company_email   varchar(100),
+        company_url     varchar(100),
+        primary key(company_id)
+    );
+
+create table item
+    (
+        item_id     varchar(50)     not null,
+        item_type   varchar(50),
+        item_name   varchar(50),
+        item_description varchar(1000),
+        item_price  float,
+        item_picture    bytea,
+        primary key(item_id)
+    );
+
+create table employee
+    (
+        emp_id         varchar(50)     not null,
+        emp_email      varchar(50),
+        emp_first_name varchar(50),
+        emp_last_name  varchar(50),
+        job_category   varchar(50),
+        salary         int,
+        street_address  varchar(100),
+        emp_city       varchar(20),
+        emp_state      varchar(15),
+        emp_zip_code   varchar(10),
+        primary key(emp_id)
+    );
+
+create table discount
+    (
+        discount_id     varchar(50)     not null,
+        discount_type   varchar(50),
+        discount_amount varchar(50),
+        discount_description varchar(50),
+        discount_start_date date,
+        discount_end_date   date,
+        primary key(discount_id)
+    );
+
+create table user_interests
+    (
+        usr_id      serial     not null,
+        usr_interest varchar(50)     not null,
+        primary key (usr_id, usr_interest),
+        foreign key (usr_id) references "user"(usr_id)
+    );
+
+create table user_item_preference
+    (
+        usr_id      serial     not null,
+        item_id      varchar(50)     not null,
+        primary key (usr_id, item_id),
+        foreign key (usr_id) references "user"(usr_id),
+        foreign key (item_id) references item(item_id)
+    );
+
+create table user_company_preference
+    (
+        usr_id      serial     not null,
+        preference_company_id   varchar(50)     not null,
+        primary key (usr_id, preference_company_id),
+        foreign key (usr_id) references "user"(usr_id),
+        foreign key (preference_company_id) references company(company_id)
+    );
+
+create table user_location_preference
+    (
+        usr_id                      serial     not null,
+        preference_location_city    varchar(20)     not null,
+        preference_location_state   varchar(15)     not null,
+        primary key(usr_id, preference_location_city, preference_location_state),
+        foreign key (usr_id) references "user"(usr_id)
+    );
+
+create table company_location
+    (
+        company_id      varchar(50)     not null,
+        location_id     varchar(50)     not null,
+        company_address varchar(100),
+        company_city    varchar(20),
+        company_state   varchar(15),
+        company_zip     varchar(10),
+        company_pnum    varchar(15),
+        primary key(location_id),
+        foreign key(company_id) references company(company_id)
+    );
+
+create table company_item
+    (
+        company_id      varchar(50)     not null,
+        item_id         varchar(50)     not null,
+        discount_id     varchar(50)     not null,
+        is_discounted   boolean,
+        primary key(company_id, item_id),
+        foreign key(company_id) references company(company_id),
+        foreign key(item_id) references item(item_id),
+        foreign key(discount_id) references discount(discount_id)
+    );
+
+create table user_company_review
+    (
+        company_id      varchar(50)     not null,
+        usr_id          serial     not null,
+        rating_score    int,
+        comments        varchar(1000),
+        foreign key(company_id) references company(company_id),
+        foreign key (usr_id) references "user"(usr_id)
+    );
+
+create table user_checkin
+    (
+        checkin_id      varchar(50)     not null,
+        checkin_date    date,
+        usr_id          serial     not null,
+        company_id      varchar(50)     not null,
+        item_id         varchar(50)     not null,
+        discount_id     varchar(50)     not null,
+        primary key(checkin_id),
+        foreign key(company_id) references company(company_id),
+        foreign key(item_id) references item(item_id),
+        foreign key(discount_id) references discount(discount_id)
+    );
+
+create table company_transaction
+    (
+        transaction_id      varchar(50)     not null,
+        transaction_date    date,
+        charge_type         varchar(50),
+        transaction_amount  float,
+        surcharge           float,
+        total_charge        float GENERATED ALWAYS AS 
+                            (CASE WHEN transaction_amount IS NULL THEN surcharge
+                                WHEN surcharge IS NULL THEN transaction_amount
+                                ELSE transaction_amount + surcharge END) STORED,
+        tx_is_paid             boolean,
+        paid_date           date,
+        company_id      varchar(50)     not null,
+        primary key(transaction_id),
+        foreign key(company_id) references company(company_id)
+    );
+
+create table company_transaction_checkin
+    (
+        transaction_id      varchar(50)     not null,
+        checkin_id          varchar(50)     not null,
+        checkin_charge      float,
+        primary key(transaction_id, checkin_id),
+        foreign key(transaction_id) references company_transaction(transaction_id),
+        foreign key(checkin_id) references user_checkin(checkin_id)
+    );
