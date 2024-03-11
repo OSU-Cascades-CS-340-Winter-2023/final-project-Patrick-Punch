@@ -1,0 +1,4488 @@
+\q
+\c pxx_final_project
+\d
+create table rob
+        (
+            usr_fname   varchar(9001), -- long 
+            usr_lname   varchar(9001),
+            usr_username   varchar(9001),
+            usr_email   varchar(9001),
+            usr_street_address   varchar(9001),
+            usr_city   varchar(9001),
+            usr_state   varchar(9001),
+            usr_id      serial      not null,
+            primary key (usr_id)
+        );
+\d
+\q
+COPY rob
+FROM '/Users/ppunch/desktop/osu/cs\ 340/final_project/final_project-Patrick-Punch/files/users.csv' 
+DELIMITER ',' 
+CSV HEADER;
+\q
+\d
+\copy rob FROM '/Users/ppunch/desktop/osu/cs\ 340/final_project/final_project-Patrick-Punch/files/users.csv' DELIMITER ',' CSV
+\copy rob from '/Users/ppunch/Desktop/OSU/cs 340/final_project/final-project-Patrick-Punch/files/users.csv' delimiter ',' csv
+\d
+select * from rob
+;
+\copy rob from '/Users/ppunch/Desktop/OSU/cs 340/final_project/final-project-Patrick-Punch/files/users.csv' delimiter ',' csv
+delete table rob
+;
+delete rob;
+drop table rob
+;
+\d
+create table test
+        (
+            first_name   varchar(9001), -- long 
+            last_name   varchar(9001),
+            username   varchar(9001),
+            email   varchar(9001),
+            street_address   varchar(9001),
+            city_address   varchar(9001),
+            state_address   varchar(9001),
+            usr_id      serial      not null,
+            primary key (usr_id)
+        );
+\d
+\copy test from '/Users/ppunch/Desktop/OSU/cs 340/final_project/final-project-Patrick-Punch/files/users.csv' delimiter ',' csv
+\d
+select first_name from test;
+COPY test(first_name, last_name, email)
+FROM '/Users/ppunch/Desktop/OSU/cs 340/final_project/final-project-Patrick-Punch/files/users.csv'
+DELIMITER ','
+CSV HEADER;
+\copy test(first_name, last_name, email) from '/Users/ppunch/Desktop/OSU/cs 340/final_project/final-project-Patrick-Punch/files/users.csv' delimiter ',' csv
+select first_name from test;
+\copy test(first_name, last_name, email, street_address, city_address, state_address) from '/Users/ppunch/Desktop/OSU/cs 340/final_project/final-project-Patrick-Punch/files/users.csv' delimiter ',' csv
+\q
+\c pxx_final_project
+\d
+\copy test(first_name, last_name, email, street_address, city_address, state_address) from '/Users/ppunch/Desktop/OSU/cs 340/final_project/final-project-Patrick-Punch/files/users.csv' delimiter ',' csv
+drop table test
+;
+\d
+create table test
+        (
+            first_name   varchar(9001), -- long 
+            last_name   varchar(9001),
+            username   varchar(9001),
+            email   varchar(9001),
+            street_address   varchar(9001),
+            city_address   varchar(9001),
+            state_address   varchar(9001),
+        );
+create table test
+        (
+            first_name   varchar(9001),
+            last_name   varchar(9001),
+            username   varchar(9001),
+            email   varchar(9001),
+            street_address   varchar(9001),
+            city_address   varchar(9001),
+            state_address   varchar(9001)
+        );
+\copy test(first_name, last_name, email, street_address, city_address, state_address) from '/Users/ppunch/Desktop/OSU/cs 340/final_project/final-project-Patrick-Punch/files/users.csv' delimiter ',' csv
+\copy test from '/Users/ppunch/Desktop/OSU/cs 340/final_project/final-project-Patrick-Punch/files/users.csv' delimiter ',' csv
+\d
+select first_name from test
+;
+\q
+drop table test
+;
+        create table test
+        (
+            first_name   varchar(15), 
+            last_name   varchar(15), 
+            username   varchar(30),
+            email   varchar(50), 
+            street_address   varchar(50), 
+            city_address   varchar(15), 
+            state_address   varchar(15),
+            usr_id      serial      not null,
+            primary key (usr_id)
+        );
+\copy test(first_name, last_name, username, email, street_address, city_address, state_address) from '/Users/ppunch/Desktop/OSU/cs 340/final_project/final-project-Patrick-Punch/files/users.csv' delimiter ',' csv
+delete from test
+where first_name = 'first_name';
+select max(length(first_name)) as max_first_name_length from test;
+\q
+\d
+drop table test
+;
+        create table test
+        (
+            first_name   varchar(15), 
+            last_name   varchar(15), 
+            username   varchar(30),
+            email   varchar(50), 
+            street_address   varchar(50), 
+            city_address   varchar(15), 
+            state_address   varchar(15),
+            usr_id      serial      not null,
+            primary key (usr_id)
+        );
+\copy test(first_name, last_name, username, email, street_address, city_address, state_address) from 'files/users.csv' delimiter ',' csv
+\q
+select e.emp_nbr, e.dept_nbr, count(b.bonus_amt)
+from employee as e
+inner join salary_bonus as b on e.emp_nbr = b.emp_nbr;
+select e.dept_nbr, count(b.bonus_amt)
+from employee as e
+inner join salary_bonus as b on e.emp_nbr = b.emp_nbr
+group by e.dept_nbr;
+select e.dept_nbr, count(b.bonus_amt)
+from employee as e
+inner join salary_bonus as b on e.emp_nbr = b.emp_nbr
+group by e.dept_nbr
+order by e.dept_nbr;
+select e.dept_nbr, count(b.bonus_amt) as num_bonuses
+from employee as e
+inner join salary_bonus as b on e.emp_nbr = b.emp_nbr
+group by e.dept_nbr
+order by e.dept_nbr;
+(select date_part('year', bonus_date) as year, count(*) as num_bonuses, sum(bonus_amt) as total_money, (avg(bonus_amt))::decimal(10,2) as avg_bonus
+from salary_bonus
+group by (date_part('year', bonus_date)));
+select select date_part('year', bonus_date) as year, e.dept_nbr, count(b.bonus_amt) as num_bonuses
+from employee as e
+inner join salary_bonus as b on e.emp_nbr = b.emp_nbr
+group by e.dept_nbr, date_part('year', bonus_date)
+order by e.dept_nbr;
+select date_part('year', bonus_date) as year, e.dept_nbr, count(b.bonus_amt) as num_bonuses
+from employee as e
+inner join salary_bonus as b on e.emp_nbr = b.emp_nbr
+group by e.dept_nbr, date_part('year', bonus_date)
+order by e.dept_nbr;
+select e.emp_first_name, e.emp_last_name, e.salary
+from employee as e 
+inner join salary_bonus as b on e.emp_nbr = s.emp_nbr
+where e.emp_nbr = 69420;
+select e.emp_first_name, e.emp_last_name, e.salary
+from employee as e 
+inner join salary_bonus as b on e.emp_nbr = b.emp_nbr
+where e.emp_nbr = 69420;
+select e.emp_first_name, e.emp_last_name, sum(e.salary, b.bonus_amt) as sum
+from employee as e 
+inner join salary_bonus as b on e.emp_nbr = b.emp_nbr
+where e.emp_nbr = 69420;
+select e.emp_first_name, e.emp_last_name, (e.salary + b.bonus_amt) as sum
+from employee as e 
+inner join salary_bonus as b on e.emp_nbr = b.emp_nbr
+where e.emp_nbr = 69420;
+select e.emp_first_name, e.emp_last_name, e.salary, (e.salary + b.bonus_amt) as sum
+from employee as e 
+inner join salary_bonus as b on e.emp_nbr = b.emp_nbr
+where e.emp_nbr = 69420;
+select sum(bonus_amt) from salary_bonus
+where emp_nbr = 69420;
+select * from salary_bonus
+where emp_nbr = 69420;
+select sum(bonus_amt) from salary_bonus
+where emp_nbr = 69420
+group by date_part('year', bonus_date);
+select * from salary_bonus
+where emp_nbr = 69420
+group by date_part('year', bonus_date);
+select emp_nbr, sum(bonus_amt)
+from salary_bonus
+where emp_nbr = 69420
+group by date_part('year', bonus_date);
+select emp_nbr, sum(bonus_amt)
+from salary_bonus
+where emp_nbr = 69420
+group by date_part('year', bonus_date), emp_nbr;
+select emp_nbr, sum(bonus_amt), date_part('year', bonus_date)
+from salary_bonus
+where emp_nbr = 69420
+group by date_part('year', bonus_date), emp_nbr;
+select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total, 
+from salary_bonus
+where emp_nbr = 69420
+group by date_part('year', bonus_date), emp_nbr;
+select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+where emp_nbr = 69420
+group by date_part('year', bonus_date), emp_nbr;
+select a.emp_nbr, a.year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+where emp_nbr = 69420
+group by date_part('year', bonus_date), emp_nbr)
+where a.year = '2023';
+select a.emp_nbr, a.year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+where emp_nbr = 69420
+group by date_part('year', bonus_date), emp_nbr) as a
+where a.year = '2023';
+select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+where emp_nbr = 69420
+group by date_part('year', bonus_date), emp_nbr;
+select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr;
+select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr;
+select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year;
+select a.emp_nbr, a.year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023';
+select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year;
+select a.emp_nbr, a.year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023';
+select a.emp_nbr, a.emp_first_name, a.emp_last_name, a.year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023';
+select a.emp_nbr, a.year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023';
+select e.emp_nbr, e.dept_nbr, e.salary, b.total
+from employee
+inner join 
+(select a.emp_nbr as enum, a.year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+;
+select e.emp_nbr, e.dept_nbr, e.salary, b.total
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+;
+select e.emp_nbr, e.dept_nbr, e.salary, b.total
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr
+;
+select e.emp_nbr, e.dept_nbr, e.salary, b.total
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr
+;
+select e.emp_nbr, e.dept_nbr, e.salary, b.total
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total
+;
+select a.emp_nbr as enum, a.year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023';
+select e.emp_nbr, e.dept_nbr, e.salary, b.total, (e.salary + b.total) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total;
+select e.emp_first_name, e.emp_last_name, e.salary, (e.salary + b.bonus_amt) as sum
+from employee as e 
+inner join salary_bonus as b on e.emp_nbr = b.emp_nbr
+where e.emp_nbr = 69420;
+select e.emp_first_name, e.emp_last_name, e.salary, (e.salary + b.bonus_amt) as sum
+from employee as e 
+inner join salary_bonus as b on e.emp_nbr = b.emp_nbr
+where e.emp_nbr = 69420
+group by date_part('year', bonus_date);
+select e.emp_nbr, e.salary, (e.salary + b.bonus_amt) as sum
+from employee as e 
+inner join salary_bonus as b on e.emp_nbr = b.emp_nbr
+where e.emp_nbr = 69420
+group by date_part('year', bonus_date), e.emp_nbr;
+select date_part('year', bonus_date) as year, e.dept_nbr, count(b.bonus_amt) as num_bonuses
+from employee as e
+inner join salary_bonus as b on e.emp_nbr = b.emp_nbr
+group by e.dept_nbr, date_part('year', bonus_date), b.bonus_amt
+order by e.dept_nbr;
+select e.emp_nbr, e.salary, (e.salary + b.bonus_amt) as sum
+from employee as e 
+inner join salary_bonus as b on e.emp_nbr = b.emp_nbr
+where e.emp_nbr = 69420
+group by date_part('year', bonus_date);
+select e.emp_nbr, e.salary, (e.salary + b.bonus_amt) as sum
+from employee as e 
+inner join salary_bonus as b on e.emp_nbr = b.emp_nbr
+where e.emp_nbr = 69420
+group by date_part('year', bonus_date), b.bonus_amt;
+select e.emp_nbr, e.salary, (e.salary + b.bonus_amt) as sum
+from employee as e 
+inner join salary_bonus as b on e.emp_nbr = b.emp_nbr
+where e.emp_nbr = 69420
+group by date_part('year', bonus_date), b.bonus_amt, e.emp_nbr;
+select date_part('year', bonus_date),e.emp_nbr, e.salary, (e.salary + b.bonus_amt) as sum
+from employee as e 
+inner join salary_bonus as b on e.emp_nbr = b.emp_nbr
+where e.emp_nbr = 69420
+group by date_part('year', bonus_date), b.bonus_amt, e.emp_nbr;
+select a.emp_nbr as enum, a.year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023';
+select e.emp_nbr, e.dept_nbr, e.salary, b.total, (e.salary + b.total) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total;
+select x.name, x.dep_no, x.totalsum
+from 
+(
+select e.emp_nbr, e.dept_nbr, e.salary, b.total, (e.salary + b.total) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total
+) as x 
+group by x.dep_no;
+select x.name, x.dep_no, x.totalsum
+from 
+(
+select e.emp_nbr as name, e.dept_nbr as dep_no, e.salary, b.total, (e.salary + b.total) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total
+) as x 
+group by x.dep_no;
+select x.name, x.dep_no, x.totalsum
+from 
+(
+select e.emp_nbr as name, e.dept_nbr as dep_no, e.salary, b.total, (e.salary + b.total) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total
+) as x 
+group by x.dep_no, x.name;
+select x.name, x.dep_no, x.totalsum
+from 
+(
+select e.emp_nbr as name, e.dept_nbr as dep_no, e.salary, b.total, (e.salary + b.total) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total
+) as x 
+group by x.dep_no, x.name, x.totalsum;
+select e.emp_nbr as name, e.dept_nbr as dep_no, e.salary, b.total, (e.salary + b.total) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total;
+select x.dep_no, x.name, max(x.totalsum)as max, 
+from 
+(
+select e.emp_nbr as name, e.dept_nbr as dep_no, e.salary, b.total, (e.salary + b.total) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total
+) as x 
+group by x.dep_no, x.name, max;
+select x.dep_no, x.name, max(x.totalsum)as max
+from 
+(
+select e.emp_nbr as name, e.dept_nbr as dep_no, e.salary, b.total, (e.salary + b.total) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total
+) as x 
+group by x.dep_no, x.name, max;
+select x.dep_no, x.name, max(x.totalsum)as max
+from 
+(
+select e.emp_nbr as name, e.dept_nbr as dep_no, e.salary, b.total, (e.salary + b.total) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total
+) as x 
+group by x.dep_no, x.name;
+select x.name, x.dep_no, x.totalsum
+from 
+(
+select e.emp_nbr as name, e.dept_nbr as dep_no, e.salary, b.total, (e.salary + b.total) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total
+) as x 
+group by x.dep_no, x.name, x.totalsum;
+select x.name, x.dep_no, x.totalsum
+from 
+(
+select e.emp_nbr as name, e.dept_nbr as dep_no, e.salary, b.total, (e.salary + b.total) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total
+) as x 
+group by x.dep_no, x.name, x.totalsum
+order by totalsum desc limit 1;
+select x.name, x.dep_no, x.totalsum
+from 
+(
+select e.emp_nbr as name, e.dept_nbr as dep_no, e.salary, b.total, (e.salary + b.total) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total
+) as x 
+group by x.dep_no, x.name, x.totalsum
+order by totalsum desc limit 5;
+select x.name, x.dep_no, x.totalsum
+from 
+(
+select e.emp_nbr as name, e.dept_nbr as dep_no, e.salary, b.total, (e.salary + b.total) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total
+) as x 
+group by distinct(x.dep_no), x.name, x.totalsum
+order by totalsum desc limit 5;
+select x.name, distinct(x.dep_no), x.totalsum
+from 
+(
+select e.emp_nbr as name, e.dept_nbr as dep_no, e.salary, b.total, (e.salary + b.total) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total
+) as x 
+group by x.dep_no, x.name, x.totalsum
+order by totalsum desc limit 5;
+select x.name, x.dep_no, x.totalsum
+from 
+(
+select e.emp_nbr as name, e.dept_nbr as dep_no, e.salary, b.total, (e.salary + b.total) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total
+) as x 
+group by x.dep_no, x.name, x.totalsum
+order by totalsum desc limit 5;
+select x.name, x.dep_no, x.totalsum
+from 
+(
+select e.emp_nbr as name, e.dept_nbr as dep_no, e.salary, b.total, (e.salary + b.total) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total
+) as x 
+group by x.dep_no, x.name, x.totalsum
+order by totalsum desc;
+select x.dep_no, x.name, max(x.totalsum)as max
+from 
+(select e.emp_nbr as name, e.dept_nbr as dep_no, e.salary, b.total, (e.salary + b.total) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total) as x 
+group by x.dep_no, x.name;
+select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year;
+select date_part('year', bonus_date),e.emp_nbr, e.salary, (e.salary + b.bonus_amt) as sum
+from employee as e 
+inner join salary_bonus as b on e.emp_nbr = b.emp_nbr
+where e.emp_nbr = 69420
+group by date_part('year', bonus_date), b.bonus_amt, e.emp_nbr;
+select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year;
+select e.emp_nbr, e.dept_nbr, e.salary, b.total, (e.salary + b.total) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total;
+select date_part('year', bonus_date)e.emp_nbr, e.dept_nbr, e.salary, b.total, (e.salary + b.total) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total;
+select date_part('year', bonus_date),e.emp_nbr, e.dept_nbr, e.salary, b.total, (e.salary + b.total) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total;
+select date_part('year', b.bonus_date),e.emp_nbr, e.dept_nbr, e.salary, b.total, (e.salary + b.total) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total;
+select a.year, e.emp_nbr, e.dept_nbr, e.salary, b.total, (e.salary + b.total) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total;
+select b.bonus_year, e.emp_nbr, e.dept_nbr, e.salary, b.total, (e.salary + b.total) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year as bonus_year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total;
+select b.bonus_year, e.emp_nbr, e.dept_nbr, e.salary, b.total, (e.salary + b.total) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year as bonus_year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total, b.bonus_year;
+select x.dep_no, x.name, max(x.totalsum)as max
+from 
+(select e.emp_nbr as name, e.dept_nbr as dep_no, e.salary, b.total, (e.salary + b.total) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total) as x 
+group by x.dep_no, x.name;
+select x.name, x.dep_no, x.totalsum
+from 
+(
+select e.emp_nbr as name, e.dept_nbr as dep_no, e.salary, b.total, (e.salary + b.total) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total
+) as x 
+group by x.dep_no, x.name, x.totalsum
+order by totalsum desc;
+select x.name, x.dep_no, x.totalsum, x.comp_year
+from 
+(
+select b.bonus_year as comp_year, e.emp_nbr, e.dept_nbr, e.salary, b.total, (e.salary + b.total) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year as bonus_year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total, b.bonus_year
+) as x 
+group by x.dep_no, x.name, x.totalsum
+order by totalsum desc;
+select x.e_num, x.dep_no, x.totalsum, b.comp_year
+from 
+(
+select b.bonus_year as comp_year, e.emp_nbr as e_num, e.dept_nbr as dep_no, e.salary, b.total, (e.salary + b.total) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year as bonus_year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total, b.bonus_year
+) as x 
+group by x.dep_no, x.name, x.totalsum
+order by totalsum desc;
+select x.e_num, x.dep_no, x.totalsum, x.comp_year
+from 
+(
+select b.bonus_year as comp_year, e.emp_nbr as e_num, e.dept_nbr as dep_no, e.salary, b.total, (e.salary + b.total) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year as bonus_year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total, b.bonus_year
+) as x 
+group by x.dep_no, x.name, x.totalsum
+order by totalsum desc;
+select x.e_num, x.dep_no, x.totalsum, x.comp_year
+from 
+(
+select b.bonus_year as comp_year, e.emp_nbr as e_num, e.dept_nbr as dep_no, e.salary, b.total, (e.salary + b.total) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year as bonus_year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total, b.bonus_year
+) as x 
+group by x.dep_no, x.e_num, x.totalsum, x.comp_year
+order by totalsum desc;
+select x.e_num, x.dep_no, max(x.totalsum), x.comp_year
+from 
+(
+select b.bonus_year as comp_year, e.emp_nbr as e_num, e.dept_nbr as dep_no, e.salary, b.total, (e.salary + b.total) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year as bonus_year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total, b.bonus_year
+) as x 
+group by x.dep_no, x.e_num, x.totalsum, x.comp_year
+order by totalsum desc;
+select x.e_num, x.dep_no, max(x.totalsum), x.comp_year
+from 
+(
+select b.bonus_year as comp_year, e.emp_nbr as e_num, e.dept_nbr as dep_no, e.salary, b.total, (e.salary + b.total) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year as bonus_year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total, b.bonus_year
+) as x 
+group by x.dep_no, x.e_num, x.totalsum, x.comp_year
+order by totalsum desc limit 2;
+select x.e_num, x.dep_no, max(x.totalsum), x.comp_year
+from 
+(
+select b.bonus_year as comp_year, e.emp_nbr as e_num, e.dept_nbr as dep_no, e.salary, b.total, (e.salary + b.total) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year as bonus_year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total, b.bonus_year
+) as x 
+group by x.dep_no, x.e_num, x.totalsum, x.comp_year
+order by totalsum desc;
+select x.e_num, x.dep_no, x.totalsum, x.comp_year
+from 
+(
+select b.bonus_year as comp_year, e.emp_nbr as e_num, e.dept_nbr as dep_no, e.salary, b.total, (e.salary + b.total) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year as bonus_year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total, b.bonus_year
+) as x 
+group by x.dep_no, x.e_num, x.totalsum, x.comp_year
+order by totalsum desc;
+select b.bonus_year, e.emp_nbr, e.dept_nbr, e.salary, b.total, (e.salary + b.total) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year as bonus_year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total, b.bonus_year;
+select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year;
+select sum(bonus_amt) from salary_bonus
+where emp_nbr = 69420
+group by date_part('year', bonus_date);
+select date_part('year', bonus_date),e.emp_nbr, e.salary, (e.salary + b.bonus_amt) as sum
+from employee as e 
+inner join salary_bonus as b on e.emp_nbr = b.emp_nbr
+where e.emp_nbr = 69420
+group by date_part('year', bonus_date), b.bonus_amt, e.emp_nbr;
+select date_part('year', bonus_date),e.emp_nbr, e.salary, (e.salary + b.bonus_amt) as sum
+from employee as e 
+inner join salary_bonus as b on e.emp_nbr = b.emp_nbr
+group by date_part('year', bonus_date), b.bonus_amt, e.emp_nbr;
+select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total_bonus
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year;\
+select emp_nbr, date_part('year', bonus_date)as year, coalesce(sum(bonus_amt), 0) as total_bonus
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year;
+select emp_nbr, date_part('year', bonus_date)as ayear, coalesce(sum(bonus_amt), 0) as total_bonus
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr, total_bonus
+order by emp_nbr, ayear;
+select emp_nbr, date_part('year', bonus_date)as ayear, coalesce(sum(bonus_amt), 0) as total_bonus
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, ayear;
+select emp_nbr, date_part('year', bonus_date)as ayear, sum(bonus_amt) as total_bonus
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, ayear;
+select b.bonus_year, e.emp_nbr, e.dept_nbr, e.salary, b.total, (e.salary + coalesce(b.total, 0) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year as bonus_year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total, b.bonus_year;
+)
+;
+select b.bonus_year, e.emp_nbr, e.dept_nbr, e.salary, b.total, (e.salary + coalesce(b.total, 0)) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year as bonus_year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total, b.bonus_year;
+select b.bonus_year, e.emp_nbr, e.dept_nbr, e.salary, b.total, (e.salary + coalesce(b.total, 0)) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year as bonus_year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+) as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total, b.bonus_year;
+select emp_hire_date from employee;
+select hire_date from employee;
+select hire_date from employee where hire_date < '2024-01-01';
+select x.e_num, x.dep_no, max(x.totalsum), x.comp_year
+from 
+(
+select b.bonus_year as comp_year, e.emp_nbr as e_num, e.dept_nbr as dep_no, e.salary, b.total, (e.salary + b.total) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year as bonus_year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total, b.bonus_year
+) as x 
+group by x.dep_no, x.e_num, x.totalsum, x.comp_year
+order by totalsum desc;
+select max(tsum), x.dep_no
+from
+(select x.e_num, x.dep_no, max(x.totalsum) as tsum, x.comp_year
+from 
+(
+select b.bonus_year as comp_year, e.emp_nbr as e_num, e.dept_nbr as dep_no, e.salary, b.total, (e.salary + b.total) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year as bonus_year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total, b.bonus_year
+) as x 
+group by x.dep_no, x.e_num, x.totalsum, x.comp_year
+order by totalsum desc)
+group by x.dep_no;
+select max(tsum), z.dep_no
+from
+(select x.e_num, x.dep_no, max(x.totalsum) as tsum, x.comp_year
+from 
+(
+select b.bonus_year as comp_year, e.emp_nbr as e_num, e.dept_nbr as dep_no, e.salary, b.total, (e.salary + b.total) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year as bonus_year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total, b.bonus_year
+) as x 
+group by x.dep_no, x.e_num, x.totalsum, x.comp_year
+order by totalsum desc) as z
+group by z.dep_no;
+select max(tsum), z.dep_no
+from
+(select x.e_num, x.dep_no, max(x.totalsum) as tsum, x.comp_year
+from 
+(
+select b.bonus_year as comp_year, e.emp_nbr as e_num, e.dept_nbr as dep_no, e.salary, b.total, (e.salary + b.total) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year as bonus_year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total, b.bonus_year
+) as x 
+group by x.dep_no, x.e_num, x.totalsum, x.comp_year
+order by totalsum desc) as z
+group by z.dep_no
+order by z.dep_no;
+select max(tsum), z.dep_no, z.e_num
+from
+(select x.e_num, x.dep_no, max(x.totalsum) as tsum, x.comp_year
+from 
+(
+select b.bonus_year as comp_year, e.emp_nbr as e_num, e.dept_nbr as dep_no, e.salary, b.total, (e.salary + b.total) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year as bonus_year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total, b.bonus_year
+) as x 
+group by x.dep_no, x.e_num, x.totalsum, x.comp_year
+order by totalsum desc) as z
+group by z.dep_no
+order by z.dep_no;
+select max(tsum), z.dep_no, z.e_num
+from
+(select x.e_num, x.dep_no, max(x.totalsum) as tsum, x.comp_year
+from 
+(
+select b.bonus_year as comp_year, e.emp_nbr as e_num, e.dept_nbr as dep_no, e.salary, b.total, (e.salary + b.total) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year as bonus_year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total, b.bonus_year
+) as x 
+group by x.dep_no, x.e_num, x.totalsum, x.comp_year
+order by totalsum desc) as z
+group by z.dep_no, z.e_num
+order by z.dep_no;
+select max(tsum), z.dep_no
+from
+(select x.e_num, x.dep_no, max(x.totalsum) as tsum, x.comp_year
+from 
+(
+select b.bonus_year as comp_year, e.emp_nbr as e_num, e.dept_nbr as dep_no, e.salary, b.total, (e.salary + b.total) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year as bonus_year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total, b.bonus_year
+) as x 
+group by x.dep_no, x.e_num, x.totalsum, x.comp_year
+order by totalsum desc) as z
+group by z.dep_no
+order by z.dep_no;
+select max(tsum), z.dep_no, z.e_num
+from
+(select x.e_num, x.dep_no, max(x.totalsum) as tsum, x.comp_year
+from 
+(
+select b.bonus_year as comp_year, e.emp_nbr as e_num, e.dept_nbr as dep_no, e.salary, b.total, (e.salary + b.total) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year as bonus_year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total, b.bonus_year
+) as x 
+group by x.dep_no, x.e_num, x.totalsum, x.comp_year
+order by totalsum desc) as z
+group by z.dep_no, z.e_num
+order by z.dep_no
+having count(z.dep_no) = 1;
+select max(tsum), z.dep_no, z.e_num
+from
+(select x.e_num, x.dep_no, max(x.totalsum) as tsum, x.comp_year
+from 
+(
+select b.bonus_year as comp_year, e.emp_nbr as e_num, e.dept_nbr as dep_no, e.salary, b.total, (e.salary + b.total) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year as bonus_year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total, b.bonus_year
+) as x 
+group by x.dep_no, x.e_num, x.totalsum, x.comp_year
+order by totalsum desc) as z
+group by z.dep_no, z.e_num
+order by z.dep_no
+while having count(z.dep_no) = 1;
+select max(tsum), z.dep_no, z.e_num
+from
+(select x.e_num, x.dep_no, max(x.totalsum) as tsum, x.comp_year
+from 
+(
+select b.bonus_year as comp_year, e.emp_nbr as e_num, e.dept_nbr as dep_no, e.salary, b.total, (e.salary + b.total) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year as bonus_year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total, b.bonus_year
+) as x 
+group by x.dep_no, x.e_num, x.totalsum, x.comp_year
+order by totalsum desc) as z
+group by z.dep_no, z.e_num
+order by z.dep_no
+having count(z.dep_no) = 1;
+select max(tsum), z.dep_no, z.e_num
+from
+(select x.e_num, x.dep_no, max(x.totalsum) as tsum, x.comp_year
+from 
+(
+select b.bonus_year as comp_year, e.emp_nbr as e_num, e.dept_nbr as dep_no, e.salary, b.total, (e.salary + b.total) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year as bonus_year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total, b.bonus_year
+) as x 
+group by x.dep_no, x.e_num, x.totalsum, x.comp_year
+order by totalsum desc) as z
+group by z.dep_no
+order by z.dep_no, z.e_num;
+select max(tsum), distinct(z.dep_no), z.e_num
+from
+(select x.e_num, x.dep_no, max(x.totalsum) as tsum, x.comp_year
+from 
+(
+select b.bonus_year as comp_year, e.emp_nbr as e_num, e.dept_nbr as dep_no, e.salary, b.total, (e.salary + b.total) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year as bonus_year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total, b.bonus_year
+) as x 
+group by x.dep_no, x.e_num, x.totalsum, x.comp_year
+order by totalsum desc) as z
+group by z.dep_no, z.e_num
+order by z.dep_no;
+select max(tsum), z.dep_no, z.e_num
+from
+(select x.e_num, x.dep_no, max(x.totalsum) as tsum, x.comp_year
+from 
+(
+select b.bonus_year as comp_year, e.emp_nbr as e_num, e.dept_nbr as dep_no, e.salary, b.total, (e.salary + b.total) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year as bonus_year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total, b.bonus_year
+) as x 
+group by x.dep_no, x.e_num, x.totalsum, x.comp_year
+order by totalsum desc) as z
+group by z.dep_no, z.e_num
+order by z.dep_no;
+select max(tsum), z.dep_no
+from
+(select x.e_num, x.dep_no, max(x.totalsum) as tsum, x.comp_year
+from 
+(
+select b.bonus_year as comp_year, e.emp_nbr as e_num, e.dept_nbr as dep_no, e.salary, b.total, (e.salary + b.total) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year as bonus_year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total, b.bonus_year
+) as x 
+group by x.dep_no, x.e_num, x.totalsum, x.comp_year
+order by totalsum desc) as z
+group by z.dep_no
+order by z.dep_no;
+select y.totalcomp, y.dep_no, q.e_num 
+from 
+select max(tsum) as totalcomp, z.dep_no
+from
+(select x.e_num, x.dep_no, max(x.totalsum) as tsum, x.comp_year
+from 
+(
+select b.bonus_year as comp_year, e.emp_nbr as e_num, e.dept_nbr as dep_no, e.salary, b.total, (e.salary + b.total) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year as bonus_year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total, b.bonus_year
+) as x 
+group by x.dep_no, x.e_num, x.totalsum, x.comp_year
+order by totalsum desc) as z
+group by z.dep_no
+order by z.dep_no) as y
+inner join 
+(select max(tsum)as totalcomp, z.dep_no, z.e_num
+from
+(select x.e_num, x.dep_no, max(x.totalsum) as tsum, x.comp_year
+from 
+(select b.bonus_year as comp_year, e.emp_nbr as e_num, e.dept_nbr as dep_no, e.salary, b.total, (e.salary + b.total) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year as bonus_year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total, b.bonus_year
+) as x 
+group by x.dep_no, x.e_num, x.totalsum, x.comp_year
+order by totalsum desc) as z
+group by z.dep_no, z.e_num
+order by z.dep_no) as q
+on y.e_num = q.e_num
+where y.totalcomp = q.totalcomp;
+select y.totalcomp, y.dep_no, q.e_num 
+from 
+(select max(tsum) as totalcomp, z.dep_no
+from
+(select x.e_num, x.dep_no, max(x.totalsum) as tsum, x.comp_year
+from 
+(
+select b.bonus_year as comp_year, e.emp_nbr as e_num, e.dept_nbr as dep_no, e.salary, b.total, (e.salary + b.total) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year as bonus_year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total, b.bonus_year
+) as x 
+group by x.dep_no, x.e_num, x.totalsum, x.comp_year
+order by totalsum desc) as z
+group by z.dep_no
+order by z.dep_no) as y
+inner join 
+(select max(tsum)as totalcomp, z.dep_no, z.e_num
+from
+(select x.e_num, x.dep_no, max(x.totalsum) as tsum, x.comp_year
+from 
+(select b.bonus_year as comp_year, e.emp_nbr as e_num, e.dept_nbr as dep_no, e.salary, b.total, (e.salary + b.total) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year as bonus_year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total, b.bonus_year
+) as x 
+group by x.dep_no, x.e_num, x.totalsum, x.comp_year
+order by totalsum desc) as z
+group by z.dep_no, z.e_num
+order by z.dep_no) as q
+on y.e_num = q.e_num
+where y.totalcomp = q.totalcomp;
+select y.totalcomp, y.dep_no, q.e_num 
+from 
+(select max(tsum) as totalcomp, z.dep_no
+from
+(select x.e_num, x.dep_no, max(x.totalsum) as tsum, x.comp_year
+from 
+(select b.bonus_year as comp_year, e.emp_nbr as e_num, e.dept_nbr as dep_no, e.salary, b.total, (e.salary + b.total) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year as bonus_year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total, b.bonus_year
+) as x 
+group by x.dep_no, x.e_num, x.totalsum, x.comp_year
+order by totalsum desc) as z
+group by z.dep_no
+order by z.dep_no) as y
+
+inner join 
+
+(select max(tsum)as totalcomp, z.dep_no, z.e_num
+from
+(select x.e_num, x.dep_no, max(x.totalsum) as tsum, x.comp_year
+from 
+(select b.bonus_year as comp_year, e.emp_nbr as e_num, e.dept_nbr as dep_no, e.salary, b.total, (e.salary + b.total) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year as bonus_year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total, b.bonus_year
+) as x 
+group by x.dep_no, x.e_num, x.totalsum, x.comp_year
+order by totalsum desc) as z
+group by z.dep_no, z.e_num
+order by z.dep_no) as q
+on y.totalcomp = q.totalcomp;
+select * from salary_bonus
+;
+select (e.salary + (sum(bonus_amt))), date_part('year', bonus_date) as bonus_year
+from salary_bonus
+inner join
+employee as e on e.emp_nbr = emp_nbr;
+select (e.salary + (sum(s.bonus_amt))), date_part('year', bonus_date) as bonus_year
+from salary_bonus as s
+inner join
+employee as e on e.emp_nbr = s.emp_nbr;
+select (e.salary + (sum(s.bonus_amt))), date_part('year', bonus_date) as bonus_year
+from salary_bonus as s
+inner join
+employee as e on e.emp_nbr = s.emp_nbr
+group by e.salary;
+select (e.salary + (sum(s.bonus_amt))), date_part('year', bonus_date) as bonus_year
+from salary_bonus as s
+inner join
+employee as e on e.emp_nbr = s.emp_nbr
+group by e.salary, s.bonus_amt;
+select (e.salary + (sum(s.bonus_amt))), date_part('year', bonus_date) as bonus_year
+from salary_bonus as s
+inner join
+employee as e on e.emp_nbr = s.emp_nbr
+group by e.salary, s.bonus_date;
+select (e.salary + (sum(s.bonus_amt)))as totalcomp, e.emp_nbr, date_part('year', bonus_date) as bonus_year
+from salary_bonus as s
+inner join
+employee as e on e.emp_nbr = s.emp_nbr
+group by e.salary, s.bonus_date, e.emp_nbr
+order by e.emp_nbr;
+select (e.salary + (sum(s.bonus_amt)))as totalcomp, e.emp_nbr, date_part('year', bonus_date) as bonus_year
+from salary_bonus as s
+inner join
+employee as e on e.emp_nbr = s.emp_nbr
+where bonus_year = '2023'
+group by e.salary, s.bonus_date, e.emp_nbr
+order by e.emp_nbr;
+select (e.salary + (sum(s.bonus_amt)))as totalcomp, e.emp_nbr, date_part('year', bonus_date) as bonus_year
+from salary_bonus as s
+inner join
+employee as e on e.emp_nbr = s.emp_nbr
+group by e.salary, s.bonus_date, e.emp_nbr
+order by e.emp_nbr
+where bonus_year = '2023';
+select e.salary, e.totalcomp, e.emp_nbr, e.bonus_year 
+from
+(
+select (e.salary + (sum(s.bonus_amt)))as totalcomp, e.emp_nbr, date_part('year', bonus_date) as bonus_year
+from salary_bonus as s
+inner join
+employee as e on e.emp_nbr = s.emp_nbr
+group by e.salary, s.bonus_date, e.emp_nbr
+order by e.emp_nbr
+) as e
+where e.bonus_year = '2023';
+select e.salary, e.totalcomp, e.emp_nbr, e.bonus_year 
+from
+(
+select (e.salary as salary + (sum(s.bonus_amt)))as totalcomp, e.emp_nb as emp_nbr, date_part('year', bonus_date) as bonus_year
+from salary_bonus as s
+inner join
+employee as e on e.emp_nbr = s.emp_nbr
+group by e.salary, s.bonus_date, e.emp_nbr
+order by e.emp_nbr
+) as e
+where e.bonus_year = '2023';
+select salary, e.totalcomp, emp_nbr, e.bonus_year 
+from
+(
+select (e.salary + (sum(s.bonus_amt)))as totalcomp, e.emp_nbr, date_part('year', bonus_date) as bonus_year
+from salary_bonus as s
+inner join
+employee as e on e.emp_nbr = s.emp_nbr
+group by e.salary, s.bonus_date, e.emp_nbr
+order by e.emp_nbr
+) as e
+where e.bonus_year = '2023';
+select e.e.salary, e.totalcomp, e.e.emp_nbr, e.bonus_year 
+from
+(
+select (e.salary + (sum(s.bonus_amt)))as totalcomp, e.emp_nbr, date_part('year', bonus_date) as bonus_year
+from salary_bonus as s
+inner join
+employee as e on e.emp_nbr = s.emp_nbr
+group by e.salary, s.bonus_date, e.emp_nbr
+order by e.emp_nbr
+) as e
+where e.bonus_year = '2023';
+select f.salary, f.totalcomp, f.emp_nbr, f.bonus_year 
+from
+(
+select (e.salary + (sum(s.bonus_amt)))as totalcomp, e.emp_nbr, date_part('year', bonus_date) as bonus_year
+from salary_bonus as s
+inner join
+employee as e on e.emp_nbr = s.emp_nbr
+group by e.salary, s.bonus_date, e.emp_nbr
+order by e.emp_nbr
+) as f
+where f.bonus_year = '2023';
+select e.pay, e.totalcomp, e.e_num, e.bonus_year 
+from
+(
+select (e.salary as pay + (sum(s.bonus_amt)))as totalcomp, e.emp_nbr as e_num, date_part('year', bonus_date) as bonus_year
+from salary_bonus as s
+inner join
+employee as e on e.emp_nbr = s.emp_nbr
+group by e.salary, s.bonus_date, e.emp_nbr
+order by e.emp_nbr
+) as e
+where e.bonus_year = '2023';
+select e.totalcomp, e.emp_nbr, e.bonus_year 
+from
+(
+select (e.salary + (sum(s.bonus_amt)))as totalcomp, e.emp_nbr, date_part('year', bonus_date) as bonus_year
+from salary_bonus as s
+inner join
+employee as e on e.emp_nbr = s.emp_nbr
+group by e.salary, s.bonus_date, e.emp_nbr
+order by e.emp_nbr
+) as e
+where e.bonus_year = '2023';
+select (e.salary + (sum(s.bonus_amt)))as totalcomp, e.emp_nbr, date_part('year', bonus_date) as bonus_year
+from salary_bonus as s
+inner join
+employee as e on e.emp_nbr = s.emp_nbr
+group by e.salary, s.bonus_date, e.emp_nbr
+order by e.emp_nbr
+;
+select e.totalcomp, e.emp_nbr, e.bonus_year 
+from
+(
+select (e.salary + coalesce((sum(s.bonus_amt),0))as totalcomp, e.emp_nbr, date_part('year', bonus_date) as bonus_year
+from salary_bonus as s
+inner join
+employee as e on e.emp_nbr = s.emp_nbr
+group by e.salary, s.bonus_date, e.emp_nbr
+order by e.emp_nbr
+) as e
+where e.bonus_year = '2023';
+)
+;
+select e.totalcomp, e.emp_nbr, e.bonus_year 
+from
+(
+select (e.salary + coalesce((sum(s.bonus_amt),0)))as totalcomp, e.emp_nbr, date_part('year', bonus_date) as bonus_year
+from salary_bonus as s
+inner join
+employee as e on e.emp_nbr = s.emp_nbr
+group by e.salary, s.bonus_date, e.emp_nbr
+order by e.emp_nbr
+) as e
+where e.bonus_year = '2023';
+select e.totalcomp, e.emp_nbr, e.bonus_year 
+from
+(
+select (e.salary + (sum(s.bonus_amt),0))as totalcomp, e.emp_nbr, date_part('year', bonus_date) as bonus_year
+from salary_bonus as s
+inner join
+employee as e on e.emp_nbr = s.emp_nbr
+group by e.salary, s.bonus_date, e.emp_nbr
+order by e.emp_nbr
+) as e
+where e.bonus_year = '2023';
+select e.totalcomp, e.emp_nbr, e.bonus_year 
+from
+(
+select (e.salary + sum(s.bonus_amt)as totalcomp, e.emp_nbr, date_part('year', bonus_date) as bonus_year
+from salary_bonus as s
+inner join
+employee as e on e.emp_nbr = s.emp_nbr
+group by e.salary, s.bonus_date, e.emp_nbr
+order by e.emp_nbr
+) as e
+where e.bonus_year = '2023';
+)select e.totalcomp, e.emp_nbr, e.bonus_year 
+from
+(
+select (e.salary + sum(s.bonus_amt)as totalcomp, e.emp_nbr, date_part('year', bonus_date) as bonus_year
+from salary_bonus as s
+inner join
+employee as e on e.emp_nbr = s.emp_nbr
+group by e.salary, s.bonus_date, e.emp_nbr
+order by e.emp_nbr
+) as e
+where e.bonus_year = '2023';
+)
+;
+select e.totalcomp, e.emp_nbr, e.bonus_year 
+from
+(
+select (e.salary + sum(s.bonus_amt))as totalcomp, e.emp_nbr, date_part('year', bonus_date) as bonus_year
+from salary_bonus as s
+inner join
+employee as e on e.emp_nbr = s.emp_nbr
+group by e.salary, s.bonus_date, e.emp_nbr
+order by e.emp_nbr
+) as e
+where e.bonus_year = '2023';
+select (e.salary + sum(s.bonus_amt))as totalcomp, e.emp_nbr, date_part('year', bonus_date) as bonus_year
+from salary_bonus as s
+inner join
+employee as e on e.emp_nbr = s.emp_nbr
+group by e.salary, s.bonus_date, e.emp_nbr
+order by e.emp_nbr
+;
+select y.emp_first_name, y.emp_last_name, y.totalcomp, y.dep_no, q.e_num 
+from 
+(select max(tsum) as totalcomp, z.dep_no
+from
+(select x.emp_first_name, x.emp_last_name,x.e_num, x.dep_no, max(x.totalsum) as tsum, x.comp_year
+from 
+(select e.emp_first_name, e.emp_last_name, b.bonus_year as comp_year, e.emp_nbr as e_num, e.dept_nbr as dep_no, e.salary, b.total, (e.salary + b.total) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year as bonus_year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total, b.bonus_year
+) as x 
+group by x.dep_no, x.e_num, x.totalsum, x.comp_year
+order by totalsum desc) as z
+group by z.dep_no
+order by z.dep_no) as y
+
+inner join 
+
+(select max(tsum)as totalcomp, z.dep_no, z.e_num
+from
+(select x.e_num, x.dep_no, max(x.totalsum) as tsum, x.comp_year
+from 
+(select b.bonus_year as comp_year, e.emp_nbr as e_num, e.dept_nbr as dep_no, e.salary, b.total, (e.salary + b.total) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year as bonus_year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total, b.bonus_year
+) as x 
+group by x.dep_no, x.e_num, x.totalsum, x.comp_year
+order by totalsum desc) as z
+group by z.dep_no, z.e_num
+order by z.dep_no) as q
+on y.totalcomp = q.totalcomp;
+select y.emp_first_name, y.emp_last_name, y.totalcomp, y.dep_no, q.e_num 
+from 
+(select max(tsum) as totalcomp, z.dep_no
+from
+(select x.emp_first_name, x.emp_last_name,x.e_num, x.dep_no, max(x.totalsum) as tsum, x.comp_year
+from 
+(select e.emp_first_name, e.emp_last_name, b.bonus_year as comp_year, e.emp_nbr as e_num, e.dept_nbr as dep_no, e.salary, b.total, (e.salary + b.total) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year as bonus_year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total, b.bonus_year
+) as x 
+group by x.dep_no, x.e_num, x.totalsum, x.comp_year,x.emp_first_name, x.emp_last_name
+order by totalsum desc) as z
+group by z.dep_no
+order by z.dep_no) as y
+;
+select e.emp_first_name, e.emp_last_name, b.bonus_year as comp_year, e.emp_nbr as e_num, e.dept_nbr as dep_no, e.salary, b.total, (e.salary + b.total) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year as bonus_year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total, b.bonus_year
+;
+select max(tsum) as totalcomp, z.dep_no, z.emp_first_name, z.emp_last_name
+from
+(select x.emp_first_name, x.emp_last_name,x.e_num, x.dep_no, max(x.totalsum) as tsum, x.comp_year
+from 
+(select e.emp_first_name, e.emp_last_name, b.bonus_year as comp_year, e.emp_nbr as e_num, e.dept_nbr as dep_no, e.salary, b.total, (e.salary + b.total) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year as bonus_year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total, b.bonus_year
+) as x 
+group by x.dep_no, x.e_num, x.totalsum, x.comp_year,x.emp_first_name, x.emp_last_name
+order by totalsum desc) as z
+group by z.dep_no
+order by z.dep_no;
+select max(tsum) as totalcomp, z.dep_no, z.emp_first_name, z.emp_last_name
+from
+(select x.emp_first_name, x.emp_last_name,x.e_num, x.dep_no, max(x.totalsum) as tsum, x.comp_year
+from 
+(select e.emp_first_name, e.emp_last_name, b.bonus_year as comp_year, e.emp_nbr as e_num, e.dept_nbr as dep_no, e.salary, b.total, (e.salary + b.total) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year as bonus_year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total, b.bonus_year
+) as x 
+group by x.dep_no, x.e_num, x.totalsum, x.comp_year,x.emp_first_name, x.emp_last_name
+order by totalsum desc) as z
+group by z.dep_no, z.emp_first_name, z.emp_last_name
+order by z.dep_no
+;
+select y.emp_first_name, y.emp_last_name, y.totalcomp, y.dep_no, q.e_num 
+from 
+(select max(tsum) as totalcomp, z.dep_no, z.emp_first_name, z.emp_last_name
+from
+(select x.emp_first_name, x.emp_last_name,x.e_num, x.dep_no, max(x.totalsum) as tsum, x.comp_year
+from 
+(select e.emp_first_name, e.emp_last_name, b.bonus_year as comp_year, e.emp_nbr as e_num, e.dept_nbr as dep_no, e.salary, b.total, (e.salary + b.total) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year as bonus_year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total, b.bonus_year
+) as x 
+group by x.dep_no, x.e_num, x.totalsum, x.comp_year,x.emp_first_name, x.emp_last_name
+order by totalsum desc) as z
+group by z.dep_no, z.emp_first_name, z.emp_last_name
+order by z.dep_no) as y
+;
+select max(tsum) as totalcomp, z.dep_no, z.emp_first_name, z.emp_last_name, z.comp_year
+from
+(select x.emp_first_name, x.emp_last_name,x.e_num, x.dep_no, max(x.totalsum) as tsum, x.comp_year
+from 
+(select e.emp_first_name, e.emp_last_name, b.bonus_year as comp_year, e.emp_nbr as e_num, e.dept_nbr as dep_no, e.salary, b.total, (e.salary + b.total) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year as bonus_year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total, b.bonus_year
+) as x 
+group by x.dep_no, x.e_num, x.totalsum, x.comp_year,x.emp_first_name, x.emp_last_name
+order by totalsum desc) as z
+group by z.dep_no, z.emp_first_name, z.emp_last_name, z.comp_year
+order by z.dep_no
+;
+select y.emp_first_name, y.emp_last_name, y.totalcomp, y.dep_no, q.e_num 
+from 
+(select max(tsum) as totalcomp, z.dep_no, z.emp_first_name, z.emp_last_name, z.comp_year
+from
+(select x.emp_first_name, x.emp_last_name,x.e_num, x.dep_no, max(x.totalsum) as tsum, x.comp_year
+from 
+(select e.emp_first_name, e.emp_last_name, b.bonus_year as comp_year, e.emp_nbr as e_num, e.dept_nbr as dep_no, e.salary, b.total, (e.salary + b.total) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year as bonus_year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total, b.bonus_year
+) as x 
+group by x.dep_no, x.e_num, x.totalsum, x.comp_year,x.emp_first_name, x.emp_last_name
+order by totalsum desc) as z
+group by z.dep_no, z.emp_first_name, z.emp_last_name, z.comp_year
+order by z.dep_no) as y
+
+inner join 
+
+(select max(tsum)as totalcomp, z.dep_no, z.e_num
+from
+(select x.e_num, x.dep_no, max(x.totalsum) as tsum, x.comp_year
+from 
+(select b.bonus_year as comp_year, e.emp_nbr as e_num, e.dept_nbr as dep_no, e.salary, b.total, (e.salary + b.total) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year as bonus_year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total, b.bonus_year
+) as x 
+group by x.dep_no, x.e_num, x.totalsum, x.comp_year
+order by totalsum desc) as z
+group by z.dep_no, z.e_num
+order by z.dep_no) as q
+on y.totalcomp = q.totalcomp;
+select max(tsum)as totalcomp, z.dep_no, z.e_num
+from
+(select x.e_num, x.dep_no, max(x.totalsum) as tsum, x.comp_year
+from 
+(select b.bonus_year as comp_year, e.emp_nbr as e_num, e.dept_nbr as dep_no, e.salary, b.total, (e.salary + b.total) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year as bonus_year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total, b.bonus_year
+) as x 
+group by x.dep_no, x.e_num, x.totalsum, x.comp_year
+order by totalsum desc) as z
+group by z.dep_no, z.e_num
+order by z.dep_no;
+select y.emp_first_name, y.emp_last_name, y.totalcomp, y.dep_no, q.e_num 
+from 
+(select max(tsum) as totalcomp, z.dep_no, z.emp_first_name, z.emp_last_name, z.comp_year
+from
+(select x.emp_first_name, x.emp_last_name,x.e_num, x.dep_no, max(x.totalsum) as tsum, x.comp_year
+from 
+(select e.emp_first_name, e.emp_last_name, b.bonus_year as comp_year, e.emp_nbr as e_num, e.dept_nbr as dep_no, e.salary, b.total, (e.salary + b.total) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year as bonus_year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total, b.bonus_year
+) as x 
+group by x.dep_no, x.e_num, x.totalsum, x.comp_year,x.emp_first_name, x.emp_last_name
+order by totalsum desc) as z
+group by z.dep_no, z.emp_first_name, z.emp_last_name, z.comp_year
+order by z.dep_no) as y
+
+inner join 
+
+(select max(tsum)as totalcomp, z.dep_no, z.e_num
+from
+(select x.e_num, x.dep_no, max(x.totalsum) as tsum, x.comp_year
+from 
+(select b.bonus_year as comp_year, e.emp_nbr as e_num, e.dept_nbr as dep_no, e.salary, b.total, (e.salary + b.total) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year as bonus_year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total, b.bonus_year
+) as x 
+group by x.dep_no, x.e_num, x.totalsum, x.comp_year
+order by totalsum desc) as z
+group by z.dep_no, z.e_num
+order by z.dep_no) as q
+on y.totalcomp = q.totalcomp;
+select max(tsum) as totalcomp, z.dep_no, z.emp_first_name, z.emp_last_name, z.comp_year
+from
+(select x.emp_first_name, x.emp_last_name,x.e_num, x.dep_no, max(x.totalsum) as tsum, x.comp_year
+from 
+(select e.emp_first_name, e.emp_last_name, b.bonus_year as comp_year, e.emp_nbr as e_num, e.dept_nbr as dep_no, e.salary, b.total, (e.salary + b.total) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year as bonus_year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total, b.bonus_year
+) as x 
+group by x.dep_no, x.e_num, x.totalsum, x.comp_year,x.emp_first_name, x.emp_last_name
+order by totalsum desc) as z
+group by z.dep_no, z.emp_first_name, z.emp_last_name, z.comp_year
+order by z.dep_no;
+select max(tsum)as totalcomp, z.dep_no, z.e_num
+from
+(select x.e_num, x.dep_no, max(x.totalsum) as tsum, x.comp_year
+from 
+(select b.bonus_year as comp_year, e.emp_nbr as e_num, e.dept_nbr as dep_no, e.salary, b.total, (e.salary + b.total) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year as bonus_year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total, b.bonus_year
+) as x 
+group by x.dep_no, x.e_num, x.totalsum, x.comp_year
+order by totalsum desc) as z
+group by z.dep_no, z.e_num
+order by z.dep_no
+;
+select max(tsum) as totalcomp, z.dep_no
+from
+(select x.e_num, x.dep_no, max(x.totalsum) as tsum, x.comp_year
+from 
+(select b.bonus_year as comp_year, e.emp_nbr as e_num, e.dept_nbr as dep_no, e.salary, b.total, (e.salary + b.total) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year as bonus_year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total, b.bonus_year
+) as x 
+group by x.dep_no, x.e_num, x.totalsum, x.comp_year
+order by totalsum desc) as z
+group by z.dep_no
+order by z.dep_no
+;
+select max(tsum) as totalcomp, z.dep_no
+from
+(select x.e_num, x.dep_no, max(x.totalsum) as tsum, x.comp_year
+from 
+(select b.bonus_year as comp_year, e.emp_nbr as e_num, e.dept_nbr as dep_no, e.salary, b.total, (e.salary + b.total) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year as bonus_year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total, b.bonus_year
+) as x 
+group by x.dep_no, x.e_num, x.totalsum, x.comp_year
+order by totalsum desc) as z
+group by z.dep_no
+order by z.dep_no;
+select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year;
+select emp_nbr, date_part('year', bonus_date)as bonus_year, coalesce(sum(bonus_amt),0) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, bonus_year;
+select e.emp_nbr, e.salary + coalesce(sum(bonus_amt), 0) as totalcomp 
+from employee as e
+left join 
+(select * from salary_bonus
+where bonus_date > '2022' and bonus_date < '2024');
+select e.emp_nbr, e.salary + coalesce(sum(b.bonus_amt), 0) as totalcomp 
+from employee as e
+left join 
+(select * from salary_bonus
+where bonus_date > '2022' and bonus_date < '2024') as b
+on e.emp_nbr = b.emp_nbr;
+select e.emp_nbr, e.salary + coalesce(sum(b.bonus_amt), 0) as totalcomp 
+from employee as e
+left join 
+(select * from salary_bonus
+where extract(year from bonus_date) = '2023') as b
+on e.emp_nbr = b.emp_nbr;
+select e.emp_nbr, e.salary + coalesce(sum(b.bonus_amt), 0) as totalcomp 
+from employee as e
+left join 
+(select * from salary_bonus
+where extract(year from bonus_date) = '2023') as b
+on e.emp_nbr = b.emp_nbr
+group by e.emp_nbr;
+select e.emp_nbr, e.salary + coalesce(sum(b.bonus_amt), 0) as totalcomp 
+from employee as e
+left join 
+(select * from salary_bonus
+where extract(year from bonus_date) = '2023') as b
+on e.emp_nbr = b.emp_nbr
+group by e.emp_nbr
+order by e.emp_nbr;
+select e.emp_nbr, e.salary + coalesce(sum(b.bonus_amt), 0) as totalcomp, date_part('year', bonus_date) 
+from employee as e
+left join 
+(select * from salary_bonus
+where extract(year from bonus_date) = '2023') as b
+on e.emp_nbr = b.emp_nbr
+group by e.emp_nbr
+order by e.emp_nbr;
+select e.emp_nbr, e.salary + coalesce(sum(b.bonus_amt), 0) as totalcomp, date_part('year', bonus_date) as bdate 
+from employee as e
+left join 
+(select * from salary_bonus
+where extract(year from bonus_date) = '2023') as b
+on e.emp_nbr = b.emp_nbr
+group by e.emp_nbr, bdate
+order by e.emp_nbr;
+select e.emp_nbr, e.dept_nbr,e.salary + coalesce(sum(b.bonus_amt), 0) as totalcomp, date_part('year', bonus_date) as bdate 
+from employee as e
+left join 
+(select * from salary_bonus
+where extract(year from bonus_date) = '2023') as b
+on e.emp_nbr = b.emp_nbr
+group by e.emp_nbr, bdate, e.dept_nbr
+order by e.emp_nbr;
+select e.emp_nbr, e.emp_first_name, e.emp_last_name, e.dept_nbr,e.salary + coalesce(sum(b.bonus_amt), 0) as totalcomp, date_part('year', bonus_date) as bdate 
+from employee as e
+left join 
+(select * from salary_bonus
+where extract(year from bonus_date) = '2023') as b
+on e.emp_nbr = b.emp_nbr
+group by e.emp_nbr, bdate, e.dept_nbr, e.emp_first_name, e.emp_last_name
+order by e.emp_nbr;
+select e.emp_nbr, e.emp_first_name, e.emp_last_name, e.dept_nbr,e.salary + coalesce(sum(b.bonus_amt), 0) as totalcomp, date_part('year', bonus_date) as bdate 
+from employee as e
+left join 
+(select * from salary_bonus
+where extract(year from bonus_date) = '2023') as b
+on e.emp_nbr = b.emp_nbr
+group by e.emp_nbr, bdate, e.dept_nbr, e.emp_first_name, e.emp_last_name
+order by e.emp_nbr;
+select e.emp_nbr, e.emp_first_name, e.emp_last_name, e.dept_nbr,e.salary + coalesce(sum(b.bonus_amt), 0) as 2023_total_comp, date_part('year', bonus_date) as bdate 
+from employee as e
+left join 
+(select * from salary_bonus
+where extract(year from bonus_date) = '2023') as b
+on e.emp_nbr = b.emp_nbr
+group by e.emp_nbr, bdate, e.dept_nbr, e.emp_first_name, e.emp_last_name
+order by e.emp_nbr;
+select e.emp_nbr, e.emp_first_name, e.emp_last_name, e.dept_nbr,e.salary + coalesce(sum(b.bonus_amt), 0) as total_2023_comp, date_part('year', bonus_date) as bdate 
+from employee as e
+left join 
+(select * from salary_bonus
+where extract(year from bonus_date) = '2023') as b
+on e.emp_nbr = b.emp_nbr
+group by e.emp_nbr, bdate, e.dept_nbr, e.emp_first_name, e.emp_last_name
+order by e.emp_nbr;
+select e.emp_nbr, e.emp_first_name, e.emp_last_name, e.dept_nbr,e.salary + coalesce(sum(b.bonus_amt), 0) as total_2023_comp
+from employee as e
+left join 
+(select * from salary_bonus
+where extract(year from bonus_date) = '2023') as b
+on e.emp_nbr = b.emp_nbr
+group by e.emp_nbr, bdate, e.dept_nbr, e.emp_first_name, e.emp_last_name
+order by e.emp_nbr;
+select e.emp_nbr, e.emp_first_name, e.emp_last_name, e.dept_nbr,e.salary + coalesce(sum(b.bonus_amt), 0) as total_2023_comp
+from employee as e
+left join 
+(select * from salary_bonus
+where extract(year from bonus_date) = '2023') as b
+on e.emp_nbr = b.emp_nbr
+group by e.emp_nbr, e.dept_nbr, e.emp_first_name, e.emp_last_name
+order by e.emp_nbr;
+select e.emp_nbr, e.emp_first_name, e.emp_last_name, e.dept_nbr,e.salary + coalesce(sum(b.bonus_amt), 0) as total_2023_comp, date_part('year', bonus_date) as bonus_yr 
+from employee as e
+left join 
+(select * from salary_bonus
+where extract(year from bonus_date) = '2023') as b
+on e.emp_nbr = b.emp_nbr
+group by e.emp_nbr, bonus_yr, e.dept_nbr, e.emp_first_name, e.emp_last_name
+order by e.emp_nbr;
+select y.totalcomp, y.dep_no, q.e_num 
+from 
+(select max(tsum) as totalcomp, z.dep_no
+from
+(select x.e_num, x.dep_no, max(x.totalsum) as tsum, x.comp_year
+from 
+(select b.bonus_year as comp_year, e.emp_nbr as e_num, e.dept_nbr as dep_no, e.salary, b.total, (e.salary + b.total) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year as bonus_year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total, b.bonus_year
+) as x 
+group by x.dep_no, x.e_num, x.totalsum, x.comp_year
+order by totalsum desc) as z
+group by z.dep_no
+order by z.dep_no) as y
+
+inner join 
+
+(select max(tsum)as totalcomp, z.dep_no, z.e_num
+from
+(select x.e_num, x.dep_no, max(x.totalsum) as tsum, x.comp_year
+from 
+(select b.bonus_year as comp_year, e.emp_nbr as e_num, e.dept_nbr as dep_no, e.salary, b.total, (e.salary + b.total) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year as bonus_year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total, b.bonus_year
+) as x 
+group by x.dep_no, x.e_num, x.totalsum, x.comp_year
+order by totalsum desc) as z
+group by z.dep_no, z.e_num
+order by z.dep_no) as q
+on y.totalcomp = q.totalcomp;
+select max(tsum) as totalcomp, z.dep_no
+from
+(select x.e_num, x.dep_no, max(x.totalsum) as tsum, x.comp_year
+from 
+(select b.bonus_year as comp_year, e.emp_nbr as e_num, e.dept_nbr as dep_no, e.salary, b.total, (e.salary + b.total) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year as bonus_year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total, b.bonus_year
+) as x 
+group by x.dep_no, x.e_num, x.totalsum, x.comp_year
+order by totalsum desc) as z
+group by z.dep_no
+order by z.dep_no
+;
+select a.emp_nbr as enum, a.year as bonus_year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023'
+;
+select x.e_num, x.dep_no, max(x.totalsum) as tsum, x.comp_year
+from 
+(select b.bonus_year as comp_year, e.emp_nbr as e_num, e.dept_nbr as dep_no, e.salary, b.total, (e.salary + b.total) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year as bonus_year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total, b.bonus_year
+) as x 
+group by x.dep_no, x.e_num, x.totalsum, x.comp_year
+order by totalsum desc;
+select e.emp_nbr, e.emp_first_name, e.emp_last_name, e.dept_nbr,e.salary + coalesce(sum(b.bonus_amt), 0) as total_2023_comp, date_part('year', bonus_date) as bonus_yr 
+from employee as e
+left join 
+(select * from salary_bonus
+where extract(year from bonus_date) = '2023') as b
+on e.emp_nbr = b.emp_nbr
+group by e.emp_nbr, bonus_yr, e.dept_nbr, e.emp_first_name, e.emp_last_name
+order by e.emp_nbr;
+select e.emp_nbr, e.emp_first_name, e.emp_last_name, e.dept_nbr,e.salary + coalesce(sum(b.bonus_amt), 0) as total_2023_comp, date_part('year', bonus_date) as bonus_yr 
+from employee as e
+left join 
+(select * from salary_bonus
+where extract(year from bonus_date) = '2023') as b
+on e.emp_nbr = b.emp_nbr
+group by e.emp_nbr, bonus_yr, e.dept_nbr, e.emp_first_name, e.emp_last_name
+order by e.emp_nbr;
+select x.emp_nbr, x.emp_first_name, x.emp_last_name, x.dpt_nbr, max(x.total_2023_comp) as tsum, x.bonus_yr
+from
+(select e.emp_nbr, e.emp_first_name, e.emp_last_name, e.dept_nbr,e.salary + coalesce(sum(b.bonus_amt), 0) as total_2023_comp, date_part('year', bonus_date) as bonus_yr 
+from employee as e
+left join 
+(select * from salary_bonus
+where extract(year from bonus_date) = '2023') as b
+on e.emp_nbr = b.emp_nbr
+group by e.emp_nbr, bonus_yr, e.dept_nbr, e.emp_first_name, e.emp_last_name
+order by e.emp_nbr) as x
+group by x.dept_nbr, x.emp_nbr, x.total, x.comp_year
+order by totalsum desc;
+select x.emp_nbr, x.emp_first_name, x.emp_last_name, x.dept_nbr, max(x.total_2023_comp) as tsum, x.bonus_yr
+from
+(select e.emp_nbr, e.emp_first_name, e.emp_last_name, e.dept_nbr,e.salary + coalesce(sum(b.bonus_amt), 0) as total_2023_comp, date_part('year', bonus_date) as bonus_yr 
+from employee as e
+left join 
+(select * from salary_bonus
+where extract(year from bonus_date) = '2023') as b
+on e.emp_nbr = b.emp_nbr
+group by e.emp_nbr, bonus_yr, e.dept_nbr, e.emp_first_name, e.emp_last_name
+order by e.emp_nbr) as x
+group by x.dept_nbr, x.emp_nbr, x.total, x.comp_year
+order by totalsum desc;
+select x.emp_nbr, x.emp_first_name, x.emp_last_name, x.dept_nbr, max(x.total_2023_comp) as tsum, x.bonus_yr
+from
+(select e.emp_nbr, e.emp_first_name, e.emp_last_name, e.dept_nbr,e.salary + coalesce(sum(b.bonus_amt), 0) as total_2023_comp, date_part('year', bonus_date) as bonus_yr 
+from employee as e
+left join 
+(select * from salary_bonus
+where extract(year from bonus_date) = '2023') as b
+on e.emp_nbr = b.emp_nbr
+group by e.emp_nbr, bonus_yr, e.dept_nbr, e.emp_first_name, e.emp_last_name
+order by e.emp_nbr) as x
+group by x.dept_nbr, x.emp_nbr, x.total, x.comp_year
+order by total_2023_comp desc;
+select e.emp_nbr, e.emp_first_name, e.emp_last_name, e.dept_nbr,e.salary + coalesce(sum(b.bonus_amt), 0) as total_2023_comp, date_part('year', bonus_date) as bonus_yr 
+from employee as e
+left join 
+(select * from salary_bonus
+where extract(year from bonus_date) = '2023') as b
+on e.emp_nbr = b.emp_nbr
+group by e.emp_nbr, bonus_yr, e.dept_nbr, e.emp_first_name, e.emp_last_name
+order by e.emp_nbr;
+select x.emp_nbr, x.emp_first_name, x.emp_last_name, x.dept_nbr, max(x.total_2023_comp) as tsum, x.bonus_yr
+from
+(select e.emp_nbr, e.emp_first_name, e.emp_last_name, e.dept_nbr,e.salary + coalesce(sum(b.bonus_amt), 0) as total_2023_comp, date_part('year', bonus_date) as bonus_yr 
+from employee as e
+left join 
+(select * from salary_bonus
+where extract(year from bonus_date) = '2023') as b
+on e.emp_nbr = b.emp_nbr
+group by e.emp_nbr, bonus_yr, e.dept_nbr, e.emp_first_name, e.emp_last_name
+order by e.emp_nbr) as x
+group by x.dept_nbr, x.emp_nbr, x.total, x.comp_year
+order by total_2023_comp desc
+;
+select x.emp_nbr, x.emp_first_name, x.emp_last_name, x.dept_nbr, max(x.total_2023_comp) as tsum, x.bonus_yr
+from
+(select e.emp_nbr, e.emp_first_name, e.emp_last_name, e.dept_nbr,e.salary + coalesce(sum(b.bonus_amt), 0) as total_2023_comp, date_part('year', bonus_date) as bonus_yr 
+from employee as e
+left join 
+(select * from salary_bonus
+where extract(year from bonus_date) = '2023') as b
+on e.emp_nbr = b.emp_nbr
+group by e.emp_nbr, bonus_yr, e.dept_nbr, e.emp_first_name, e.emp_last_name
+order by e.emp_nbr) as x
+group by x.dept_nbr, x.emp_nbr, x.total_2023_comp, x.bonus_yr
+order by total_2023_comp desc;
+select x.emp_nbr, x.emp_first_name, x.emp_last_name, x.dept_nbr, max(x.total_2023_comp) as tsum, x.bonus_yr
+from
+(select e.emp_nbr, e.emp_first_name, e.emp_last_name, e.dept_nbr,e.salary + coalesce(sum(b.bonus_amt), 0) as total_2023_comp, date_part('year', bonus_date) as bonus_yr 
+from employee as e
+left join 
+(select * from salary_bonus
+where extract(year from bonus_date) = '2023') as b
+on e.emp_nbr = b.emp_nbr
+group by e.emp_nbr, bonus_yr, e.dept_nbr, e.emp_first_name, e.emp_last_name
+order by e.emp_nbr) as x
+group by x.dept_nbr, x.emp_nbr, x.total_2023_comp, x.bonus_yr, x.emp_first_name, x.emp_last_name
+order by total_2023_comp desc;
+select max(tsum)as totalcomp, z.dep_no, z.e_num
+from
+select y.totalcomp, y.dep_no, q.e_num 
+from 
+(select max(tsum) as totalcomp, z.dep_no
+from
+(select x.emp_nbr, x.emp_first_name, x.emp_last_name, x.dept_nbr, max(x.total_2023_comp) as tsum, x.bonus_yr
+from
+(select e.emp_nbr, e.emp_first_name, e.emp_last_name, e.dept_nbr,e.salary + coalesce(sum(b.bonus_amt), 0) as total_2023_comp, date_part('year', bonus_date) as bonus_yr 
+from employee as e
+left join 
+(select * from salary_bonus
+where extract(year from bonus_date) = '2023') as b
+on e.emp_nbr = b.emp_nbr
+group by e.emp_nbr, bonus_yr, e.dept_nbr, e.emp_first_name, e.emp_last_name
+order by e.emp_nbr) as x
+group by x.dept_nbr, x.emp_nbr, x.total_2023_comp, x.bonus_yr, x.emp_first_name, x.emp_last_name
+order by total_2023_comp desc)as z
+group by z.dep_no, z.e_num
+order by z.dep_no
+;
+);
+(select max(tsum)as totalcomp, z.dep_no, z.e_num
+from
+(select x.e_num, x.dep_no, max(x.totalsum) as tsum, x.comp_year
+from 
+(select b.bonus_year as comp_year, e.emp_nbr as e_num, e.dept_nbr as dep_no, e.salary, b.total, (e.salary + b.total) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year as bonus_year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total, b.bonus_year
+) as x 
+group by x.dep_no, x.e_num, x.totalsum, x.comp_year
+order by totalsum desc) as z
+group by z.dep_no, z.e_num
+order by z.dep_no) as q
+on y.totalcomp = q.totalcomp;
+select max(tsum)as totalcomp, z.dep_no, z.e_num
+from
+(select x.e_num, x.dep_no, max(x.totalsum) as tsum, x.comp_year
+from 
+(select b.bonus_year as comp_year, e.emp_nbr as e_num, e.dept_nbr as dep_no, e.salary, b.total, (e.salary + b.total) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year as bonus_year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total, b.bonus_year
+) as x 
+group by x.dep_no, x.e_num, x.totalsum, x.comp_year
+order by totalsum desc) as z
+group by z.dep_no, z.e_num
+order by z.dep_no;
+select x.emp_nbr, x.emp_first_name, x.emp_last_name, x.dept_nbr, max(x.total_2023_comp) as tsum, x.bonus_yr
+from
+(select e.emp_nbr, e.emp_first_name, e.emp_last_name, e.dept_nbr,e.salary + coalesce(sum(b.bonus_amt), 0) as total_2023_comp, date_part('year', bonus_date) as bonus_yr 
+from employee as e
+left join 
+(select * from salary_bonus
+where extract(year from bonus_date) = '2023') as b
+on e.emp_nbr = b.emp_nbr
+group by e.emp_nbr, bonus_yr, e.dept_nbr, e.emp_first_name, e.emp_last_name
+order by e.emp_nbr) as x
+group by x.dept_nbr, x.emp_nbr, x.total_2023_comp, x.bonus_yr, x.emp_first_name, x.emp_last_name
+order by total_2023_comp desc;
+select max(tsum)as totalcomp, z.dep_no, z.e_num
+from
+(select x.e_num, x.dep_no, max(x.totalsum) as tsum, x.comp_year
+from 
+(select b.bonus_year as comp_year, e.emp_nbr as e_num, e.dept_nbr as dep_no, e.salary, b.total, (e.salary + b.total) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year as bonus_year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total, b.bonus_year
+) as x 
+group by x.dep_no, x.e_num, x.totalsum, x.comp_year
+order by totalsum desc) as z
+group by z.dep_no, z.e_num
+order by z.dep_no;
+select max(tsum) as totalcomp, z.dep_no
+from
+(select x.emp_nbr, x.emp_first_name, x.emp_last_name, x.dept_nbr, max(x.total_2023_comp) as tsum, x.bonus_yr
+from
+(select e.emp_nbr, e.emp_first_name, e.emp_last_name, e.dept_nbr,e.salary + coalesce(sum(b.bonus_amt), 0) as total_2023_comp, date_part('year', bonus_date) as bonus_yr 
+from employee as e
+left join 
+(select * from salary_bonus
+where extract(year from bonus_date) = '2023') as b
+on e.emp_nbr = b.emp_nbr
+group by e.emp_nbr, bonus_yr, e.dept_nbr, e.emp_first_name, e.emp_last_name
+order by e.emp_nbr) as x
+group by x.dept_nbr, x.emp_nbr, x.total_2023_comp, x.bonus_yr, x.emp_first_name, x.emp_last_name
+order by total_2023_comp desc) as z
+group by z.dep_no, z.e_num
+order by z.dep_no;
+select max(tsum) as totalcomp, z.dept_nbr, z.emp_nbr
+from
+(select x.emp_nbr, x.emp_first_name, x.emp_last_name, x.dept_nbr, max(x.total_2023_comp) as tsum, x.bonus_yr
+from
+(select e.emp_nbr, e.emp_first_name, e.emp_last_name, e.dept_nbr,e.salary + coalesce(sum(b.bonus_amt), 0) as total_2023_comp, date_part('year', bonus_date) as bonus_yr 
+from employee as e
+left join 
+(select * from salary_bonus
+where extract(year from bonus_date) = '2023') as b
+on e.emp_nbr = b.emp_nbr
+group by e.emp_nbr, bonus_yr, e.dept_nbr, e.emp_first_name, e.emp_last_name
+order by e.emp_nbr) as x
+group by x.dept_nbr, x.emp_nbr, x.total_2023_comp, x.bonus_yr, x.emp_first_name, x.emp_last_name
+order by total_2023_comp desc) as z
+group by z.dept_nbr, z.emp_nbr
+order by z.dept_nbr;
+select y.totalcomp, y.dep_no, q.e_num 
+from 
+(select max(tsum) as totalcomp, z.dep_no
+from
+(select x.e_num, x.dep_no, max(x.totalsum) as tsum, x.comp_year
+from 
+(select b.bonus_year as comp_year, e.emp_nbr as e_num, e.dept_nbr as dep_no, e.salary, b.total, (e.salary + b.total) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year as bonus_year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total, b.bonus_year
+) as x 
+group by x.dep_no, x.e_num, x.totalsum, x.comp_year
+order by totalsum desc) as z
+group by z.dep_no
+order by z.dep_no) as y
+
+inner join 
+(
+select max(tsum) as totalcomp, z.dept_nbr, z.emp_nbr
+from
+(select x.emp_nbr, x.emp_first_name, x.emp_last_name, x.dept_nbr, max(x.total_2023_comp) as tsum, x.bonus_yr
+from
+(select e.emp_nbr, e.emp_first_name, e.emp_last_name, e.dept_nbr,e.salary + coalesce(sum(b.bonus_amt), 0) as total_2023_comp, date_part('year', bonus_date) as bonus_yr 
+from employee as e
+left join 
+(select * from salary_bonus
+where extract(year from bonus_date) = '2023') as b
+on e.emp_nbr = b.emp_nbr
+group by e.emp_nbr, bonus_yr, e.dept_nbr, e.emp_first_name, e.emp_last_name
+order by e.emp_nbr) as x
+group by x.dept_nbr, x.emp_nbr, x.total_2023_comp, x.bonus_yr, x.emp_first_name, x.emp_last_name
+order by total_2023_comp desc) as z
+group by z.dept_nbr, z.emp_nbr
+order by z.dept_nbr
+)as q
+on y.totalcomp = q.totalcomp;
+select max(tsum) as totalcomp, z.dept_nbr, z.emp_nbr
+from
+(select x.emp_nbr, x.emp_first_name, x.emp_last_name, x.dept_nbr, max(x.total_2023_comp) as tsum, x.bonus_yr
+from
+(select e.emp_nbr, e.emp_first_name, e.emp_last_name, e.dept_nbr,e.salary + coalesce(sum(b.bonus_amt), 0) as total_2023_comp, date_part('year', bonus_date) as bonus_yr 
+from employee as e
+left join 
+(select * from salary_bonus
+where extract(year from bonus_date) = '2023') as b
+on e.emp_nbr = b.emp_nbr
+group by e.emp_nbr, bonus_yr, e.dept_nbr, e.emp_first_name, e.emp_last_name
+order by e.emp_nbr) as x
+group by x.dept_nbr, x.emp_nbr, x.total_2023_comp, x.bonus_yr, x.emp_first_name, x.emp_last_name
+order by total_2023_comp desc) as z
+group by z.dept_nbr, z.emp_nbr
+order by z.dept_nbr;
+select y.totalcomp, y.dep_no, q.emp_nbr
+from 
+(select max(tsum) as totalcomp, z.dep_no
+from
+(select x.e_num, x.dep_no, max(x.totalsum) as tsum, x.comp_year
+from 
+(select b.bonus_year as comp_year, e.emp_nbr as e_num, e.dept_nbr as dep_no, e.salary, b.total, (e.salary + b.total) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year as bonus_year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total, b.bonus_year
+) as x 
+group by x.dep_no, x.e_num, x.totalsum, x.comp_year
+order by totalsum desc) as z
+group by z.dep_no
+order by z.dep_no) as y
+
+inner join 
+(
+select max(tsum) as totalcomp, z.dept_nbr, z.emp_nbr
+from
+(select x.emp_nbr, x.emp_first_name, x.emp_last_name, x.dept_nbr, max(x.total_2023_comp) as tsum, x.bonus_yr
+from
+(select e.emp_nbr, e.emp_first_name, e.emp_last_name, e.dept_nbr,e.salary + coalesce(sum(b.bonus_amt), 0) as total_2023_comp, date_part('year', bonus_date) as bonus_yr 
+from employee as e
+left join 
+(select * from salary_bonus
+where extract(year from bonus_date) = '2023') as b
+on e.emp_nbr = b.emp_nbr
+group by e.emp_nbr, bonus_yr, e.dept_nbr, e.emp_first_name, e.emp_last_name
+order by e.emp_nbr) as x
+group by x.dept_nbr, x.emp_nbr, x.total_2023_comp, x.bonus_yr, x.emp_first_name, x.emp_last_name
+order by total_2023_comp desc) as z
+group by z.dept_nbr, z.emp_nbr
+order by z.dept_nbr
+)as q
+on y.totalcomp = q.totalcomp;
+select y.totalcomp, y.dep_no, q.emp_nbr, q.emp_first_name,q.emp_last_name
+from 
+(select max(tsum) as totalcomp, z.dep_no
+from
+(select x.e_num, x.dep_no, max(x.totalsum) as tsum, x.comp_year
+from 
+(select b.bonus_year as comp_year, e.emp_nbr as e_num, e.dept_nbr as dep_no, e.salary, b.total, (e.salary + b.total) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year as bonus_year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total, b.bonus_year
+) as x 
+group by x.dep_no, x.e_num, x.totalsum, x.comp_year
+order by totalsum desc) as z
+group by z.dep_no
+order by z.dep_no) as y
+
+inner join 
+(
+select max(tsum) as totalcomp, z.dept_nbr, z.emp_nbr
+from
+(select x.emp_nbr, x.emp_first_name, x.emp_last_name, x.dept_nbr, max(x.total_2023_comp) as tsum, x.bonus_yr
+from
+(select e.emp_nbr, e.emp_first_name, e.emp_last_name, e.dept_nbr,e.salary + coalesce(sum(b.bonus_amt), 0) as total_2023_comp, date_part('year', bonus_date) as bonus_yr 
+from employee as e
+left join 
+(select * from salary_bonus
+where extract(year from bonus_date) = '2023') as b
+on e.emp_nbr = b.emp_nbr
+group by e.emp_nbr, bonus_yr, e.dept_nbr, e.emp_first_name, e.emp_last_name
+order by e.emp_nbr) as x
+group by x.dept_nbr, x.emp_nbr, x.total_2023_comp, x.bonus_yr, x.emp_first_name, x.emp_last_name
+order by total_2023_comp desc) as z
+group by z.dept_nbr, z.emp_nbr
+order by z.dept_nbr
+)as q
+on y.totalcomp = q.totalcomp;
+select max(tsum) as totalcomp, z.dept_nbr, z.emp_nbr, z.emp_first_name, z.emp_last_name
+from
+(select x.emp_nbr, x.emp_first_name, x.emp_last_name, x.dept_nbr, max(x.total_2023_comp) as tsum, x.bonus_yr
+from
+(select e.emp_nbr, e.emp_first_name, e.emp_last_name, e.dept_nbr,e.salary + coalesce(sum(b.bonus_amt), 0) as total_2023_comp, date_part('year', bonus_date) as bonus_yr 
+from employee as e
+left join 
+(select * from salary_bonus
+where extract(year from bonus_date) = '2023') as b
+on e.emp_nbr = b.emp_nbr
+group by e.emp_nbr, bonus_yr, e.dept_nbr, e.emp_first_name, e.emp_last_name
+order by e.emp_nbr) as x
+group by x.dept_nbr, x.emp_nbr, x.total_2023_comp, x.bonus_yr, x.emp_first_name, x.emp_last_name
+order by total_2023_comp desc) as z
+group by z.dept_nbr, z.emp_nbr, z.emp_first_name, z.emp_last_name
+order by z.dept_nbr;
+select y.totalcomp, y.dep_no, q.emp_nbr, q.emp_first_name,q.emp_last_name
+from 
+(select max(tsum) as totalcomp, z.dep_no
+from
+(select x.e_num, x.dep_no, max(x.totalsum) as tsum, x.comp_year
+from 
+(select b.bonus_year as comp_year, e.emp_nbr as e_num, e.dept_nbr as dep_no, e.salary, b.total, (e.salary + b.total) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year as bonus_year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total, b.bonus_year
+) as x 
+group by x.dep_no, x.e_num, x.totalsum, x.comp_year
+order by totalsum desc) as z
+group by z.dep_no
+order by z.dep_no) as y
+
+inner join 
+(
+select max(tsum) as totalcomp, z.dept_nbr, z.emp_nbr, z.emp_first_name, z.emp_last_name
+from
+(select x.emp_nbr, x.emp_first_name, x.emp_last_name, x.dept_nbr, max(x.total_2023_comp) as tsum, x.bonus_yr
+from
+(select e.emp_nbr, e.emp_first_name, e.emp_last_name, e.dept_nbr,e.salary + coalesce(sum(b.bonus_amt), 0) as total_2023_comp, date_part('year', bonus_date) as bonus_yr 
+from employee as e
+left join 
+(select * from salary_bonus
+where extract(year from bonus_date) = '2023') as b
+on e.emp_nbr = b.emp_nbr
+group by e.emp_nbr, bonus_yr, e.dept_nbr, e.emp_first_name, e.emp_last_name
+order by e.emp_nbr) as x
+group by x.dept_nbr, x.emp_nbr, x.total_2023_comp, x.bonus_yr, x.emp_first_name, x.emp_last_name
+order by total_2023_comp desc) as z
+group by z.dept_nbr, z.emp_nbr, z.emp_first_name, z.emp_last_name
+order by z.dept_nbr
+)as q
+on y.totalcomp = q.totalcomp;
+select y.totalcomp, y.dep_no, q.emp_nbr, concat(q.emp_first_name, ' ', q.emp_last_name) as emp_name
+from 
+(select max(tsum) as totalcomp, z.dep_no
+from
+(select x.e_num, x.dep_no, max(x.totalsum) as tsum, x.comp_year
+from 
+(select b.bonus_year as comp_year, e.emp_nbr as e_num, e.dept_nbr as dep_no, e.salary, b.total, (e.salary + b.total) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year as bonus_year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total, b.bonus_year
+) as x 
+group by x.dep_no, x.e_num, x.totalsum, x.comp_year
+order by totalsum desc) as z
+group by z.dep_no
+order by z.dep_no) as y
+
+inner join 
+(
+select max(tsum) as totalcomp, z.dept_nbr, z.emp_nbr, z.emp_first_name, z.emp_last_name
+from
+(select x.emp_nbr, x.emp_first_name, x.emp_last_name, x.dept_nbr, max(x.total_2023_comp) as tsum, x.bonus_yr
+from
+(select e.emp_nbr, e.emp_first_name, e.emp_last_name, e.dept_nbr,e.salary + coalesce(sum(b.bonus_amt), 0) as total_2023_comp, date_part('year', bonus_date) as bonus_yr 
+from employee as e
+left join 
+(select * from salary_bonus
+where extract(year from bonus_date) = '2023') as b
+on e.emp_nbr = b.emp_nbr
+group by e.emp_nbr, bonus_yr, e.dept_nbr, e.emp_first_name, e.emp_last_name
+order by e.emp_nbr) as x
+group by x.dept_nbr, x.emp_nbr, x.total_2023_comp, x.bonus_yr, x.emp_first_name, x.emp_last_name
+order by total_2023_comp desc) as z
+group by z.dept_nbr, z.emp_nbr, z.emp_first_name, z.emp_last_name
+order by z.dept_nbr
+)as q
+on y.totalcomp = q.totalcomp;
+select max(tsum) as totalcomp, z.dep_no
+from
+(select x.e_num, x.dep_no, max(x.totalsum) as tsum, x.comp_year
+from 
+(select b.bonus_year as comp_year, e.emp_nbr as e_num, e.dept_nbr as dep_no, e.salary, b.total, (e.salary + b.total) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year as bonus_year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total, b.bonus_year
+) as x 
+group by x.dep_no, x.e_num, x.totalsum, x.comp_year
+order by totalsum desc) as z
+group by z.dep_no
+order by z.dep_no;
+select e.emp_nbr, e.emp_first_name, e.emp_last_name, e.dept_nbr,e.salary + coalesce(sum(b.bonus_amt), 0) as total_2023_comp, date_part('year', bonus_date) as bonus_yr 
+from employee as e
+left join 
+(select * from salary_bonus
+where extract(year from bonus_date) = '2023') as b
+on e.emp_nbr = b.emp_nbr
+group by e.emp_nbr, bonus_yr, e.dept_nbr, e.emp_first_name, e.emp_last_name
+order by e.emp_nbr;
+select x.emp_nbr, x.emp_first_name, x.emp_last_name, x.dept_nbr, x.salary,  max(x.total_2023_comp) as tsum, x.bonus_yr
+from 
+(
+
+select e.emp_nbr, e.emp_first_name, e.emp_last_name, e.dept_nbr,e.salary + coalesce(sum(b.bonus_amt), 0) as total_2023_comp, date_part('year', bonus_date) as bonus_yr 
+from employee as e
+left join 
+(select * from salary_bonus
+where extract(year from bonus_date) = '2023') as b
+on e.emp_nbr = b.emp_nbr
+group by e.emp_nbr, bonus_yr, e.dept_nbr, e.emp_first_name, e.emp_last_name
+order by e.emp_nbr
+
+) as x 
+group by x.dep_no, x.e_num, x.totalsum, x.comp_year, x.emp_first_name, x.emp_last_name
+order by totalsum desc;
+select x.emp_nbr, x.emp_first_name, x.emp_last_name, x.dept_nbr,  max(x.total_2023_comp) as tsum, x.bonus_yr
+from 
+(
+
+select e.emp_nbr, e.emp_first_name, e.emp_last_name, e.dept_nbr,e.salary + coalesce(sum(b.bonus_amt), 0) as total_2023_comp, date_part('year', bonus_date) as bonus_yr 
+from employee as e
+left join 
+(select * from salary_bonus
+where extract(year from bonus_date) = '2023') as b
+on e.emp_nbr = b.emp_nbr
+group by e.emp_nbr, bonus_yr, e.dept_nbr, e.emp_first_name, e.emp_last_name
+order by e.emp_nbr
+
+) as x 
+group by x.dep_no, x.e_num, x.totalsum, x.comp_year, x.emp_first_name, x.emp_last_name
+order by totalsum desc
+;
+select x.emp_nbr, x.emp_first_name, x.emp_last_name, x.dept_nbr,  max(x.total_2023_comp) as tsum, x.bonus_yr
+from 
+(
+
+select e.emp_nbr, e.emp_first_name, e.emp_last_name, e.dept_nbr,e.salary + coalesce(sum(b.bonus_amt), 0) as total_2023_comp, date_part('year', bonus_date) as bonus_yr 
+from employee as e
+left join 
+(select * from salary_bonus
+where extract(year from bonus_date) = '2023') as b
+on e.emp_nbr = b.emp_nbr
+group by e.emp_nbr, bonus_yr, e.dept_nbr, e.emp_first_name, e.emp_last_name
+order by e.emp_nbr
+
+) as x 
+group by x.dep_no, x.e_num, x.totalsum, x.comp_year, x.emp_first_name, x.emp_last_name
+order by total_2023_comp desc;
+select x.emp_nbr, x.emp_first_name, x.emp_last_name, x.dept_nbr,  max(x.total_2023_comp) as tsum, x.bonus_yr
+from 
+(
+
+select e.emp_nbr, e.emp_first_name, e.emp_last_name, e.dept_nbr,e.salary + coalesce(sum(b.bonus_amt), 0) as total_2023_comp, date_part('year', bonus_date) as bonus_yr 
+from employee as e
+left join 
+(select * from salary_bonus
+where extract(year from bonus_date) = '2023') as b
+on e.emp_nbr = b.emp_nbr
+group by e.emp_nbr, bonus_yr, e.dept_nbr, e.emp_first_name, e.emp_last_name
+order by e.emp_nbr
+
+) as x 
+group by x.dept_nbr, x.emp_nbr, x.total_2023_comp, x.bonus_yr, x.emp_first_name, x.emp_last_name
+order by total_2023_comp desc;
+select x.emp_nbr, x.emp_first_name, x.emp_last_name, x.dept_nbr,  max(x.total_2023_comp) as max_comp, x.bonus_yr
+from 
+(
+
+select e.emp_nbr, e.emp_first_name, e.emp_last_name, e.dept_nbr,e.salary + coalesce(sum(b.bonus_amt), 0) as total_2023_comp, date_part('year', bonus_date) as bonus_yr 
+from employee as e
+left join 
+(select * from salary_bonus
+where extract(year from bonus_date) = '2023') as b
+on e.emp_nbr = b.emp_nbr
+group by e.emp_nbr, bonus_yr, e.dept_nbr, e.emp_first_name, e.emp_last_name
+order by e.emp_nbr
+
+) as x 
+group by x.dept_nbr, x.emp_nbr, x.total_2023_comp, x.bonus_yr, x.emp_first_name, x.emp_last_name
+order by max_comp desc;
+select max(max_comp) as totalcomp, z.dept_nbr
+from
+(select x.emp_nbr, x.emp_first_name, x.emp_last_name, x.dept_nbr,  max(x.total_2023_comp) as max_comp, x.bonus_yr
+from 
+(
+select e.emp_nbr, e.emp_first_name, e.emp_last_name, e.dept_nbr,e.salary + coalesce(sum(b.bonus_amt), 0) as total_2023_comp, date_part('year', bonus_date) as bonus_yr 
+from employee as e
+left join 
+(select * from salary_bonus
+where extract(year from bonus_date) = '2023') as b
+on e.emp_nbr = b.emp_nbr
+group by e.emp_nbr, bonus_yr, e.dept_nbr, e.emp_first_name, e.emp_last_name
+order by e.emp_nbr
+
+) as x 
+group by x.dept_nbr, x.emp_nbr, x.total_2023_comp, x.bonus_yr, x.emp_first_name, x.emp_last_name
+order by max_comp desc) as z
+group by z.dept_nbr
+order by z.dept_nbr;
+select z.max_comp, z.dept_nbr
+from
+(select x.emp_nbr, x.emp_first_name, x.emp_last_name, x.dept_nbr,  max(x.total_2023_comp) as max_comp, x.bonus_yr
+from 
+(
+select e.emp_nbr, e.emp_first_name, e.emp_last_name, e.dept_nbr,e.salary + coalesce(sum(b.bonus_amt), 0) as total_2023_comp, date_part('year', bonus_date) as bonus_yr 
+from employee as e
+left join 
+(select * from salary_bonus
+where extract(year from bonus_date) = '2023') as b
+on e.emp_nbr = b.emp_nbr
+group by e.emp_nbr, bonus_yr, e.dept_nbr, e.emp_first_name, e.emp_last_name
+order by e.emp_nbr
+
+) as x 
+group by x.dept_nbr, x.emp_nbr, x.total_2023_comp, x.bonus_yr, x.emp_first_name, x.emp_last_name
+order by max_comp desc) as z
+group by z.dept_nbr
+order by z.dept_nbr;
+select z.max_comp, z.dept_nbr
+from
+(select x.emp_nbr, x.emp_first_name, x.emp_last_name, x.dept_nbr,  max(x.total_2023_comp) as max_comp, x.bonus_yr
+from 
+(
+select e.emp_nbr, e.emp_first_name, e.emp_last_name, e.dept_nbr,e.salary + coalesce(sum(b.bonus_amt), 0) as total_2023_comp, date_part('year', bonus_date) as bonus_yr 
+from employee as e
+left join 
+(select * from salary_bonus
+where extract(year from bonus_date) = '2023') as b
+on e.emp_nbr = b.emp_nbr
+group by e.emp_nbr, bonus_yr, e.dept_nbr, e.emp_first_name, e.emp_last_name
+order by e.emp_nbr
+
+) as x 
+group by x.dept_nbr, x.emp_nbr, x.total_2023_comp, x.bonus_yr, x.emp_first_name, x.emp_last_name
+order by max_comp desc) as z
+group by z.dept_nbr, z.max_comp
+order by z.dept_nbr;
+select max(max_comp) as totalcomp, z.dept_nbr
+from
+(select x.emp_nbr, x.emp_first_name, x.emp_last_name, x.dept_nbr,  x.total_2023_comp as max_comp, x.bonus_yr
+from 
+(
+select e.emp_nbr, e.emp_first_name, e.emp_last_name, e.dept_nbr,e.salary + coalesce(sum(b.bonus_amt), 0) as total_2023_comp, date_part('year', bonus_date) as bonus_yr 
+from employee as e
+left join 
+(select * from salary_bonus
+where extract(year from bonus_date) = '2023') as b
+on e.emp_nbr = b.emp_nbr
+group by e.emp_nbr, bonus_yr, e.dept_nbr, e.emp_first_name, e.emp_last_name
+order by e.emp_nbr
+
+) as x 
+group by x.dept_nbr, x.emp_nbr, x.total_2023_comp, x.bonus_yr, x.emp_first_name, x.emp_last_name
+order by max_comp desc) as z
+group by z.dept_nbr
+order by z.dept_nbr;
+select max(z.total_2023_comp) as max_comp, z.dept_nbr
+from
+(select x.emp_nbr, x.emp_first_name, x.emp_last_name, x.dept_nbr,  x.total_2023_comp, x.bonus_yr
+from 
+(
+select e.emp_nbr, e.emp_first_name, e.emp_last_name, e.dept_nbr,e.salary + coalesce(sum(b.bonus_amt), 0) as total_2023_comp, date_part('year', bonus_date) as bonus_yr 
+from employee as e
+left join 
+(select * from salary_bonus
+where extract(year from bonus_date) = '2023') as b
+on e.emp_nbr = b.emp_nbr
+group by e.emp_nbr, bonus_yr, e.dept_nbr, e.emp_first_name, e.emp_last_name
+order by e.emp_nbr
+
+) as x 
+group by x.dept_nbr, x.emp_nbr, x.total_2023_comp, x.bonus_yr, x.emp_first_name, x.emp_last_name
+order by max_comp desc) as z
+group by z.dept_nbr
+order by z.dept_nbr;
+select max(z.total_2023_comp) as max_comp, z.dept_nbr
+from
+(select x.emp_nbr, x.emp_first_name, x.emp_last_name, x.dept_nbr,  x.total_2023_comp, x.bonus_yr
+from 
+(
+select e.emp_nbr, e.emp_first_name, e.emp_last_name, e.dept_nbr,e.salary + coalesce(sum(b.bonus_amt), 0) as total_2023_comp, date_part('year', bonus_date) as bonus_yr 
+from employee as e
+left join 
+(select * from salary_bonus
+where extract(year from bonus_date) = '2023') as b
+on e.emp_nbr = b.emp_nbr
+group by e.emp_nbr, bonus_yr, e.dept_nbr, e.emp_first_name, e.emp_last_name
+order by e.emp_nbr
+
+) as x 
+group by x.dept_nbr, x.emp_nbr, x.total_2023_comp, x.bonus_yr, x.emp_first_name, x.emp_last_name
+order by x.total_2023_comp desc) as z
+group by z.dept_nbr
+order by z.dept_nbr;
+select y.totalcomp, y.dep_no, q.emp_nbr, concat(q.emp_first_name, ' ', q.emp_last_name) as emp_name
+from 
+(select max(z.total_2023_comp) as max_comp, z.dept_nbr
+from
+(select x.emp_nbr, x.emp_first_name, x.emp_last_name, x.dept_nbr,  x.total_2023_comp, x.bonus_yr
+from 
+(
+select e.emp_nbr, e.emp_first_name, e.emp_last_name, e.dept_nbr,e.salary + coalesce(sum(b.bonus_amt), 0) as total_2023_comp, date_part('year', bonus_date) as bonus_yr 
+from employee as e
+left join 
+(select * from salary_bonus
+where extract(year from bonus_date) = '2023') as b
+on e.emp_nbr = b.emp_nbr
+group by e.emp_nbr, bonus_yr, e.dept_nbr, e.emp_first_name, e.emp_last_name
+order by e.emp_nbr
+) as x 
+group by x.dept_nbr, x.emp_nbr, x.total_2023_comp, x.bonus_yr, x.emp_first_name, x.emp_last_name
+order by x.total_2023_comp desc) as z
+group by z.dept_nbr
+order by z.dept_nbr) as y
+
+inner join 
+
+(select max(tsum)as totalcomp, z.dep_no, z.e_num
+from
+(select x.e_num, x.dep_no, max(x.totalsum) as tsum, x.comp_year
+from 
+(select b.bonus_year as comp_year, e.emp_nbr as e_num, e.dept_nbr as dep_no, e.salary, b.total, (e.salary + b.total) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year as bonus_year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total, b.bonus_year
+) as x 
+group by x.dep_no, x.e_num, x.totalsum, x.comp_year
+order by totalsum desc) as z
+group by z.dep_no, z.e_num
+order by z.dep_no) as q
+on y.totalcomp = q.totalcomp;
+select y.max_comp, y.dept_nbr, q.emp_nbr, concat(q.emp_first_name, ' ', q.emp_last_name) as emp_name
+from 
+(select max(z.total_2023_comp) as max_comp, z.dept_nbr
+from
+(select x.emp_nbr, x.emp_first_name, x.emp_last_name, x.dept_nbr,  x.total_2023_comp, x.bonus_yr
+from 
+(
+select e.emp_nbr, e.emp_first_name, e.emp_last_name, e.dept_nbr,e.salary + coalesce(sum(b.bonus_amt), 0) as total_2023_comp, date_part('year', bonus_date) as bonus_yr 
+from employee as e
+left join 
+(select * from salary_bonus
+where extract(year from bonus_date) = '2023') as b
+on e.emp_nbr = b.emp_nbr
+group by e.emp_nbr, bonus_yr, e.dept_nbr, e.emp_first_name, e.emp_last_name
+order by e.emp_nbr
+) as x 
+group by x.dept_nbr, x.emp_nbr, x.total_2023_comp, x.bonus_yr, x.emp_first_name, x.emp_last_name
+order by x.total_2023_comp desc) as z
+group by z.dept_nbr
+order by z.dept_nbr) as y
+
+inner join 
+
+(select max(tsum)as totalcomp, z.dep_no, z.e_num
+from
+(select x.e_num, x.dep_no, max(x.totalsum) as tsum, x.comp_year
+from 
+(select b.bonus_year as comp_year, e.emp_nbr as e_num, e.dept_nbr as dep_no, e.salary, b.total, (e.salary + b.total) as totalsum
+from employee as e
+inner join 
+(select a.emp_nbr as enum, a.year as bonus_year, a.total from
+(select emp_nbr, date_part('year', bonus_date)as year, sum(bonus_amt) as total 
+from salary_bonus
+group by date_part('year', bonus_date), emp_nbr
+order by emp_nbr, year) as a
+where a.year = '2023') as b on e.emp_nbr = b.enum
+group by e.dept_nbr, e.emp_nbr, b.total, b.bonus_year
+) as x 
+group by x.dep_no, x.e_num, x.totalsum, x.comp_year
+order by totalsum desc) as z
+group by z.dep_no, z.e_num
+order by z.dep_no) as q
+on y.max_comp = q.totalcomp;
+select y.max_comp, y.dept_nbr, q.emp_nbr, concat(q.emp_first_name, ' ', q.emp_last_name) as emp_name
+from 
+(select max(z.total_2023_comp) as max_comp, z.dept_nbr
+from
+(select x.emp_nbr, x.emp_first_name, x.emp_last_name, x.dept_nbr,  x.total_2023_comp, x.bonus_yr
+from 
+(
+select e.emp_nbr, e.emp_first_name, e.emp_last_name, e.dept_nbr,e.salary + coalesce(sum(b.bonus_amt), 0) as total_2023_comp, date_part('year', bonus_date) as bonus_yr 
+from employee as e
+left join 
+(select * from salary_bonus
+where extract(year from bonus_date) = '2023') as b
+on e.emp_nbr = b.emp_nbr
+group by e.emp_nbr, bonus_yr, e.dept_nbr, e.emp_first_name, e.emp_last_name
+order by e.emp_nbr
+) as x 
+group by x.dept_nbr, x.emp_nbr, x.total_2023_comp, x.bonus_yr, x.emp_first_name, x.emp_last_name
+order by x.total_2023_comp desc) as z
+group by z.dept_nbr
+order by z.dept_nbr) as y
+
+inner join 
+(
+select max(tsum) as totalcomp, z.dept_nbr, z.emp_nbr, z.emp_first_name, z.emp_last_name
+from
+(select x.emp_nbr, x.emp_first_name, x.emp_last_name, x.dept_nbr, max(x.total_2023_comp) as tsum, x.bonus_yr
+from
+(select e.emp_nbr, e.emp_first_name, e.emp_last_name, e.dept_nbr,e.salary + coalesce(sum(b.bonus_amt), 0) as total_2023_comp, date_part('year', bonus_date) as bonus_yr 
+from employee as e
+left join 
+(select * from salary_bonus
+where extract(year from bonus_date) = '2023') as b
+on e.emp_nbr = b.emp_nbr
+group by e.emp_nbr, bonus_yr, e.dept_nbr, e.emp_first_name, e.emp_last_name
+order by e.emp_nbr) as x
+group by x.dept_nbr, x.emp_nbr, x.total_2023_comp, x.bonus_yr, x.emp_first_name, x.emp_last_name
+order by total_2023_comp desc) as z
+group by z.dept_nbr, z.emp_nbr, z.emp_first_name, z.emp_last_name
+order by z.dept_nbr
+)as q
+on y.totalcomp = q.totalcomp;
+select y.max_comp, y.dept_nbr, q.emp_nbr, concat(q.emp_first_name, ' ', q.emp_last_name) as emp_name
+from 
+(select max(z.total_2023_comp) as max_comp, z.dept_nbr
+from
+(select x.emp_nbr, x.emp_first_name, x.emp_last_name, x.dept_nbr,  x.total_2023_comp, x.bonus_yr
+from 
+(
+select e.emp_nbr, e.emp_first_name, e.emp_last_name, e.dept_nbr,e.salary + coalesce(sum(b.bonus_amt), 0) as total_2023_comp, date_part('year', bonus_date) as bonus_yr 
+from employee as e
+left join 
+(select * from salary_bonus
+where extract(year from bonus_date) = '2023') as b
+on e.emp_nbr = b.emp_nbr
+group by e.emp_nbr, bonus_yr, e.dept_nbr, e.emp_first_name, e.emp_last_name
+order by e.emp_nbr
+) as x 
+group by x.dept_nbr, x.emp_nbr, x.total_2023_comp, x.bonus_yr, x.emp_first_name, x.emp_last_name
+order by x.total_2023_comp desc) as z
+group by z.dept_nbr
+order by z.dept_nbr) as y
+
+inner join 
+(
+select max(tsum) as totalcomp, z.dept_nbr, z.emp_nbr, z.emp_first_name, z.emp_last_name
+from
+(select x.emp_nbr, x.emp_first_name, x.emp_last_name, x.dept_nbr, max(x.total_2023_comp) as tsum, x.bonus_yr
+from
+(select e.emp_nbr, e.emp_first_name, e.emp_last_name, e.dept_nbr,e.salary + coalesce(sum(b.bonus_amt), 0) as total_2023_comp, date_part('year', bonus_date) as bonus_yr 
+from employee as e
+left join 
+(select * from salary_bonus
+where extract(year from bonus_date) = '2023') as b
+on e.emp_nbr = b.emp_nbr
+group by e.emp_nbr, bonus_yr, e.dept_nbr, e.emp_first_name, e.emp_last_name
+order by e.emp_nbr) as x
+group by x.dept_nbr, x.emp_nbr, x.total_2023_comp, x.bonus_yr, x.emp_first_name, x.emp_last_name
+order by total_2023_comp desc) as z
+group by z.dept_nbr, z.emp_nbr, z.emp_first_name, z.emp_last_name
+order by z.dept_nbr
+)as q
+on y.max_comp = q.totalcomp;
+select max(z.total_2023_comp) as max_comp, z.dept_nbr, z.emp_nbr, z.emp_first_name, z.emp_last_name
+from
+(select x.emp_nbr, x.emp_first_name, x.emp_last_name, x.dept_nbr, x.total_2023_comp, x.bonus_yr
+from
+(select e.emp_nbr, e.emp_first_name, e.emp_last_name, e.dept_nbr,e.salary + coalesce(sum(b.bonus_amt), 0) as total_2023_comp, date_part('year', bonus_date) as bonus_yr 
+from employee as e
+left join 
+(select * from salary_bonus
+where extract(year from bonus_date) = '2023') as b
+on e.emp_nbr = b.emp_nbr
+group by e.emp_nbr, bonus_yr, e.dept_nbr, e.emp_first_name, e.emp_last_name
+order by e.emp_nbr) as x
+group by x.dept_nbr, x.emp_nbr, x.total_2023_comp, x.bonus_yr, x.emp_first_name, x.emp_last_name
+order by total_2023_comp desc) as z
+group by z.dept_nbr, z.emp_nbr, z.emp_first_name, z.emp_last_name
+order by z.dept_nbr;
+select y.max_comp, y.dept_nbr, q.emp_nbr, concat(q.emp_first_name, ' ', q.emp_last_name) as top_earner
+from 
+(select max(z.total_2023_comp) as max_comp, z.dept_nbr
+from
+(select x.emp_nbr, x.emp_first_name, x.emp_last_name, x.dept_nbr,  x.total_2023_comp, x.bonus_yr
+from 
+(
+select e.emp_nbr, e.emp_first_name, e.emp_last_name, e.dept_nbr,e.salary + coalesce(sum(b.bonus_amt), 0) as total_2023_comp, date_part('year', bonus_date) as bonus_yr 
+from employee as e
+left join 
+(select * from salary_bonus
+where extract(year from bonus_date) = '2023') as b
+on e.emp_nbr = b.emp_nbr
+group by e.emp_nbr, bonus_yr, e.dept_nbr, e.emp_first_name, e.emp_last_name
+order by e.emp_nbr
+) as x 
+group by x.dept_nbr, x.emp_nbr, x.total_2023_comp, x.bonus_yr, x.emp_first_name, x.emp_last_name
+order by x.total_2023_comp desc) as z
+group by z.dept_nbr
+order by z.dept_nbr) as y
+
+inner join 
+(
+select max(z.total_2023_comp) as max_comp, z.dept_nbr, z.emp_nbr, z.emp_first_name, z.emp_last_name
+from
+(select x.emp_nbr, x.emp_first_name, x.emp_last_name, x.dept_nbr, x.total_2023_comp, x.bonus_yr
+from
+(select e.emp_nbr, e.emp_first_name, e.emp_last_name, e.dept_nbr,e.salary + coalesce(sum(b.bonus_amt), 0) as total_2023_comp, date_part('year', bonus_date) as bonus_yr 
+from employee as e
+left join 
+(select * from salary_bonus
+where extract(year from bonus_date) = '2023') as b
+on e.emp_nbr = b.emp_nbr
+group by e.emp_nbr, bonus_yr, e.dept_nbr, e.emp_first_name, e.emp_last_name
+order by e.emp_nbr) as x
+group by x.dept_nbr, x.emp_nbr, x.total_2023_comp, x.bonus_yr, x.emp_first_name, x.emp_last_name
+order by total_2023_comp desc) as z
+group by z.dept_nbr, z.emp_nbr, z.emp_first_name, z.emp_last_name
+order by z.dept_nbr
+)as q
+on y.max_comp = q.totalcomp;
+select y.max_comp, y.dept_nbr, q.emp_nbr, concat(q.emp_first_name, ' ', q.emp_last_name) as top_earner
+from 
+(select max(z.total_2023_comp) as max_comp, z.dept_nbr
+from
+(select x.emp_nbr, x.emp_first_name, x.emp_last_name, x.dept_nbr,  x.total_2023_comp, x.bonus_yr
+from 
+(
+select e.emp_nbr, e.emp_first_name, e.emp_last_name, e.dept_nbr,e.salary + coalesce(sum(b.bonus_amt), 0) as total_2023_comp, date_part('year', bonus_date) as bonus_yr 
+from employee as e
+left join 
+(select * from salary_bonus
+where extract(year from bonus_date) = '2023') as b
+on e.emp_nbr = b.emp_nbr
+group by e.emp_nbr, bonus_yr, e.dept_nbr, e.emp_first_name, e.emp_last_name
+order by e.emp_nbr
+) as x 
+group by x.dept_nbr, x.emp_nbr, x.total_2023_comp, x.bonus_yr, x.emp_first_name, x.emp_last_name
+order by x.total_2023_comp desc) as z
+group by z.dept_nbr
+order by z.dept_nbr) as y
+
+inner join 
+(
+select max(z.total_2023_comp) as max_comp, z.dept_nbr, z.emp_nbr, z.emp_first_name, z.emp_last_name
+from
+(select x.emp_nbr, x.emp_first_name, x.emp_last_name, x.dept_nbr, x.total_2023_comp, x.bonus_yr
+from
+(select e.emp_nbr, e.emp_first_name, e.emp_last_name, e.dept_nbr,e.salary + coalesce(sum(b.bonus_amt), 0) as total_2023_comp, date_part('year', bonus_date) as bonus_yr 
+from employee as e
+left join 
+(select * from salary_bonus
+where extract(year from bonus_date) = '2023') as b
+on e.emp_nbr = b.emp_nbr
+group by e.emp_nbr, bonus_yr, e.dept_nbr, e.emp_first_name, e.emp_last_name
+order by e.emp_nbr) as x
+group by x.dept_nbr, x.emp_nbr, x.total_2023_comp, x.bonus_yr, x.emp_first_name, x.emp_last_name
+order by total_2023_comp desc) as z
+group by z.dept_nbr, z.emp_nbr, z.emp_first_name, z.emp_last_name
+order by z.dept_nbr
+)as q
+on y.max_comp = q.max_comp;
+select y.max_comp, y.dept_nbr, q.emp_nbr, concat(q.emp_first_name, ' ', q.emp_last_name) as top_earner
+from 
+(select max(z.total_2023_comp) as max_comp, z.dept_nbr
+from
+(select x.emp_nbr, x.emp_first_name, x.emp_last_name, x.dept_nbr,  x.total_2023_comp, x.bonus_yr
+from 
+(select e.emp_nbr, e.emp_first_name, e.emp_last_name, e.dept_nbr,e.salary + coalesce(sum(b.bonus_amt), 0) as total_2023_comp, date_part('year', bonus_date) as bonus_yr 
+from employee as e
+left join 
+(select * from salary_bonus
+where extract(year from bonus_date) = '2023') as b
+on e.emp_nbr = b.emp_nbr
+group by e.emp_nbr, bonus_yr, e.dept_nbr, e.emp_first_name, e.emp_last_name
+order by e.emp_nbr) as x 
+group by x.dept_nbr, x.emp_nbr, x.total_2023_comp, x.bonus_yr, x.emp_first_name, x.emp_last_name
+order by x.total_2023_comp desc) as z
+group by z.dept_nbr
+order by z.dept_nbr) as y
+
+inner join 
+
+(select max(z.total_2023_comp) as max_comp, z.dept_nbr, z.emp_nbr, z.emp_first_name, z.emp_last_name
+from
+(select x.emp_nbr, x.emp_first_name, x.emp_last_name, x.dept_nbr, x.total_2023_comp, x.bonus_yr
+from
+(select e.emp_nbr, e.emp_first_name, e.emp_last_name, e.dept_nbr,e.salary + coalesce(sum(b.bonus_amt), 0) as total_2023_comp, date_part('year', bonus_date) as bonus_yr 
+from employee as e
+left join 
+(select * from salary_bonus
+where extract(year from bonus_date) = '2023') as b
+on e.emp_nbr = b.emp_nbr
+group by e.emp_nbr, bonus_yr, e.dept_nbr, e.emp_first_name, e.emp_last_name
+order by e.emp_nbr) as x
+group by x.dept_nbr, x.emp_nbr, x.total_2023_comp, x.bonus_yr, x.emp_first_name, x.emp_last_name
+order by total_2023_comp desc) as z
+group by z.dept_nbr, z.emp_nbr, z.emp_first_name, z.emp_last_name
+order by z.dept_nbr
+)as q
+on y.max_comp = q.max_comp;
+select y.max_comp, y.dept_nbr, q.emp_nbr, concat(q.emp_first_name, ' ', q.emp_last_name) as top_earner
+from 
+(select max(z.total_2023_comp) as max_comp, z.dept_nbr
+from
+(select x.emp_nbr, x.emp_first_name, x.emp_last_name, x.dept_nbr,  x.total_2023_comp, x.bonus_yr
+from 
+(select e.emp_nbr, e.emp_first_name, e.emp_last_name, e.dept_nbr,e.salary + coalesce(sum(b.bonus_amt), 0) as total_2023_comp, date_part('year', bonus_date) as bonus_yr 
+from employee as e
+left join 
+(select * from salary_bonus
+where extract(year from bonus_date) = '2023') as b
+on e.emp_nbr = b.emp_nbr
+group by e.emp_nbr, bonus_yr, e.dept_nbr, e.emp_first_name, e.emp_last_name
+order by e.emp_nbr) as x 
+group by x.dept_nbr, x.emp_nbr, x.total_2023_comp, x.bonus_yr, x.emp_first_name, x.emp_last_name
+order by x.total_2023_comp desc) as z
+group by z.dept_nbr
+order by z.dept_nbr) as y
+inner join 
+(select max(z.total_2023_comp) as max_comp, z.dept_nbr, z.emp_nbr, z.emp_first_name, z.emp_last_name
+from
+(select x.emp_nbr, x.emp_first_name, x.emp_last_name, x.dept_nbr, x.total_2023_comp, x.bonus_yr
+from
+(select e.emp_nbr, e.emp_first_name, e.emp_last_name, e.dept_nbr,e.salary + coalesce(sum(b.bonus_amt), 0) as total_2023_comp, date_part('year', bonus_date) as bonus_yr 
+from employee as e
+left join 
+(select * from salary_bonus
+where extract(year from bonus_date) = '2023') as b
+on e.emp_nbr = b.emp_nbr
+group by e.emp_nbr, bonus_yr, e.dept_nbr, e.emp_first_name, e.emp_last_name
+order by e.emp_nbr) as x
+group by x.dept_nbr, x.emp_nbr, x.total_2023_comp, x.bonus_yr, x.emp_first_name, x.emp_last_name
+order by total_2023_comp desc) as z
+group by z.dept_nbr, z.emp_nbr, z.emp_first_name, z.emp_last_name
+order by z.dept_nbr
+)as q
+on y.max_comp = q.max_comp;
+select * from employee;
+\d
+select * from department;
+select * 
+from employee as e
+inner join department as d on e.dept_nbr = d.dept_nbr; 
+select e.emp_first_name, e.emp_last_name, e.dept_nbr, d.dept_location
+from employee as e
+inner join department as d on e.dept_nbr = d.dept_nbr; 
+select * from salary_bonus;
+select f.emp_nbr, f.emp_first_name, f.emp_last_name f.dept_nbr, f.dept_location, s.bonus_amt
+from
+(select e.emp_first_name, e.emp_last_name, e.dept_nbr, d.dept_location
+from employee as e
+inner join department as d on e.dept_nbr = d.dept_nbr)as f
+join salary_bonus as s on f.emp_nbr = s.emp_nbr;
+select f.emp_nbr, f.emp_first_name, f.emp_last_name dept_nbr, f.dept_location, s.bonus_amt
+from
+(select e.emp_first_name, e.emp_last_name, e.dept_nbr, d.dept_location
+from employee as e
+inner join department as d on e.dept_nbr = d.dept_nbr)as f
+join salary_bonus as s on f.emp_nbr = s.emp_nbr;
+select f.emp_nbr, f.emp_first_name, f.emp_last_name dept_nbr, f.dept_location, s.bonus_amt
+from
+(select e.emp_nbr,e.emp_first_name, e.emp_last_name, e.dept_nbr, d.dept_location
+from employee as e
+inner join department as d on e.dept_nbr = d.dept_nbr)as f
+join salary_bonus as s on f.emp_nbr = s.emp_nbr;
+select max(bonus_amt) from 
+(
+select f.emp_nbr, f.emp_first_name, f.emp_last_name dept_nbr, f.dept_location, s.bonus_amt
+from
+(select e.emp_nbr,e.emp_first_name, e.emp_last_name, e.dept_nbr, d.dept_location
+from employee as e
+inner join department as d on e.dept_nbr = d.dept_nbr)as f
+join salary_bonus as s on f.emp_nbr = s.emp_nbr
+) as x;
+select max(bonus_amt), x.emp_nbr, x.emp_first_name, x.emp_last_name, x.dept_nbr, x.dept_location from 
+(
+select f.emp_nbr, f.emp_first_name, f.emp_last_name dept_nbr, f.dept_location, s.bonus_amt
+from
+(select e.emp_nbr,e.emp_first_name, e.emp_last_name, e.dept_nbr, d.dept_location
+from employee as e
+inner join department as d on e.dept_nbr = d.dept_nbr)as f
+join salary_bonus as s on f.emp_nbr = s.emp_nbr
+) as x
+group by x.dept_location, x.emp_nbr, x.emp_first_name, x.emp_last_name, x.dept_nbr;
+select f.emp_nbr, f.emp_first_name, f.emp_last_name, dept_nbr, f.dept_location, s.bonus_amt
+from
+(select e.emp_nbr,e.emp_first_name, e.emp_last_name, e.dept_nbr, d.dept_location
+from employee as e
+inner join department as d on e.dept_nbr = d.dept_nbr)as f
+join salary_bonus as s on f.emp_nbr = s.emp_nbr;
+select e.emp_first_name, e.emp_last_name, e.dept_nbr, d.dept_location
+from employee as e
+inner join department as d on e.dept_nbr = d.dept_nbr; 
+
+select max(bonus_amt), x.emp_nbr, x.emp_first_name, x.emp_last_name, x.dept_nbr, x.dept_location from 
+(
+select f.emp_nbr, f.emp_first_name, f.emp_last_name, dept_nbr, f.dept_location, s.bonus_amt
+from
+(select e.emp_nbr,e.emp_first_name, e.emp_last_name, e.dept_nbr, d.dept_location
+from employee as e
+inner join department as d on e.dept_nbr = d.dept_nbr)as f
+join salary_bonus as s on f.emp_nbr = s.emp_nbr
+) as x
+group by x.dept_location, x.emp_nbr, x.emp_first_name, x.emp_last_name, x.dept_nbr;
+select f.emp_nbr, f.emp_first_name, f.emp_last_name, dept_nbr, f.dept_location, s.bonus_amt
+from
+(select e.emp_nbr,e.emp_first_name, e.emp_last_name, e.dept_nbr, d.dept_location
+from employee as e
+inner join department as d on e.dept_nbr = d.dept_nbr)as f
+join salary_bonus as s on f.emp_nbr = s.emp_nbr;
+select max(bonus_amt), x.emp_nbr, x.emp_first_name, x.emp_last_name, x.dept_nbr, x.dept_location from 
+(
+select f.emp_nbr, f.emp_first_name, f.emp_last_name, dept_nbr, f.dept_location, s.bonus_amt
+from
+(select e.emp_nbr,e.emp_first_name, e.emp_last_name, e.dept_nbr, d.dept_location
+from employee as e
+inner join department as d on e.dept_nbr = d.dept_nbr)as f
+join salary_bonus as s on f.emp_nbr = s.emp_nbr
+) as x
+group by x.dept_location, x.emp_nbr, x.emp_first_name, x.emp_last_name, x.dept_nbr;
+select max(bonus_amt), x.dept_location from 
+(
+select f.emp_nbr, f.emp_first_name, f.emp_last_name, dept_nbr, f.dept_location, s.bonus_amt
+from
+(select e.emp_nbr,e.emp_first_name, e.emp_last_name, e.dept_nbr, d.dept_location
+from employee as e
+inner join department as d on e.dept_nbr = d.dept_nbr)as f
+join salary_bonus as s on f.emp_nbr = s.emp_nbr
+) as x
+group by x.dept_location;
+select f.emp_nbr, f.emp_first_name, f.emp_last_name, dept_nbr, f.dept_location, s.bonus_amt
+from
+(select e.emp_nbr,e.emp_first_name, e.emp_last_name, e.dept_nbr, d.dept_location
+from employee as e
+inner join department as d on e.dept_nbr = d.dept_nbr)as f
+join salary_bonus as s on f.emp_nbr = s.emp_nbr;
+select a.emp_nbr, concat(a.emp_first_name, ' ', a.emp_last_name) as emp_name, b.largest_bonus, a.dept_nbr, b.dept_location
+from
+(
+select f.emp_nbr, f.emp_first_name, f.emp_last_name, dept_nbr, f.dept_location, s.bonus_amt
+from
+(select e.emp_nbr,e.emp_first_name, e.emp_last_name, e.dept_nbr, d.dept_location
+from employee as e
+inner join department as d on e.dept_nbr = d.dept_nbr)as f
+join salary_bonus as s on f.emp_nbr = s.emp_nbr
+) as a
+join
+(
+select max(bonus_amt)as largest_bonus, x.dept_location from 
+(
+select f.emp_nbr, f.emp_first_name, f.emp_last_name, dept_nbr, f.dept_location, s.bonus_amt
+from
+(select e.emp_nbr,e.emp_first_name, e.emp_last_name, e.dept_nbr, d.dept_location
+from employee as e
+inner join department as d on e.dept_nbr = d.dept_nbr)as f
+join salary_bonus as s on f.emp_nbr = s.emp_nbr
+) as x
+group by x.dept_location
+)as b
+on a.bonus_amt = b.largest_bonus;
+select a.emp_nbr, concat(a.emp_first_name, ' ', a.emp_last_name) as emp_name, b.largest_bonus, a.dept_nbr, b.dept_location
+from
+(
+select f.emp_nbr, f.emp_first_name, f.emp_last_name, dept_nbr, f.dept_location, s.bonus_amt
+from
+(select e.emp_nbr,e.emp_first_name, e.emp_last_name, e.dept_nbr, d.dept_location
+from employee as e
+inner join department as d on e.dept_nbr = d.dept_nbr)as f
+join salary_bonus as s on f.emp_nbr = s.emp_nbr
+) as a
+join
+(
+select max(bonus_amt)as largest_bonus, x.dept_location from 
+(
+select f.emp_nbr, f.emp_first_name, f.emp_last_name, dept_nbr, f.dept_location, s.bonus_amt
+from
+(select e.emp_nbr,e.emp_first_name, e.emp_last_name, e.dept_nbr, d.dept_location
+from employee as e
+inner join department as d on e.dept_nbr = d.dept_nbr)as f
+join salary_bonus as s on f.emp_nbr = s.emp_nbr
+) as x
+group by x.dept_location
+)as b
+on a.bonus_amt = b.largest_bonus;
+select * from salary_grade;
+select x.dept_nbr, x.grade_level, count(emp_nbr) as num_emps from 
+(select e.emp_nbr, e.salary, s.grade_level, e.dept_nbr
+from employee as e
+join salary_grade as s on
+(e.salary <= s.high_salary and e.salary >= s.low_salary)
+order by e.dept_nbr) as x
+group by x.dept_nbr, x.grade_level
+order by x.dept_nbr;
+select * from salary_bonus;
+select x.dept_nbr, x.grade_level, count(emp_nbr) as num_emps from 
+(select e.emp_nbr, e.salary, s.grade_level, e.dept_nbr
+from employee as e
+join salary_grade as s on
+(e.salary <= s.high_salary and e.salary >= s.low_salary)
+order by e.dept_nbr) as x
+group by x.dept_nbr, x.grade_level
+order by x.dept_nbr;
+select emp_nbr, salary 
+from employee;
+select e.emp_nbr, e.salary, b.salary_bonus 
+from employee as e
+join salary_bonus as s on e.emp_nbr = s.emp_nbr
+;
+select e.emp_nbr, e.salary, s.salary_bonus 
+from employee as e
+join salary_bonus as s on e.emp_nbr = s.emp_nbr
+;
+select e.emp_nbr, e.salary, s.bonus_amt
+from employee as e
+join salary_bonus as s on e.emp_nbr = s.emp_nbr
+;
+select * from salary_bonus;
+select e.emp_nbr, e.salary, s.grade_level, e.dept_nbr
+from employee as e
+join salary_grade as s on
+(e.salary <= s.high_salary and e.salary >= s.low_salary)
+order by e.dept_nbr;
+select e.emp_nbr, e.salary, s.grade_level, e.dept_nbr
+from employee as e
+join salary_grade as s on
+(e.salary <= s.high_salary and e.salary >= s.low_salary)
+order by s.grade_level
+l
+;
+;
+select e.emp_nbr, e.salary, s.grade_level, e.dept_nbr
+from employee as e
+join salary_grade as s on
+(e.salary <= s.high_salary and e.salary >= s.low_salary)
+order by s.grade_level;
+select e.emp_nbr, e.salary, s.bonus_amt
+from employee as e
+join salary_bonus as s on e.emp_nbr = s.emp_nbr
+;
+select e.emp_nbr, e.salary, s.grade_level, e.dept_nbr
+from employee as e
+join salary_grade as s on
+(e.salary <= s.high_salary and e.salary >= s.low_salary)
+order by s.grade_level;
+select a.emp_nbr, a.salary, a.grade_level, a.dept_nbr, b.bonus_amt
+from
+(
+select e.emp_nbr, e.salary, s.grade_level, e.dept_nbr
+from employee as e
+join salary_grade as s on
+(e.salary <= s.high_salary and e.salary >= s.low_salary)
+order by s.grade_level) as a
+join salary_bonus as b on a.emp_nbr = b.emp_nbr;
+select avg(c.bonus_amt), c.grade_level
+from
+(
+select a.emp_nbr, a.salary, a.grade_level, a.dept_nbr, b.bonus_amt
+from
+(
+select e.emp_nbr, e.salary, s.grade_level, e.dept_nbr
+from employee as e
+join salary_grade as s on
+(e.salary <= s.high_salary and e.salary >= s.low_salary)
+order by s.grade_level) as a
+join salary_bonus as b on a.emp_nbr = b.emp_nbr)
+as c 
+group by c.grade_level;
+select avg(c.bonus_amt)::decimal(10,2), c.grade_level
+from
+(
+select a.emp_nbr, a.salary, a.grade_level, a.dept_nbr, b.bonus_amt
+from
+(
+select e.emp_nbr, e.salary, s.grade_level, e.dept_nbr
+from employee as e
+join salary_grade as s on
+(e.salary <= s.high_salary and e.salary >= s.low_salary)
+order by s.grade_level) as a
+join salary_bonus as b on a.emp_nbr = b.emp_nbr)
+as c 
+group by c.grade_level;
+select avg(c.bonus_amt)::decimal(10,2)as avg_bonus, c.grade_level
+from
+(
+select a.emp_nbr, a.salary, a.grade_level, a.dept_nbr, b.bonus_amt
+from
+(
+select e.emp_nbr, e.salary, s.grade_level, e.dept_nbr
+from employee as e
+join salary_grade as s on
+(e.salary <= s.high_salary and e.salary >= s.low_salary)
+order by s.grade_level) as a
+join salary_bonus as b on a.emp_nbr = b.emp_nbr)
+as c 
+group by c.grade_level;
+select a.emp_nbr, a.salary, a.grade_level, a.dept_nbr, b.bonus_amt
+from
+(
+select e.emp_nbr, e.salary, s.grade_level, e.dept_nbr
+from employee as e
+join salary_grade as s on
+(e.salary <= s.high_salary and e.salary >= s.low_salary)
+order by s.grade_level) as a
+join salary_bonus as b on a.emp_nbr = b.emp_nbr;
+select e.emp_nbr, s.grade_level, e.dept_nbr
+from employee as e
+join salary_grade as s on
+(e.salary <= s.high_salary and e.salary >= s.low_salary)
+order by s.grade_level
+;
+select a.emp_nbr, a.grade_level, a.dept_nbr, b.bonus_amt
+from
+(
+select e.emp_nbr, s.grade_level, e.dept_nbr
+from employee as e
+join salary_grade as s on
+(e.salary <= s.high_salary and e.salary >= s.low_salary)
+order by s.grade_level) as a
+join salary_bonus as b on a.emp_nbr = b.emp_nbr;
+select x.emp_nbr, x.grade_level, x.dept_nbr, x.bonus_amt, d.dept_location
+from
+(
+select a.emp_nbr, a.grade_level, a.dept_nbr, b.bonus_amt
+from
+(
+select e.emp_nbr, s.grade_level, e.dept_nbr
+from employee as e
+join salary_grade as s on
+(e.salary <= s.high_salary and e.salary >= s.low_salary)
+order by s.grade_level) as a
+join salary_bonus as b on a.emp_nbr = b.emp_nbr) as x
+join department as d on x.emp_nbr = d.emp_nbr;
+select * from department;
+select x.emp_nbr, x.grade_level, x.dept_nbr, x.bonus_amt, d.dept_location
+from
+(
+select a.emp_nbr, a.grade_level, a.dept_nbr, b.bonus_amt
+from
+(
+select e.emp_nbr, s.grade_level, e.dept_nbr
+from employee as e
+join salary_grade as s on
+(e.salary <= s.high_salary and e.salary >= s.low_salary)
+order by s.grade_level) as a
+join salary_bonus as b on a.emp_nbr = b.emp_nbr) as x
+join department as d on x.dept_nbr = d.dept_nbr;
+select avg(c.bonus_amt)::decimal(10,2)as avg_bonus, c.grade_level, c.dept_location
+from
+(select x.emp_nbr, x.grade_level, x.dept_nbr, x.bonus_amt, d.dept_location
+from
+(
+select a.emp_nbr, a.grade_level, a.dept_nbr, b.bonus_amt
+from
+(
+select e.emp_nbr, s.grade_level, e.dept_nbr
+from employee as e
+join salary_grade as s on
+(e.salary <= s.high_salary and e.salary >= s.low_salary)
+order by s.grade_level) as a
+join salary_bonus as b on a.emp_nbr = b.emp_nbr) as x
+join department as d on x.dept_nbr = d.dept_nbr) as c
+group_by c.grade_level, c.dept_location;
+select avg(c.bonus_amt)::decimal(10,2)as avg_bonus, c.grade_level, c.dept_location
+from
+(select x.emp_nbr, x.grade_level, x.dept_nbr, x.bonus_amt, d.dept_location
+from
+(
+select a.emp_nbr, a.grade_level, a.dept_nbr, b.bonus_amt
+from
+(
+select e.emp_nbr, s.grade_level, e.dept_nbr
+from employee as e
+join salary_grade as s on
+(e.salary <= s.high_salary and e.salary >= s.low_salary)
+order by s.grade_level) as a
+join salary_bonus as b on a.emp_nbr = b.emp_nbr) as x
+join department as d on x.dept_nbr = d.dept_nbr) as c
+group by c.grade_level, c.dept_location;
+select emp_nbr, emp_first_name, emp_last_name, salary from employee
+where salary > (
+select avg(salary)::decimal(10,2) as avg_salary from employee);
+select emp_nbr, emp_first_name, emp_last_name, salary, avg(salary)::decimal(10,2) as avg_salary from employee
+where salary > (
+select avg(salary)::decimal(10,2) as avg_salary from employee);
+select emp_nbr, concat(emp_first_name, ' ', emp_last_name)as emp_name, salary, avg(salary)::decimal(10,2) as avg_salary from employee
+where salary > (
+select avg(salary)::decimal(10,2) as avg_salary from employee)
+group by emp_name, emp_nbr, salary
+;
+select emp_nbr, concat(emp_first_name, ' ', emp_last_name)as emp_name, salary from employee
+where salary > (
+select avg(salary)::decimal(10,2) as avg_salary from employee)
+group by emp_name, emp_nbr, salary
+;
+select avg(salary) from employee;
+select emp_nbr, concat(emp_first_name, ' ', emp_last_name)as emp_name, salary from employee
+where salary > (
+select avg(salary)::decimal(10,2) as avg_salary from employee)
+group by emp_name, emp_nbr, salary
+;
+select avg(salary) from employee;
+select emp_nbr, concat(e1.emp_first_name, ' ', e1.emp_last_name)as emp_name,e1.dept_nbr, e1.salary, e2.avg_salary as dept_avg
+from employee as e1
+join (select avg(salary)::decimal(10,2) as avg_salary, dept_nbr from employee
+group by dept_nbr
+order by dept_nbr)as e2 on e1.dept_nbr = e2.dept_nbr
+where e1.salary > e2.avg_salary;
+select emp_nbr, concat(e1.emp_first_name, ' ', e1.emp_last_name)as emp_name,e1.dept_nbr, e1.salary, e2.avg_salary as dept_avg
+from employee as e1
+join (select avg(salary)::decimal(10,2) as avg_salary, dept_nbr from employee
+group by dept_nbr
+order by dept_nbr)as e2 on e1.dept_nbr = e2.dept_nbr
+where e1.salary > e2.avg_salary;
+select avg(salary)::decimal(10,2) as avg_salary, dept_nbr from employee
+group by dept_nbr
+order by dept_nbr;
+SELECT dept_nbr, PERCENTILE_CONT(0.5)  WITHIN GROUP(ORDER BY salary)as median FROM employee
+group by dept_nbr
+order by median desc;
+select dept_nbr, count(distinct(emp_job_title)) as job_titles
+from employee
+group by dept_nbr;
+select x.grade_level, count(x.emp_nbr) as num_emps from
+(select e.emp_nbr, e.salary, s.grade_level
+from employee as e
+join salary_grade as s on
+(e.salary <= s.high_salary and e.salary >= s.low_salary)) as x
+group by x.grade_level;
+select x.grade_level, count(x.emp_nbr) as num_emps from
+(select e.emp_nbr, e.salary, s.grade_level
+from employee as e
+join salary_grade as s on
+(e.salary <= s.high_salary and e.salary >= s.low_salary)) as x
+group by x.grade_level
+order by x.grade_level;
+select x.dept_nbr, x.grade_level, count(emp_nbr) as num_emps from 
+(select e.emp_nbr, e.salary, s.grade_level, e.dept_nbr
+from employee as e
+join salary_grade as s on
+(e.salary <= s.high_salary and e.salary >= s.low_salary)
+order by e.dept_nbr) as x
+group by x.dept_nbr, x.grade_level
+order by x.dept_nbr;
+select date_part('year', bonus_date) as year, count(*) as num_bonuses, sum(bonus_amt) as total_money, (avg(bonus_amt))::decimal(10,2) as avg_bonus
+from salary_bonus
+group by (date_part('year', bonus_date));
+select date_part('year', bonus_date) as year, e.dept_nbr, count(b.bonus_amt) as num_bonuses
+from employee as e
+inner join salary_bonus as b on e.emp_nbr = b.emp_nbr
+group by e.dept_nbr, date_part('year', bonus_date)
+order by e.dept_nbr;
+select y.max_comp, y.dept_nbr, q.emp_nbr, concat(q.emp_first_name, ' ', q.emp_last_name) as top_earner
+from 
+(select max(z.total_2023_comp) as max_comp, z.dept_nbr
+from
+(select x.emp_nbr, x.emp_first_name, x.emp_last_name, x.dept_nbr,  x.total_2023_comp, x.bonus_yr
+from 
+(select e.emp_nbr, e.emp_first_name, e.emp_last_name, e.dept_nbr,e.salary + coalesce(sum(b.bonus_amt), 0) as total_2023_comp, date_part('year', bonus_date) as bonus_yr 
+from employee as e
+left join 
+(select * from salary_bonus
+where extract(year from bonus_date) = '2023') as b
+on e.emp_nbr = b.emp_nbr
+group by e.emp_nbr, bonus_yr, e.dept_nbr, e.emp_first_name, e.emp_last_name
+order by e.emp_nbr) as x 
+group by x.dept_nbr, x.emp_nbr, x.total_2023_comp, x.bonus_yr, x.emp_first_name, x.emp_last_name
+order by x.total_2023_comp desc) as z
+group by z.dept_nbr
+order by z.dept_nbr) as y
+inner join 
+(select max(z.total_2023_comp) as max_comp, z.dept_nbr, z.emp_nbr, z.emp_first_name, z.emp_last_name
+from
+(select x.emp_nbr, x.emp_first_name, x.emp_last_name, x.dept_nbr, x.total_2023_comp, x.bonus_yr
+from
+(select e.emp_nbr, e.emp_first_name, e.emp_last_name, e.dept_nbr,e.salary + coalesce(sum(b.bonus_amt), 0) as total_2023_comp, date_part('year', bonus_date) as bonus_yr 
+from employee as e
+left join 
+(select * from salary_bonus
+where extract(year from bonus_date) = '2023') as b
+on e.emp_nbr = b.emp_nbr
+group by e.emp_nbr, bonus_yr, e.dept_nbr, e.emp_first_name, e.emp_last_name
+order by e.emp_nbr) as x
+group by x.dept_nbr, x.emp_nbr, x.total_2023_comp, x.bonus_yr, x.emp_first_name, x.emp_last_name
+order by total_2023_comp desc) as z
+group by z.dept_nbr, z.emp_nbr, z.emp_first_name, z.emp_last_name
+order by z.dept_nbr)as q
+on y.max_comp = q.max_comp;
+select a.emp_nbr, concat(a.emp_first_name, ' ', a.emp_last_name) as emp_name, b.largest_bonus, a.dept_nbr, b.dept_location
+from
+(select f.emp_nbr, f.emp_first_name, f.emp_last_name, dept_nbr, f.dept_location, s.bonus_amt
+from
+(select e.emp_nbr,e.emp_first_name, e.emp_last_name, e.dept_nbr, d.dept_location
+from employee as e
+inner join department as d on e.dept_nbr = d.dept_nbr)as f
+join salary_bonus as s on f.emp_nbr = s.emp_nbr) as a
+join
+(select max(bonus_amt)as largest_bonus, x.dept_location from 
+(select f.emp_nbr, f.emp_first_name, f.emp_last_name, dept_nbr, f.dept_location, s.bonus_amt
+from
+(select e.emp_nbr,e.emp_first_name, e.emp_last_name, e.dept_nbr, d.dept_location
+from employee as e
+inner join department as d on e.dept_nbr = d.dept_nbr)as f
+join salary_bonus as s on f.emp_nbr = s.emp_nbr) as x
+group by x.dept_location)as b
+on a.bonus_amt = b.largest_bonus;
+select avg(c.bonus_amt)::decimal(10,2)as avg_bonus, c.grade_level
+from
+(select a.emp_nbr, a.salary, a.grade_level, a.dept_nbr, b.bonus_amt
+from
+(select e.emp_nbr, e.salary, s.grade_level, e.dept_nbr
+from employee as e
+join salary_grade as s on
+(e.salary <= s.high_salary and e.salary >= s.low_salary)
+order by s.grade_level) as a
+join salary_bonus as b on a.emp_nbr = b.emp_nbr)
+as c 
+group by c.grade_level;
+select c.grade_level, avg(c.bonus_amt)::decimal(10,2)as avg_bonus
+from
+(select a.emp_nbr, a.salary, a.grade_level, a.dept_nbr, b.bonus_amt
+from
+(select e.emp_nbr, e.salary, s.grade_level, e.dept_nbr
+from employee as e
+join salary_grade as s on
+(e.salary <= s.high_salary and e.salary >= s.low_salary)
+order by s.grade_level) as a
+join salary_bonus as b on a.emp_nbr = b.emp_nbr)
+as c 
+group by c.grade_level;
+select avg(c.bonus_amt)::decimal(10,2)as avg_bonus, c.grade_level, c.dept_location
+from
+(select x.emp_nbr, x.grade_level, x.dept_nbr, x.bonus_amt, d.dept_location
+from
+(select a.emp_nbr, a.grade_level, a.dept_nbr, b.bonus_amt
+from
+(select e.emp_nbr, s.grade_level, e.dept_nbr
+from employee as e
+join salary_grade as s on
+(e.salary <= s.high_salary and e.salary >= s.low_salary)
+order by s.grade_level) as a
+join salary_bonus as b on a.emp_nbr = b.emp_nbr) as x
+join department as d on x.dept_nbr = d.dept_nbr) as c
+group by c.grade_level, c.dept_location;
+\q
+\d
+SELECT email
+FROM test
+WHERE email !~* '^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$';
+SELECT email, COUNT(*)
+FROM test
+GROUP BY email
+HAVING COUNT(*) > 1;
+SELECT INITCAP(first_name) as ProperFirstName, 
+       INITCAP(last_name) as ProperLastName
+FROM test;
+create table "products_test"
+(
+    product_id = varchar(40) not null,
+    product_name = varchar(150) not null,
+    product_brand = varchar(40) not null,
+    product_type = varchar(40) not null,
+    primary key (product_id)
+);
+create table "products_test"
+(
+    product_id      varchar(40)      not null,
+    product_name    varchar(150)     not null,
+    product_brand   varchar(40)      not null,
+    product_type    varchar(40)      not null,
+    primary key (product_id)
+);
+\copy products_test(product_id, product_name, product_brand, product_type) from 'files/products.csv' delimiter '|' csv
+\copy products_test(product_id, product_name, product_brand, product_type) from '/Users/ppunch/Desktop/OSU/cs 340/final_project/final-project-Patrick-Punch/files/' delimiter '|' csv
+\copy products_test(product_id, product_name, product_brand, product_type) from '/Users/ppunch/Desktop/OSU/cs 340/final_project/final-project-Patrick-Punch/files/products.csv' delimiter '|' csv
+drop table products_test
+;
+create table "products_test"
+(
+    product_id      varchar(40)      not null,
+    product_name    varchar(15000)     not null,
+    product_brand   varchar(40)      not null,
+    product_type    varchar(40)      not null,
+    primary key (product_id)
+);
+\copy products_test(product_id, product_name, product_brand, product_type) from '/Users/ppunch/Desktop/OSU/cs 340/final_project/final-project-Patrick-Punch/files/products.csv' delimiter '|' csv
+drop table products_test;
+create table "products_test"
+(
+    product_id      varchar(40)      not null,
+    product_name    varchar(15000)     not null,
+    product_brand   varchar(40),
+    product_type    varchar(40),
+    primary key (product_id)
+);
+\copy products_test(product_id, product_name, product_brand, product_type) from '/Users/ppunch/Desktop/OSU/cs 340/final_project/final-project-Patrick-Punch/files/products.csv' delimiter '|' csv
+drop table products_test;
+create table "products_test"
+(
+    product_id      varchar(40),
+    product_name    varchar(15000)     not null,
+    product_brand   varchar(40),
+    product_type    varchar(40),
+    primary key (product_id)
+);
+\copy products_test(product_id, product_name, product_brand, product_type) from '/Users/ppunch/Desktop/OSU/cs 340/final_project/final-project-Patrick-Punch/files/products.csv' delimiter '|' csv
+drop table products_test;
+create table "products_test"
+(
+    product_id      varchar(40),
+    product_name    varchar(15000),
+    product_brand   varchar(40),
+    product_type    varchar(40),
+    primary key (product_id)
+);
+\copy products_test(product_id, product_name, product_brand, product_type) from '/Users/ppunch/Desktop/OSU/cs 340/final_project/final-project-Patrick-Punch/files/products.csv' delimiter '|' csv
+create table "products_test"
+(
+    product_id      varchar(40),
+    product_name    varchar(15000),
+    product_brand   varchar(40),
+    product_type    varchar(40),
+);
+\d
+drop table products_test;
+create table "products_test"
+(
+    product_id      varchar(40),
+    product_name    varchar(15000),
+    product_brand   varchar(40),
+    product_type    varchar(40),
+);
+create table "products_test"
+(
+    product_id      varchar(40),
+    product_name    varchar(15000),
+    product_brand   varchar(40),
+    product_type    varchar(40),
+    primary key (product_id)
+);
+drop table products_test;
+\copy products_test(product_id, product_name, product_brand, product_type) from '/Users/ppunch/Desktop/OSU/cs 340/final_project/final-project-Patrick-Punch/files/products.csv' delimiter '|' csv
+create table "products_test"
+(
+    product_id      varchar(40),
+    product_name    varchar(15000),
+    product_brand   varchar(40),
+    product_type    varchar(40),
+    primary key (product_id)
+);
+\copy products_test(product_id, product_name, product_brand, product_type) from '/Users/ppunch/Desktop/OSU/cs 340/final_project/final-project-Patrick-Punch/files/products.csv' delimiter '|' csv
+\q
+\d
+select * from test_usr_id_seq;
+\d
+\d products_test;
+drop table products_test;
+create table "products_test"
+(
+    product_id      varchar(40),
+    product_name    varchar(15000),
+    product_brand   varchar(40),
+    product_type    varchar(40),
+    primary key (product_name)
+);
+\copy products_test(product_id, product_name, product_brand, product_type) from '/Users/ppunch/Desktop/OSU/cs 340/final_project/final-project-Patrick-Punch/files/products.csv' delimiter '|' csv
+drop table products_test;
+create table "products_test"
+(
+    product_id      varchar(40),
+    product_name    varchar(15000),
+    product_brand   varchar(40),
+    product_type    varchar(40),
+    primary key (product_name, product_type)
+);
+\copy products_test(product_id, product_name, product_brand, product_type) from '/Users/ppunch/Desktop/OSU/cs 340/final_project/final-project-Patrick-Punch/files/products.csv' delimiter '|' csv
+select * from products_test;
+drop table products_test;
+create table "products_test"
+(
+    product_id      varchar(40),
+    product_name    varchar(15000),
+    product_brand   varchar(40),
+    product_type    varchar(40),
+    primary key (product_name, product_brand,product_type)
+);
+\copy products_test(product_id, product_name, product_brand, product_type) from '/Users/ppunch/Desktop/OSU/cs 340/final_project/final-project-Patrick-Punch/files/products.csv' delimiter '|' csv
+drop table products_test;
+create table "products_test"
+(
+    product_id      varchar(40),
+    product_name    varchar(15000),
+    product_brand   varchar(40),
+    product_type    varchar(40),
+    test_pkey      serial      not null,
+    primary key (test_pkey)
+);
+\copy products_test(product_id, product_name, product_brand, product_type) from '/Users/ppunch/Desktop/OSU/cs 340/final_project/final-project-Patrick-Punch/files/products.csv' delimiter '|' csv
+select * from products_test;
+\d
+create table services_test
+    (
+        service_id = varchar(50)
+        service_name= varchar(100)
+        service_brand = varchar(50)
+        service_catagory = varchar(50)
+        primary key(service_id)
+    );
+create table services_test
+    (
+        services_id varchar(50),
+        services_name  varchar(100),
+        services_brand varchar(50),
+        services_catagory varchar(50),
+        primary key(services_id)
+    );
+\copy services_test(services_id, services_name, services_brand, services_catagory) from '/Users/ppunch/Desktop/OSU/cs 340/final_project/final-project-Patrick-Punch/files/services.csv' delimiter ',' csv
+drop table services_test;
+create table services_test
+    (
+        services_id varchar(50),
+        services_name  varchar(100),
+        services_brand varchar(50),
+        services_catagory varchar(50),
+        test_pkey       serial      not null,
+        primary key(test_pkey)
+    );
+\copy services_test(services_id, services_name, services_brand, services_catagory) from '/Users/ppunch/Desktop/OSU/cs 340/final_project/final-project-Patrick-Punch/files/services.csv' delimiter ',' csv
+drop table services_test;
+create table services_test
+    (
+        services_id varchar(50),
+        services_name  varchar(100),
+        services_brand varchar(50),
+        services_catagory varchar(50),
+        test_pkey       serial      not null,
+        primary key(test_pkey)
+    );
+\copy services_test(services_id, services_name, services_brand, services_catagory) from 'files/services.csv' delimiter ',' csv
+\q
+\d
+create table company
+    (
+        company_id      varchar(50)     not null,
+        company_name    varchar(50),
+        contact         varchar(50),
+        phone           varchar(50),
+        company_email   varchar(100),
+        company_url     varchar(100),
+        primary key(company_id)
+    );
+create table item
+    (
+        item_id     varchar(50)     not null,
+        item_type   varchar(50),
+        item_name   varchar(50),
+        item_description varchar(1000),
+        item_price  float,
+        item_picture    bytea,
+        primary key(item_id)
+    );
+create table employee
+    (
+        emp_id         varchar(50)     not null,
+        emp_email      varchar(50),
+        emp_first_name varchar(50),
+        emp_last_name  varchar(50),
+        job_category   varchar(50),
+        salary         int,
+        street_address  varchar(100),
+        emp_city       varchar(20),
+        emp_state      varchar(15),
+        emp_zip_code   varchar(10),
+        primary key(emp_id)
+    );
+\d
+create table discount
+    (
+        discount_id     varchar(50)     not null,
+        discount_type   varchar(50),
+        discount_amount varchar(50),
+        discount_description varchar(50),
+        discount_start_date date,
+        discount_end_date   date,
+        primary key(discount_id)
+    );
+create table user_interests
+    (
+        usr_id       varchar(50)     not null,
+        usr_interest varchar(50)     not null,
+        primary key (usr_id, usr_interest),
+        foreign key (usr_id) references user(usr_id)
+    );
+\d
+create table user
+    (
+        usr_id      serial     not null,
+        usr_email       varchar(25)     not null,
+        usr_password        varchar(25),
+        usr_fname       varchar(15),
+        usr_lname       varchar(15),
+        usr_address_num       varchar(15),
+        usr_city        varchar(15),
+        usr_state       varchar(15),
+        usr_zip         varchar(12),
+        primary key (usr_id)
+    );
+create table "user"
+    (
+        usr_id      serial     not null,
+        usr_email       varchar(25)     not null,
+        usr_password        varchar(25),
+        usr_fname       varchar(15),
+        usr_lname       varchar(15),
+        usr_address_num       varchar(15),
+        usr_city        varchar(15),
+        usr_state       varchar(15),
+        usr_zip         varchar(12),
+        primary key (usr_id)
+    );
+\d
+\q
+\d
+create table services
+    (
+        services_id  varchar(50)
+        services_name  varchar(100)
+        services_brand   varchar(50)
+        services_catagory  varchar(50)
+        primary key(services_id)
+    );
+create table "services"
+    (
+        services_id  varchar(50)
+        services_name  varchar(100)
+        services_brand   varchar(50)
+        services_catagory  varchar(50)
+        primary key(services_id)
+    );
+create table service
+    (
+        service_id  varchar(50)
+        service_sname  varchar(100)
+        service_brand   varchar(50)
+        service_catagory  varchar(50)
+        primary key(service_id)
+    );
+create table user_interests
+    (
+        usr_id       varchar(50)     not null,
+        usr_interest varchar(50)     not null,
+        primary key (usr_id, usr_interest),
+        foreign key (usr_id) references user(usr_id)
+    );
+create table user_interests
+    (
+        usr_id       varchar(50)     not null,
+        usr_interest varchar(50)     not null,
+        primary key (usr_id, usr_interest),
+        foreign key (usr_id) references "user"(usr_id)
+    );
+create table user_interests
+    (
+        usr_id       varchar(50)     not null,
+        usr_interest varchar(50)     not null,
+        primary key (usr_id, usr_interest),
+        foreign key (usr_id) references user(usr_id)
+    );
+create table user_interests
+    (
+        usr_id       varchar(50)     not null,
+        usr_interest varchar(50)     not null,
+        primary key (usr_id, usr_interest),
+        foreign key (usr_id) references "user(usr_id)"
+    );
+create table user_interests
+    (
+        usr_id       varchar(50)     not null,
+        usr_interest varchar(50)     not null,
+        primary key (usr_id, usr_interest),
+        foreign key (usr_id) references "user"(usr_id)
+    );
+create table user_interests
+    (
+        usr_id      serial     not null,
+        usr_interest varchar(50)     not null,
+        primary key (usr_id, usr_interest),
+        foreign key (usr_id) references "user"(usr_id)
+    );
+\q
+\d
+create table user_item_preference
+    (
+        usr_id      serial     not null,
+        item_id      varchar(50)     not null,
+        primary key (usr_id, item_id),
+        foreign key (usr_id) references user(usr_id),
+        foreign key (item_id) references item(item_id)
+    );
+select * from user_interests;
+create table user_item_preference
+    (
+        usr_id      serial     not null,
+        item_id      varchar(50)     not null,
+        primary key (usr_id, item_id),
+        foreign key (usr_id) references user(usr_id),
+        foreign key (item_id) references item(item_id)
+    );
+create table user_item_preference
+    (
+        usr_id      serial     not null,
+        item_id      varchar(50)     not null,
+        primary key (usr_id, item_id),
+        foreign key (usr_id) references user(usr_id),
+        foreign key (item_id) references item(item_id)
+    );
+create table user_company_preference
+    (
+        usr_id      serial     not null,
+        preference_company_id   varchar(50)     not null,
+        primary key (usr_id, preference_company_id),
+        foreign key (usr_id) references user(usr_id),
+        foreign key (preference_company_id) references company(company_id)
+    );
+create table user_location_preference
+    (
+        usr_id                      serial     not null,
+        preference_location_city    varchar(20)     not null,
+        preference_location_state   varchar(15)     not null,
+        primary key(usr_id, preference_location_city, preference_location_state)
+        foreign key (usr_id) references user(usr_id)
+    );
+create table user_location_preference
+    (
+        usr_id                      serial     not null,
+        preference_location_city    varchar(20)     not null,
+        preference_location_state   varchar(15)     not null,
+        primary key(usr_id, preference_location_city, preference_location_state),
+        foreign key (usr_id) references user(usr_id)
+    );
+create table user_item_preference
+    (
+        usr_id      serial     not null,
+        item_id      varchar(50)     not null,
+        primary key (usr_id, item_id),
+        foreign key (usr_id) references (user(usr_id)),
+        foreign key (item_id) references item(item_id)
+    );
+create table user_interests
+    (
+        usr_id      serial     not null,
+        usr_interest varchar(50)     not null,
+        primary key (usr_id, usr_interest),
+        foreign key (usr_id) references "user"(usr_id)
+    );
+create table user_item_preference
+    (
+        usr_id      serial     not null,
+        item_id      varchar(50)     not null,
+        primary key (usr_id, item_id),
+        foreign key (usr_id) references "user"(usr_id),
+        foreign key (item_id) references item(item_id)
+    );
+create table user_company_preference
+    (
+        usr_id      serial     not null,
+        preference_company_id   varchar(50)     not null,
+        primary key (usr_id, preference_company_id),
+        foreign key (usr_id) references "user"(usr_id),
+        foreign key (preference_company_id) references company(company_id)
+    );
+create table user_location_preference
+    (
+        usr_id                      serial     not null,
+        preference_location_city    varchar(20)     not null,
+        preference_location_state   varchar(15)     not null,
+        primary key(usr_id, preference_location_city, preference_location_state),
+        foreign key (usr_id) references "user"(usr_id)
+    );
+create table company_location
+    (
+        company_id      varchar(50)     not null,
+        location_id     varchar(50)     not null,
+        company_address varchar(100),
+        company_city    varchar(20),
+        company_state   varchar(15),
+        company_zip     varchar(10),
+        company_pnum    varchar(15),
+        primary key(location_id),
+        foreign key(company_id) references company(company_id)
+    );
+create table company_item
+    (
+        company_id      varchar(50)     not null,
+        item_id         varchar(50)     not null,
+        discount_id     varchar(50)     not null,
+        is_discounted   boolean,
+        primary key(company_id, item_id),
+        foreign key(company_id) references company(company_id),
+        foreign key(item_id) references item(item_id),
+        foreign key(discount_id) references discount(discount_id)
+    );
+create table user_company_review
+    (
+        company_id      varchar(50)     not null,
+        usr_id          serial     not null,
+        rating_score    int,
+        comments        varchar(1000),
+        foreign key(company_id) references company(company_id),
+        foreign key (usr_id) references user(usr_id)
+    );
+create table user_company_review
+    (
+        company_id      varchar(50)     not null,
+        usr_id          serial     not null,
+        rating_score    int,
+        comments        varchar(1000),
+        foreign key(company_id) references company(company_id),
+        foreign key (usr_id) references "user"(usr_id)
+    );
+create table user_company_review
+    (
+        company_id      varchar(50)     not null,
+        usr_id          serial     not null,
+        rating_score    int,
+        comments        varchar(1000),
+        foreign key(company_id) references company(company_id),
+        foreign key (usr_id) references "user"(usr_id)
+    );
+create table user_checkin
+    (
+        checkin_id      varchar(50)     not null,
+        checkin_date    date,
+        usr_id          serial     not null,
+        company_id      varchar(50)     not null,
+        item_id         varchar(50)     not null,
+        discount_id     varchar(50)     not null,
+        primary key(checkin_id),
+        foreign key(company_id) references company(company_id),
+        foreign key(item_id) references item(item_id),
+        foreign key(discount_id) references discount(discount_id)
+    );
+create table company_transaction
+    (
+        transaction_id      varchar(50)     not null,
+        transaction_date    date,
+        charge_type         varchar(50),
+        transaction_amount  float,
+        surcharge           float,
+        total_charge        (transaction_amount + surcharge),
+        is_paid             boolean,
+        paid_date           date,
+        company_id      varchar(50)     not null,
+        primary key(transaction_id),
+        foreign key(company_id) references company(company_id)
+    );
+create table company_transaction
+    (
+        transaction_id      varchar(50)     not null,
+        transaction_date    date,
+        charge_type         varchar(50),
+        transaction_amount  float,
+        surcharge           float,
+        total_charge        (sum(transaction_amount, surcharge)),
+        is_paid             boolean,
+        paid_date           date,
+        company_id      varchar(50)     not null,
+        primary key(transaction_id),
+        foreign key(company_id) references company(company_id)
+    );
+create table company_transaction
+    (
+        transaction_id      varchar(50)     not null,
+        transaction_date    date,
+        charge_type         varchar(50),
+        transaction_amount  float,
+        surcharge           float,
+        total_charge        float GENERATED ALWAYS
+        as (total_charge + surcharge) STORED,
+        is_paid             boolean,
+        paid_date           date,
+        company_id      varchar(50)     not null,
+        primary key(transaction_id),
+        foreign key(company_id) references company(company_id)
+    );
+create table company_transaction
+    (
+        transaction_id      varchar(50)     not null,
+        transaction_date    date,
+        charge_type         varchar(50),
+        transaction_amount  float not null,
+        surcharge           float not null,
+        total_charge        float GENERATED ALWAYS
+        as (total_charge + surcharge) STORED,
+        is_paid             boolean,
+        paid_date           date,
+        company_id      varchar(50)     not null,
+        primary key(transaction_id),
+        foreign key(company_id) references company(company_id)
+    );
+create table company_transaction
+    (
+        transaction_id      varchar(50)     not null,
+        transaction_date    date,
+        charge_type         varchar(50),
+        transaction_amount  float(4) not null,
+        surcharge           float(4) not null,
+        total_charge        float(4) GENERATED ALWAYS
+        as (total_charge + surcharge) STORED,
+        is_paid             boolean,
+        paid_date           date,
+        company_id      varchar(50)     not null,
+        primary key(transaction_id),
+        foreign key(company_id) references company(company_id)
+    );
+create table company_transaction
+    (
+        transaction_id      varchar(50)     not null,
+        transaction_date    date,
+        charge_type         varchar(50),
+        transaction_amount  float,
+        surcharge           float,
+        total_charge        float GENERATED ALWAYS
+        as (total_charge + surcharge) STORED
+        is_paid             boolean,
+        paid_date           date,
+        company_id      varchar(50)     not null,
+        primary key(transaction_id),
+        foreign key(company_id) references company(company_id)
+    );
+create table company_transaction
+    (
+        transaction_id      varchar(50)     not null,
+        transaction_date    date,
+        charge_type         varchar(50),
+        transaction_amount  float,
+        surcharge           float,
+        total_charge        float GENERATED ALWAYS
+        as (total_charge + surcharge) STORED
+        tx_is_paid             boolean,
+        paid_date           date,
+        company_id      varchar(50)     not null,
+        primary key(transaction_id),
+        foreign key(company_id) references company(company_id)
+    );
+create table company_transaction
+    (
+        transaction_id      varchar(50)     not null,
+        transaction_date    date,
+        charge_type         varchar(50),
+        transaction_amount  float,
+        surcharge           float,
+        total_charge        float GENERATED ALWAYS
+        as (total_charge + surcharge) STORED,
+        tx_is_paid             boolean,
+        paid_date           date,
+        company_id      varchar(50)     not null,
+        primary key(transaction_id),
+        foreign key(company_id) references company(company_id)
+    );
+create table company_transaction
+    (
+        transaction_id      varchar(50)     not null,
+        transaction_date    date,
+        charge_type         varchar(50),
+        transaction_amount  float,
+        surcharge           float,
+        total_charge        float GENERATED ALWAYS
+        as (total_charge + surcharge),
+        tx_is_paid             boolean,
+        paid_date           date,
+        company_id      varchar(50)     not null,
+        primary key(transaction_id),
+        foreign key(company_id) references company(company_id)
+    );
+create table company_transaction
+    (
+        transaction_id      varchar(50)     not null,
+        transaction_date    date,
+        charge_type         varchar(50),
+        transaction_amount  float,
+        surcharge           float,
+        total_charge        float GENERATED ALWAYS
+        as (total_charge + surcharge)
+        tx_is_paid             boolean,
+        paid_date           date,
+        company_id      varchar(50)     not null,
+        primary key(transaction_id),
+        foreign key(company_id) references company(company_id)
+    );
+create table company_transaction
+    (
+        transaction_id      varchar(50)     not null,
+        transaction_date    date,
+        charge_type         varchar(50),
+        transaction_amount  float,
+        surcharge           float,
+        total_charge        float GENERATED ALWAYS
+        as (total_charge + surcharge) not null,
+        tx_is_paid             boolean,
+        paid_date           date,
+        company_id      varchar(50)     not null,
+        primary key(transaction_id),
+        foreign key(company_id) references company(company_id)
+)
+;
+create table company_transaction
+    (
+        transaction_id      varchar(50)     not null,
+        transaction_date    date,
+        charge_type         varchar(50),
+        transaction_amount  float,
+        surcharge           float,
+        total_charge        float GENERATED ALWAYS
+        as (total_charge + surcharge) STORED,
+        tx_is_paid             boolean,
+        paid_date           date,
+        company_id      varchar(50)     not null,
+        primary key(transaction_id),
+        foreign key(company_id) references company(company_id)
+    );
+create table company_transaction
+    (
+        transaction_id      varchar(50)     not null,
+        transaction_date    date,
+        charge_type         varchar(50),
+        transaction_amount  float not null,
+        surcharge           float not null,
+        total_charge        float GENERATED ALWAYS
+        as (total_charge + surcharge) STORED,
+        tx_is_paid             boolean,
+        paid_date           date,
+        company_id      varchar(50)     not null,
+        primary key(transaction_id),
+        foreign key(company_id) references company(company_id)
+    );
+create table company_transaction
+    (
+        transaction_id      varchar(50)     not null,
+        transaction_date    date,
+        charge_type         varchar(50),
+        transaction_amount  float,
+        surcharge           float,
+        total_charge        float GENERATED ALWAYS AS (transaction_amount + surcharge) STORED,
+        tx_is_paid             boolean,
+        paid_date           date,
+        company_id      varchar(50)     not null,
+        primary key(transaction_id),
+        foreign key(company_id) references company(company_id)
+    );
+drop table company_transaction;
+create table company_transaction
+    (
+        transaction_id      varchar(50)     not null,
+        transaction_date    date,
+        charge_type         varchar(50),
+        transaction_amount  float,
+        surcharge           float,
+        total_charge        float GENERATED ALWAYS AS 
+                            (CASE WHEN transaction_amount IS NULL THEN surcharge
+                                WHEN surcharge IS NULL THEN transaction_amount
+                                ELSE transaction_amount + surcharge END) STORED,
+        tx_is_paid             boolean,
+        paid_date           date,
+        company_id      varchar(50)     not null,
+        primary key(transaction_id),
+        foreign key(company_id) references company(company_id)
+    );
+create table company_transaction_checkin
+    (
+        transaction_id      varchar(50)     not null,
+        checkin_id          varchar(50)     not null,
+        checkin_charge      float,
+        primary key(transaction_id, checkin_id),
+        foreign key(transaction_id) references company_transaction(transaction_id),
+        foreign key(checkin_id) references user_checkin(checkin_id)
+    );
+\q
+select name_1, name_2, d.dept_name
+from department as d
+inner join
+(select concat(e1.emp_first_name, ' ', e1.emp_last_name)as name_1,
+e1.dept_nbr as dnum,
+concat(e2.emp_first_name, ' ', e2.emp_last_name)as name_2
+from
+(select emp_first_name, emp_last_name, dept_nbr, emp_nbr 
+from employee) as e1
+inner join 
+(select emp_first_name, emp_last_name, dept_nbr, emp_nbr 
+from employee) as e2 on e2.dept_nbr = e1.dept_nbr
+where e1.emp_nbr < e2.emp_nbr)as e 
+on e.dnum = d.dept_nbr;
+select name_1, name_2, d.dept_name
+from department as d
+inner join
+(select concat(e1.emp_first_name, ' ', e1.emp_last_name)as name_1,
+e1.dept_nbr as dnum,
+concat(e2.emp_first_name, ' ', e2.emp_last_name)as name_2
+from
+(select emp_first_name, emp_last_name, dept_nbr, emp_nbr 
+from employee) as e1
+inner join 
+(select emp_first_name, emp_last_name, dept_nbr, emp_nbr 
+from employee) as e2 on e2.dept_nbr = e1.dept_nbr
+where e1.emp_nbr < e2.emp_nbr)as e 
+on e.dnum = d.dept_nbr
+order by d.dept_name;
+\q
+\c pxx_final_project
+\d
+select * from user;
+\q
+select * from "user"
+;
+\d
+        create table user_test
+        (
+            first_name   varchar(15), 
+            last_name   varchar(15), 
+            username   varchar(30),
+            email   varchar(50), 
+            street_address   varchar(50), 
+            city_address   varchar(15), 
+            state_address   varchar(15),
+            usr_id      serial      not null,
+            primary key (usr_id)
+        );
+\copy user_test(first_name, last_name, username, email, street_address, city_address, state_address) from 'Users/ppunch/desktop/osu/cs 340/final_project/final-project-Patrick-Punch/files/users.csv' delimiter ',' csv
+\copy user_test(first_name, last_name, username, email, street_address, city_address, state_address) from 'files/users.csv' delimiter ',' csv
+create table products_test
+    (
+        product_id      varchar(40),
+        product_name    varchar(15000),
+        product_brand   varchar(40),
+        product_type    varchar(40),
+        test_pkey      serial      not null,
+        primary key (test_pkey)
+    );
+\copy user_test(first_name, last_name, username, email, street_address, city_address, state_address) from '/Users/ppunch/desktop/osu/cs 340/final_project/final-project-Patrick-Punch/files/users.csv' delimiter ',' csv
+\copy user_test(first_name, last_name, username, email, street_address, city_address, state_address) from '/Users/ppunch/desktop/osu/cs 340/final_project/final-project-Patrick-Punch/files/users.csv' delimiter ',' csv
+drop table user_test
+;
+        create table user_test
+        (
+            first_name   varchar(15), 
+            last_name   varchar(15), 
+            username   varchar(30),
+            email   varchar(50), 
+            street_address   varchar(50), 
+            city_address   varchar(15), 
+            state_address   varchar(15),
+            usr_id      serial      not null,
+            primary key (usr_id)
+        );
+\copy user_test(first_name, last_name, username, email, street_address, city_address, state_address) from '/Users/ppunch/desktop/osu/cs 340/final_project/final-project-Patrick-Punch/files/users.csv' delimiter ',' csv
+\d
+select * from user_test;
+select * from products_test;
+select count(product_id) from products_test;
+select count(services_id) from services_test;
+\copy services_test(services_id, services_name, services_brand, services_catagory) from '/Users/ppunch/desktop/osu/cs 340/final_project/final-project-Patrick-Punch/files/services.csv' delimiter ',' csv
+select count(*) as num_usr
+from user_test;
+select count(*) as num_products
+from products_test;
+select count(*) as num_services
+from services_test;
+SELECT email, COUNT(*)
+FROM user_test
+GROUP BY email
+HAVING COUNT(*) > 1;
+select * from user
+;
+select * from "user"'
+'
+;
+select * from "user"
+l
+;
+delete from "user" where usr_id == 2;
+delete from "user" where usr_id = 2;
+\d
+\l
+\s
+select * from "user";
+\d "user";
+\q
+\d
+\s company
