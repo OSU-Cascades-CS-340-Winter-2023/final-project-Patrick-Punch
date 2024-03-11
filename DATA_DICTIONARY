@@ -1,0 +1,18 @@
+{
+	"User": [
+		// Stores Info about a user
+		{
+			"user_id": "primary key, sequence"
+		},
+		{
+			"user_email": "email, varchar"
+		},
+		{
+			"user_fname": "first_name, text"
+		},
+		{
+			"user_lname": "last_name, text"
+		}
+	],
+	"Products": {}
+}
