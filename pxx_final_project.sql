@@ -195,7 +195,7 @@ create table company_transaction_checkin
 -- copy from temp table to actual table, AFTER CLEANING DATA -- 
 
 -- Loading Data  --
-        create table test
+        create table user_test
         (
             first_name   varchar(15), 
             last_name   varchar(15), 

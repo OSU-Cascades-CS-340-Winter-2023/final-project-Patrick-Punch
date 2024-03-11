@@ -201,16 +201,51 @@ CREATE TABLE company_transaction_checkin
     );
 
 --file additions
+create table user_test
+    (
+        first_name   varchar(15), 
+        last_name   varchar(15), 
+        username   varchar(30),
+        email   varchar(50), 
+        street_address   varchar(50), 
+        city_address   varchar(15), 
+        state_address   varchar(15),
+        usr_id      serial      not null,
+        primary key (usr_id)
+    );
+--loads user data into the user test table
+\COPY user_test(first_name, last_name, username, email, street_address, city_address, state_address) FROM '/Users/ppunch/desktop/OSU/cs 340/final_project/final-project-Patrick-Punch/files/users.csv' WITH (FORMAT csv, DELIMITER ',', header true)
 
---loads user data into the test table
-\COPY test(first_name, last_name, username, email, street_address, city_address, state_address) FROM 'FilePath' WITH (FORMAT csv, DELIMITER ',');
+create table services_test
+    (
+        services_id varchar(50),
+        services_name  varchar(100),
+        services_brand varchar(50),
+        services_category varchar(50),
+        test_pkey       serial      not null,
+        primary key(test_pkey)
+    );
 --load data into service_test table
-\COPY services_test(services_id, services_name, services_brand, services_catagory) FROM 'FilePath' delimiter ',' csv
+\COPY services_test(services_id, services_name, services_brand, services_category) FROM '/Users/ppunch/desktop/OSU/cs 340/final_project/final-project-Patrick-Punch/files/services.csv' with (delimiter ',', format csv, header true)
+
+create table products_test
+    (
+        product_id      varchar(40),
+        product_name    varchar(300),
+        product_brand   varchar(40),
+        product_type    varchar(40),
+        test_pkey      serial      not null,
+        primary key (test_pkey)
+    );
 --load data into products_test table --
-\COPY products_test(product_id, product_name, product_brand, product_type) FROM 'FilePath' delimiter '|' csv
+\COPY products_test(product_id, product_name, product_brand, product_type) FROM '/Users/ppunch/desktop/OSU/cs 340/final_project/final-project-Patrick-Punch/files/products.csv' delimiter '|' csv
+
+--Determining data values for columns of the tables:
 
 
---Determining data values for the tables
+
+-- USER_TEST TABLE: 
+
 -- Determine max length of first_name attribute
 SELECT MAX(LENGTH(first_name)) AS max_first_name_length FROM user_test;
 -- Shows the names of the users with the longest first name
@@ -276,9 +311,71 @@ ON LENGTH(t.state_address) = x.max_state_address_length;
 
 SELECT MAX(usr_id) FROM user_test;
 
---cleans up names labled 'first_name'
-DELETE FROM test
-WHERE first_name = 'first_name';
+
+
+-- SERVICES_TEST TABLE
+
+-- Determine the length of the services_id column
+select max(length(services_id)) from services_test;
+
+-- Determine the length of the services_name column
+select max(length(services_name)) as max_svc_name
+from services_test;
+-- Shows the service with the max name length
+select * from services_test as s
+join 
+(select max(length(services_name)) as max_svc_name
+from services_test) as x
+on length(s.services_name) = x.max_svc_name;
+
+-- Determine the length of the services_brand column
+select max(length(services_brand)) as max_brand
+from services_test;
+-- Shows the service with the max brand name length
+select * from services_test as s
+join 
+(select max(length(services_brand)) as max_brand
+from services_test) as x
+on length(s.services_brand) = x.max_brand;
+
+-- Determine the length of the services_category column
+select max(length(services_category)) as max_cat
+from services_test;
+-- Shows the service with the max category name length
+select * from services_test as s
+join 
+(select max(length(services_category)) as max_cat
+from services_test) as x
+on length(s.services_category) = x.max_cat;
+
+-- PRODUCTS_TEST TABLE
+
+-- Determine the length of the product_id column
+SELECT MAX(LENGTH(product_id)) AS max_id_length FROM products_test;
+
+-- Determine the max length of the product_name column
+SELECT MAX(LENGTH(product_name)) AS max_name_length FROM products_test;
+-- Shows the product with the max name length
+select * from products_test as p
+join
+(SELECT MAX(LENGTH(product_name)) AS max_name_length FROM products_test) as x
+on length(p.product_name) = x.max_name_length;
+
+-- Determine the max length of the product_brand column
+select max(length(product_brand)) as max_brand_length from products_test;
+-- Shows the product with the max brand length
+select * from products_test as p
+join
+(select max(length(product_brand)) as max_brand_length from products_test) as x
+on length(p.product_brand) = x.max_brand_length;
+
+-- Determine the max length of the product_type column
+select max(length(product_type)) as max_type_length from products_test;
+-- Shows the product with the max brand length
+select * from products_test as p
+join
+(select max(length(product_type)) as max_type_length from products_test) as x
+on length(p.product_type) = x.max_type_length;
 
 --Cleaning data/ data scraping
 -- Email filters 
