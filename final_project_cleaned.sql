@@ -382,12 +382,12 @@ on length(p.product_type) = x.max_type_length;
 
 --finds the non unique emails that already exist and emails that violate the code above
 SELECT email, COUNT(*)
-FROM test
+FROM user_test
 GROUP BY email
 HAVING COUNT(*) > 1;
 
 
-DELETE from test
+DELETE from user_test
 --Selects FROM the emails we have and checks to see 
 --if the start has proper values then checks after the @ symbol
 --!~* operator is used for case-insensitive negation of a regular expression match
@@ -398,14 +398,14 @@ WHERE email !~* '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$';
 WITH RankedEmails AS (
   SELECT usr_id, email,
          ROW_NUMBER() OVER(PARTITION BY email ORDER BY usr_id) AS rn
-  FROM test
+  FROM user_test
 )
-DELETE FROM test
+DELETE FROM user_test
 WHERE usr_id IN (SELECT usr_id FROM RankedEmails WHERE rn > 1);
 
 
 --ads a CONSTRAINT to the emails where all emails must be UNIQUE
-ALTER TABLE test ADD CONSTRAINT unique_usr_email UNIQUE (email);
+ALTER TABLE user_test ADD CONSTRAINT unique_usr_email UNIQUE (email);
 
 
 ---State/city name fixers
