@@ -412,22 +412,22 @@ ALTER TABLE user_test ADD CONSTRAINT unique_usr_email UNIQUE (email);
 
 --State fixer
 SELECT INITCAP(state_address) AS ProperState_address
-FROM test;
-UPDATE test
+FROM user_test;
+UPDATE user_test
 SET state_address = INITCAP(state_address);
-ALTER TABLE test ADD CONSTRAINT unique_state UNIQUE (state_address);
+ALTER TABLE user_test ADD CONSTRAINT unique_state UNIQUE (state_address);
 SELECT state_address, COUNT(*)
-FROM test
+FROM user_test
 GROUP BY state_address
 HAVING COUNT(*) > 1;
 --City fixer
 SELECT INITCAP(city_address) AS ProperCity_address
-FROM test;
-UPDATE test
+FROM user_test;
+UPDATE user_test
 SET city_address = INITCAP(city_address);
-ALTER TABLE test ADD CONSTRAINT unique_city UNIQUE (city_address);
+ALTER TABLE user_test ADD CONSTRAINT unique_city UNIQUE (city_address);
 SELECT city_address, COUNT(*)
-FROM test
+FROM user_test
 GROUP BY city_address
 HAVING COUNT(*) > 1;
 
@@ -437,7 +437,7 @@ HAVING COUNT(*) > 1;
 -- changes data FROM first_name to ProperFirstName and last_name to ProperLastName
 SELECT  INITCAP(first_name) as ProperFirstName, 
         INITCAP(last_name) as ProperLastName
-FROM test;
+FROM user_test;
 
 
 
