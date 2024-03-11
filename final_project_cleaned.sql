@@ -296,6 +296,20 @@ DELETE from test
 --!~* operator is used for case-insensitive negation of a regular expression match
 WHERE email !~* '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$';
 
+-- Temporarily remove the unique constraint if necessary
+-- ALTER TABLE test DROP CONSTRAINT IF EXISTS unique_usr_email;
+
+WITH RankedEmails AS (
+  SELECT usr_id, email,
+         ROW_NUMBER() OVER(PARTITION BY email ORDER BY usr_id) AS rn
+  FROM test
+)
+DELETE FROM test
+WHERE usr_id IN (SELECT usr_id FROM RankedEmails WHERE rn > 1);
+
+-- Add the UNIQUE constraint back if it was removed
+-- ALTER TABLE test ADD CONSTRAINT unique_usr_email UNIQUE (email);
+
 --ads a CONSTRAINT to the emails where all emails must be UNIQUE
 ALTER TABLE test ADD CONSTRAINT unique_usr_email UNIQUE (email);
 
