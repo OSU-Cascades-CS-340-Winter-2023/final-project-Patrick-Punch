@@ -307,9 +307,6 @@ WITH RankedEmails AS (
 DELETE FROM test
 WHERE usr_id IN (SELECT usr_id FROM RankedEmails WHERE rn > 1);
 
--- Add the UNIQUE constraint back if it was removed
--- ALTER TABLE test ADD CONSTRAINT unique_usr_email UNIQUE (email);
-
 --ads a CONSTRAINT to the emails where all emails must be UNIQUE
 ALTER TABLE test ADD CONSTRAINT unique_usr_email UNIQUE (email);
 
