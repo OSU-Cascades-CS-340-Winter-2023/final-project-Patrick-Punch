@@ -8,24 +8,26 @@ GROUP BY email
 HAVING COUNT(*) > 1;
 
 
-DELETE from user_test
+
 --Selects FROM the emails we have and checks to see 
 --if the start has proper values then checks after the @ symbol
 --!~* operator is used for case-insensitive negation of a regular expression match
+DELETE from user_test
 WHERE email !~* '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$';
 
 -- Temporarily remove the unique constraint if necessary
 -- ALTER TABLE test DROP CONSTRAINT IF EXISTS unique_usr_email;
-WITH RankedEmails AS (
-  SELECT usr_id, email,
-         ROW_NUMBER() OVER(PARTITION BY email ORDER BY usr_id) AS rn
-  FROM user_test
-)
+WITH RankedEmails AS
+  (
+    SELECT usr_id, email,
+           ROW_NUMBER() OVER(PARTITION BY email ORDER BY usr_id) AS rn
+    FROM user_test
+  )
 DELETE FROM user_test
 WHERE usr_id IN (SELECT usr_id FROM RankedEmails WHERE rn > 1);
 
 
---ads a CONSTRAINT to the emails where all emails must be UNIQUE
+--adds a CONSTRAINT to the emails where all emails must be UNIQUE
 ALTER TABLE user_test ADD CONSTRAINT unique_usr_email UNIQUE (email);
 
 

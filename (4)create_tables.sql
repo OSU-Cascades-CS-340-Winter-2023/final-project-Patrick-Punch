@@ -5,40 +5,56 @@ CREATE TABLE "user"
     (
         usr_id SERIAL NOT NULL,
         usr_email VARCHAR(255) NOT NULL,
-        usr_password VARCHAR(255),
         usr_fname VARCHAR(50),
         usr_lname VARCHAR(50),
+        usr_username VARCHAR(30),
         usr_address_num VARCHAR(50),
         usr_city VARCHAR(50),
         usr_state VARCHAR(50),
         usr_zip VARCHAR(20),
+        usr_password VARCHAR(255),
         --key variable
         PRIMARY KEY (usr_id)
     );
 
+-- Load cleaned data into "user"
+
+insert into "user" 
+select * from user_test;
 
 --creates product table
 CREATE TABLE products 
     (
-        product_id VARCHAR(40) NOT NULL,
-        product_name VARCHAR(150) NOT NULL,
+        product_id VARCHAR(40),
+        product_name VARCHAR(300),
         product_brand VARCHAR(40),
         product_type VARCHAR(40),
+        item_no serial not null,
         --key variable
-        PRIMARY KEY (product_id)
+        PRIMARY KEY (item_no)
     );
+
+-- Load cleaned data into products
+-- Only works with product_id and product_name not declared as NOT NULL - need to clean
+insert into products 
+select * from products_test;
 
 --creates service table
 CREATE TABLE services 
     (
-        services_id VARCHAR(50) NOT NULL,
+        services_id VARCHAR(50),
         services_name VARCHAR(100),
         services_brand VARCHAR(50),
         services_category VARCHAR(50),
+        service_no serial not null,
         --key varable
-        PRIMARY KEY (services_id)
+        PRIMARY KEY (service_no)
     );
 
+-- Load cleaned data into services
+-- Only works with services_id not declared as NOT NULL - need to clean
+insert into services
+select * from services_test;
 --creates company table
 CREATE TABLE company 
     (

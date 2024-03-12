@@ -3,17 +3,16 @@
 -- Test Tables & Data Insertion
 create table user_test
     (
+        usr_id      serial      not null,
+        email   varchar(50),
         first_name   varchar(15), 
         last_name   varchar(15), 
         username   varchar(30),
-        email   varchar(50), 
         street_address   varchar(50), 
         city_address   varchar(15), 
         state_address   varchar(15),
-        usr_id      serial      not null,
         primary key (usr_id)
     );
---loads user data into the user test table
 
 create table services_test
     (
@@ -24,7 +23,6 @@ create table services_test
         test_pkey       serial      not null,
         primary key(test_pkey)
     );
---load data into service_test table
 
 create table products_test
     (
@@ -37,7 +35,9 @@ create table products_test
     );
 --load data into products_test table --
 \COPY products_test(product_id, product_name, product_brand, product_type) FROM 'Filepath' delimiter '|' csv
+
 \COPY services_test(services_id, services_name, services_brand, services_category) FROM 'Filepath' with (delimiter ',', format csv, header true)
-\COPY user_test(first_name, last_name, username, email, street_address, city_address, state_address) FROM 'Filepath' WITH (FORMAT csv, DELIMITER ',', header true)
+
+\COPY user_test(first_name, last_name, username, email, street_address, city_address, state_address) FROM '/Users/ppunch/desktop/OSU/cs 340/final_project/final-project-Patrick-Punch/files/users.csv' WITH (FORMAT csv, DELIMITER ',', header true)
 
 -- Patrick Filepath: /Users/ppunch/desktop/OSU/cs 340/final_project/final-project-Patrick-Punch/files/users.csv

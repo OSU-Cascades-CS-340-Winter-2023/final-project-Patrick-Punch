@@ -17,6 +17,7 @@ Creating the views as described in the project details.
 Writing triggers as per the assignment requirement (currently, no triggers have been created).
 Determining and creating necessary indices (other than primary key indices) to improve search performance. You have to explain why each index is necessary and choose the type of index.
 
+clean the data in products where the serial # is null
 for part c
 Create a view that counts the number of products or services with discounts each day, and additional conditions as mentioned.
 Create a view that returns a sorted list of products.
