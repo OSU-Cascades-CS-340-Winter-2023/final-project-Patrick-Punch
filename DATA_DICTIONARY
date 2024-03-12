@@ -1,16 +1,16 @@
 {
 	"User": [
 		{
-			"user_id": "primary key, sequence"
+			"usr_id": "primary key, sequence"
 		},
 		{
-			"user_email": "email, text"
+			"usr_email": "email, text"
 		},
 		{
-			"user_fname": "first_name, text"
+			"usr_fname": "first_name, text"
 		},
 		{
-			"user_lname": "last_name, text"
+			"usr_lname": "last_name, text"
 		},
 		{
 			"usr_password": "password, varchar"
