@@ -1,41 +1,40 @@
-What we have already finished:
-Emails should have a '@' and a valid domain (e.g. .com or .edu)
-You should standarize capitalization if it makes sense. For example, states.
-    added:
-    products.csv - The products that different companies sell
-    product id|product name|brand/company name|product category
-    services.csv - The services that different companies offer
-    service id|service name|brand/company name|service category
-populate the tables that have data in this directory
+# What we have already finished:
+- Emails should have a '@' and a valid domain (e.g. .com or .edu)
+- You should standarize capitalization if it makes sense. For example, states.
+    - added:
+        - products.csv - The products that different companies sell
+        - product id|product name|brand/company name|product category
+        - services.csv - The services that different companies offer
+        - service id|service name|brand/company name|service category
+- populate the tables that have data in this directory
 foreign keys
 
-What to work on:
-clean the code up only having needed code.
+## What to work on:
+- clean the code up only having needed code.
 need to turn in a brief data dictionary that describes the tables and their columns.
-Loading the cleaned data into the actual tables from the temporary tables and ensuring that data integrity constraints are respected.
-Creating the views as described in the project details.
-Writing triggers as per the assignment requirement (currently, no triggers have been created).
-Determining and creating necessary indices (other than primary key indices) to improve search performance. You have to explain why each index is necessary and choose the type of index.
+- Loading the cleaned data into the actual tables from the temporary tables and ensuring that data integrity constraints are respected.
+- Creating the views as described in the project details.
+- Writing triggers as per the assignment requirement (currently, no triggers have been created).
+- Determining and creating necessary indices (other than primary key indices) to improve search performance. You have to explain why each index is necessary and choose the type of index.
 
-clean the data in products where the serial # is null
 for part c
 Create a view that counts the number of products or services with discounts each day, and additional conditions as mentioned.
 Create a view that returns a sorted list of products.
 
-for part d
-Write a trigger that adds a record to an archive table whenever an item is updated.
+## for part d
+- [ ] Write a trigger that adds a record to an archive table whenever an item is updated.
 
 
-For indices (part e), you should:
+## For indices (part e), you should:
 
-Analyze query patterns to determine which columns may benefit from indexing.
-Create at least one additional index and justify its creation.
+- Analyze query patterns to determine which columns may benefit from indexing.
+- Create at least one additional index and justify its creation.
 
-some tables have a = symbol in them when not needed.
-The services table is missing commas at the end of each column definition.
-There are no attribute level constraints included, such as NOT NULL, CHECK, UNIQUE, etc., which are required as per the assignment details.
-Ensure that the CSV file paths are correct and accessible by the PostgreSQL server.
-user_interests table references the "user" table which is created without quotes, so make sure the referencing is consistent either with or without quotes.
-You will also need to verify the data types and lengths to ensure they are sufficient for the data being inserted, particularly for columns such as usr_email which has a length of 25 characters, which might be too short for some email addresses.
+- some tables have a = symbol in them when not needed.
+- The services table is missing commas at the end of each column definition.
+- There are no attribute level constraints included, such as NOT NULL, CHECK, UNIQUE, etc., which are required as per the assignment details.
+- Ensure that the CSV file paths are correct and accessible by the PostgreSQL server.
+- user_interests table references the "user" table which is created without quotes, so make sure the referencing is consistent either with or without quotes.
+- You will also need to verify the data types and lengths to ensure they are sufficient for the data being inserted, particularly for columns such as usr_email which has a length of 25 characters, which might be too short for some email addresses.
 
 incert here please.
