@@ -11,12 +11,23 @@ CREATE TABLE item_archive
         primary key(item_id, date_updated)
     );
 
-CREATE OR ALTER FUNCTION item_update_trigger()
+CREATE OR REPLACE FUNCTION item_update_trigger()
 RETURNS TRIGGER AS 
 $$
 BEGIN
     INSERT INTO item_archive
-    SELECT OLD.item_id, OLD.item_type, OLD.item_name, OLD.item_description, OLD.item_price, OLD.item_picture, CURRENT_DATE;
+    SELECT OLD.item_id, OLD.item_type, OLD.item_name, OLD.item_description, OLD.item_price, OLD.item_picture, NEW.item_price, CURRENT_DATE;
     RETURN NEW;
 END;
-$$
+$$ LANGUAGE plpgsql;
+
+create trigger ia_update
+before update on item
+    for each row execute function item_update_trigger();
+
+
+-- testing trigger
+-- insert into item(item_id, item_type, item_name, item_description) 
+-- values (1, 'service', 'patricks grade', 'd');
+
+-- update item set item_description = 'A' where item_id = 1;
