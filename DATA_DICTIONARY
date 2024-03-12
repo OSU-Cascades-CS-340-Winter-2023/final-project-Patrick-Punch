@@ -1,6 +1,5 @@
 {
 	"User": [
-		// Stores Info about a user
 		{
 			"user_id": "primary key, sequence"
 		},
@@ -30,7 +29,6 @@
 		}
 	],
 	"Products": [
-		// Stores Info about a product
 		{
 			"product_id": "primary key, sequence"
 		},
@@ -45,7 +43,6 @@
 		}
 	],
 	"Services": [
-		// Stores Info about a service
 		{
 			"service_id": "primary key, sequence"
 		},
@@ -60,7 +57,6 @@
 		}
 	],
 	"Company": [ 
-		// Stores Info about a company 
 		{
 			"company_id": "primary key, varchar"
 		},
@@ -81,7 +77,6 @@
 		}
 	],
 	"Item": [
-		// Stores Info about an item
 		{
 			"item_id": "primary key, varchar, not null"
 		},
@@ -102,7 +97,6 @@
 		}
 	],
 	"Employee": [
-		// Stores Info about an employee
 		{
 			"emp_id": "primary key, varchar, not null"
 		},
