@@ -8,7 +8,7 @@ GROUP BY email
 HAVING COUNT(*) > 1;
 
 
-DELETE from test
+DELETE from user_test
 --Selects FROM the emails we have and checks to see 
 --if the start has proper values then checks after the @ symbol
 --!~* operator is used for case-insensitive negation of a regular expression match

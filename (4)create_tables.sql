@@ -1,91 +1,56 @@
--- Test Tables & Data Insertion
-create table user_test
-    (
-        first_name   varchar(15), 
-        last_name   varchar(15), 
-        username   varchar(30),
-        email   varchar(50), 
-        street_address   varchar(50), 
-        city_address   varchar(15), 
-        state_address   varchar(15),
-        usr_id      serial      not null,
-        primary key (usr_id)
-    );
---loads user data into the user test table
-
-create table services_test
-    (
-        services_id varchar(50),
-        services_name  varchar(100),
-        services_brand varchar(50),
-        services_category varchar(50),
-        test_pkey       serial      not null,
-        primary key(test_pkey)
-    );
---load data into service_test table
-
-create table products_test
-    (
-        product_id      varchar(40),
-        product_name    varchar(300),
-        product_brand   varchar(40),
-        product_type    varchar(40),
-        test_pkey      serial      not null,
-        primary key (test_pkey)
-    );
---load data into products_test table --
-
-
-
 -- Relational Model Tables
 
---Creates User table
-CREATE TABLE "user" (
-    usr_id SERIAL NOT NULL,
-    usr_email VARCHAR(255) NOT NULL,
-    usr_password VARCHAR(255),
-    usr_fname VARCHAR(50),
-    usr_lname VARCHAR(50),
-    usr_address_num VARCHAR(50),
-    usr_city VARCHAR(50),
-    usr_state VARCHAR(50),
-    usr_zip VARCHAR(20),
-    --key variable
-    PRIMARY KEY (usr_id)
-);
+-- Creates User table
+CREATE TABLE "user" 
+    (
+        usr_id SERIAL NOT NULL,
+        usr_email VARCHAR(255) NOT NULL,
+        usr_password VARCHAR(255),
+        usr_fname VARCHAR(50),
+        usr_lname VARCHAR(50),
+        usr_address_num VARCHAR(50),
+        usr_city VARCHAR(50),
+        usr_state VARCHAR(50),
+        usr_zip VARCHAR(20),
+        --key variable
+        PRIMARY KEY (usr_id)
+    );
 
 
 --creates product table
-CREATE TABLE products (
-    product_id VARCHAR(40) NOT NULL,
-    product_name VARCHAR(150) NOT NULL,
-    product_brand VARCHAR(40),
-    product_type VARCHAR(40),
-    --key variable
-    PRIMARY KEY (product_id)
-);
+CREATE TABLE products 
+    (
+        product_id VARCHAR(40) NOT NULL,
+        product_name VARCHAR(150) NOT NULL,
+        product_brand VARCHAR(40),
+        product_type VARCHAR(40),
+        --key variable
+        PRIMARY KEY (product_id)
+    );
 
 --creates service table
-CREATE TABLE services (
-    services_id VARCHAR(50) NOT NULL,
-    services_name VARCHAR(100),
-    services_brand VARCHAR(50),
-    services_category VARCHAR(50),
-    --key varable
-    PRIMARY KEY (services_id)
-);
+CREATE TABLE services 
+    (
+        services_id VARCHAR(50) NOT NULL,
+        services_name VARCHAR(100),
+        services_brand VARCHAR(50),
+        services_category VARCHAR(50),
+        --key varable
+        PRIMARY KEY (services_id)
+    );
 
 --creates company table
-CREATE TABLE company (
-    company_id VARCHAR(50) NOT NULL,
-    company_name VARCHAR(50),
-    contact VARCHAR(50),
-    phone VARCHAR(50),
-    company_email VARCHAR(100),
-    company_url VARCHAR(100),
-    --key varable
-    PRIMARY KEY (company_id)
-);
+CREATE TABLE company 
+    (
+        company_id VARCHAR(50) NOT NULL,
+        company_name VARCHAR(50),
+        contact VARCHAR(50),
+        phone VARCHAR(50),
+        company_email VARCHAR(100),
+        company_url VARCHAR(100),
+        --key varable
+        PRIMARY KEY (company_id)
+    );
 
 --creates item table
 CREATE TABLE item
@@ -237,44 +202,6 @@ CREATE TABLE company_transaction_checkin
         foreign key(transaction_id) references company_transaction(transaction_id),
         foreign key(checkin_id) references user_checkin(checkin_id)
     );
-
---file additions
-create table user_test
-    (
-        first_name   varchar(15), 
-        last_name   varchar(15), 
-        username   varchar(30),
-        email   varchar(50), 
-        street_address   varchar(50), 
-        city_address   varchar(15), 
-        state_address   varchar(15),
-        usr_id      serial      not null,
-        primary key (usr_id)
-    );
---loads user data into the user test table
-
-create table services_test
-    (
-        services_id varchar(50),
-        services_name  varchar(100),
-        services_brand varchar(50),
-        services_category varchar(50),
-        test_pkey       serial      not null,
-        primary key(test_pkey)
-    );
---load data into service_test table
-
-create table products_test
-    (
-        product_id      varchar(40),
-        product_name    varchar(300),
-        product_brand   varchar(40),
-        product_type    varchar(40),
-        test_pkey      serial      not null,
-        primary key (test_pkey)
-    );
---load data into products_test table --
-
 
 
 
