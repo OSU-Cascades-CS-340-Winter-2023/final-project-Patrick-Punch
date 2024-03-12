@@ -1,0 +1,6 @@
+\COPY products_test(product_id, product_name, product_brand, product_type) FROM '/Users/ppunch/desktop/OSU/cs 340/final_project/final-project-Patrick-Punch/files/products.csv' delimiter '|' csv
+\COPY services_test(services_id, services_name, services_brand, services_category) FROM '/Users/ppunch/desktop/OSU/cs 340/final_project/final-project-Patrick-Punch/files/services.csv' with (delimiter ',', format csv, header true)
+\COPY user_test(first_name, last_name, username, email, street_address, city_address, state_address) FROM '/Users/ppunch/desktop/OSU/cs 340/final_project/final-project-Patrick-Punch/files/users.csv' WITH (FORMAT csv, DELIMITER ',', header true)
+\COPY products_test(product_id, product_name, product_brand, product_type) FROM '/Users/ppunch/desktop/OSU/cs 340/final_project/final-project-Patrick-Punch/files/products.csv' delimiter '|' csv
+\COPY services_test(services_id, services_name, services_brand, services_category) FROM '/Users/ppunch/desktop/OSU/cs 340/final_project/final-project-Patrick-Punch/files/services.csv' with (delimiter ',', format csv, header true)
+\COPY user_test(first_name, last_name, username, email, street_address, city_address, state_address) FROM '/Users/ppunch/desktop/OSU/cs 340/final_project/final-project-Patrick-Punch/files/users.csv' WITH (FORMAT csv, DELIMITER ',', header true)
