@@ -56,7 +56,7 @@
 			"service_category": "category, text"
 		}
 	],
-	"Company": [ 
+	"Company": [
 		{
 			"company_id": "primary key, varchar"
 		},
@@ -126,6 +126,175 @@
 		},
 		{
 			"emp_zip_code": "varchar"
+		}
+	],
+	"Discount": [
+		{
+			"discount_id": "varchar(50)"
+		},
+		{
+			"discount_type": "varchar(50)"
+		},
+		{
+			"discount_amount": "varchar(50)"
+		},
+		{
+			"discount_description": "varchar(50)"
+		},
+		{
+			"discount_start_date": "date"
+		},
+		{
+			"discount_end_date": "date"
+		},
+		{
+			"primary key": ["discount_id"]
+		}
+	],
+	"User_Interests": [
+		{
+			"usr_id": "foreign key, references User(usr_id), serial, not null"
+		},
+		{
+			"usr_interest": "varchar"
+		}
+	],
+	"User_Item_Preference": [
+		{
+			"usr_id": "primary key, foreign key, references User(usr_id), serial, not null"
+		},
+		{
+			"item_id": "primary key, foreign key, references Item(item_id), varchar, not null"
+		}
+	],
+	"User_Company_Preference": [
+		{
+			"usr_id": "primary key, foreign key, references User(usr_id), serial, not null"
+		},
+		{
+			"preference_company_id": "primary key, foreign key, references Company(company_id), varchar, not null"
+		}
+	],
+	"User_Location_Preference": [
+		{
+			"usr_id": "primary key, foreign key, references User(usr_id), serial, not null"
+		},
+		{
+			"preference_location_city": "primary key, varchar, not null"
+		},
+		{
+			"preference_location_state": "primary key, varchar, not null"
+		}
+	],
+	"Company_Location": [
+		{
+			"company_id": "foreign key, references Company(company_id), varchar, not null"
+		},
+		{
+			"location_id": "primary key, varchar, not null"
+		},
+		{
+			"company_address": "varchar"
+		},
+		{
+			"company_city": "varchar"
+		},
+		{
+			"company_state": "varchar"
+		},
+		{
+			"company_zip": "varchar"
+		},
+		{
+			"company_pnum": "varchar"
+		}
+	],
+	"Company_Item": [
+		{
+			"company_id": "primary key, foreign key, references Company(company_id), varchar, not null"
+		},
+		{
+			"item_id": "primary key, foreign key, references Item(item_id), varchar, not null"
+		},
+		{
+			"discount_id": "foreign key, references Discount(discount_id), varchar, not null"
+		},
+		{
+			"is_discounted": "boolean"
+		}
+	],
+	"User_Company_Review": [
+		{
+			"company_id": "foreign key, references Company(company_id), varchar, not null"
+		},
+		{
+			"usr_id": "foreign key, references User(usr_id), serial, not null"
+		},
+		{
+			"rating_score": "int"
+		},
+		{
+			"comments": "varchar"
+		}
+	],
+	"User_Checkin": [
+		{
+			"checkin_id": "primary key, varchar, not null"
+		},
+		{
+			"checkin_date": "date"
+		},
+		{
+			"usr_id": "foreign key, references User(usr_id), serial, not null"
+		},
+		{
+			"company_id": "foreign key, references Company(company_id), varchar, not null"
+		},
+		{
+			"item_id": "foreign key, references Item(item_id), varchar, not null"
+		},
+		{
+			"discount_id": "foreign key, references Discount(discount_id), varchar, not null"
+		}
+	],
+	"Company_Transaction": [
+		{
+			"transaction_id": "primary key, varchar, not null"
+		},
+		{
+			"transaction_date": "date"
+		},
+		{
+			"charge_type": "varchar"
+		},
+		{
+			"transaction_amount": "float"
+		},
+		{
+			"surcharge": "float"
+		},
+		{
+			"total_charge": "float, generated always as (transaction_amount + surcharge)"
+		},
+		{
+			"tx_is_paid": "boolean"
+		},
+		{
+			"paid_date": "date"
+		},
+		{
+			"company_id": "foreign key, references Company(company_id), varchar, not null"
+		}
+	],
+	"Company_Transaction_Checkin": [
+		{
+			"transaction_id": "primary key, foreign key, references Company_Transaction(transaction_id), varchar, not null"
+		},
+		{
+			"checkin_id": "primary key, foreign key, references User_Checkin(checkin_id), varchar, not null"
+		},
+		{
+			"checkin_charge": "float"
 		}
 	]
 }
