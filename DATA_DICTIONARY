@@ -5,14 +5,133 @@
 			"user_id": "primary key, sequence"
 		},
 		{
-			"user_email": "email, varchar"
+			"user_email": "email, text"
 		},
 		{
 			"user_fname": "first_name, text"
 		},
 		{
 			"user_lname": "last_name, text"
+		},
+		{
+			"usr_password": "password, varchar"
+		},
+		{
+			"usr_address_num": "address_number, varchar"
+		},
+		{
+			"usr_city": "city, varchar"
+		},
+		{
+			"usr_state": "state, varchar"
+		},
+		{
+			"usr_zip": "zip, varchar"
 		}
 	],
-	"Products": {}
+	"Products": [
+		// Stores Info about a product
+		{
+			"product_id": "primary key, sequence"
+		},
+		{
+			"product_name": "name, text"
+		},
+		{
+			"product_brand": "brand, text"
+		},
+		{
+			"product_type": "type, text"
+		}
+	],
+	"Services": [
+		// Stores Info about a service
+		{
+			"service_id": "primary key, sequence"
+		},
+		{
+			"service_name": "name, text"
+		},
+		{
+			"service_brand": "brand, text"
+		},
+		{
+			"service_category": "category, text"
+		}
+	],
+	"Company": [ 
+		// Stores Info about a company 
+		{
+			"company_id": "primary key, varchar"
+		},
+		{
+			"company_name": "varchar"
+		},
+		{
+			"contact": "varchar"
+		},
+		{
+			"phone": "varchar"
+		},
+		{
+			"company_email": "varchar"
+		},
+		{
+			"company_url": "varchar"
+		}
+	],
+	"Item": [
+		// Stores Info about an item
+		{
+			"item_id": "primary key, varchar, not null"
+		},
+		{
+			"item_type": "varchar"
+		},
+		{
+			"item_name": "varchar"
+		},
+		{
+			"item_description": "varchar"
+		},
+		{
+			"item_price": "float"
+		},
+		{
+			"item_picture": "bytea"
+		}
+	],
+	"Employee": [
+		// Stores Info about an employee
+		{
+			"emp_id": "primary key, varchar, not null"
+		},
+		{
+			"emp_email": "varchar"
+		},
+		{
+			"emp_first_name": "varchar"
+		},
+		{
+			"emp_last_name": "varchar"
+		},
+		{
+			"job_category": "varchar"
+		},
+		{
+			"salary": "int"
+		},
+		{
+			"street_address": "varchar"
+		},
+		{
+			"emp_city": "varchar"
+		},
+		{
+			"emp_state": "varchar"
+		},
+		{
+			"emp_zip_code": "varchar"
+		}
+	]
 }

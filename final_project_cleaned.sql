@@ -683,3 +683,47 @@ FROM user_test;
 
 
 
+GO /*Separates the batch of commands*/
+
+/*The result will be the date, the number of items with discounts on the current day, the number of items with
+discounts on the current day that were not discounted the previous day.*/
+CREATE VIEW daily_discounts AS
+SELECT CURRENT_DATE AS date, COUNT(*) AS num_discounts_today, COUNT(*) AS num_new_discounts_today
+FROM company_item
+WHERE is_discounted = true
+
+GO
+/*Create a view that returns a sorted list of products that are discounted*/
+CREATE VIEW discounted_products AS
+SELECT item_id, item_name, item_price
+FROM item
+WHERE item_id IN (SELECT item_id FROM company_item WHERE is_discounted = true)
+ORDER BY item_price DESC
+
+GO
+/*Write a trigger that adds a record to an archive table whenever an item is updated.*/
+CREATE TABLE item_archive
+    (
+        item_id     varchar(50)     not null,
+        item_type   varchar(50),
+        item_name   varchar(50),
+        item_description varchar(1000),
+        item_price  float,
+        item_picture    bytea,
+        date_updated    date,
+        primary key(item_id, date_updated)
+    );
+
+CREATE OR ALTER FUNCTION item_update_trigger()
+RETURNS TRIGGER AS 
+$$
+BEGIN
+    INSERT INTO item_archive
+    SELECT OLD.item_id, OLD.item_type, OLD.item_name, OLD.item_description, OLD.item_price, OLD.item_picture, CURRENT_DATE;
+    RETURN NEW;
+END;
+$$
+
+
+
+
