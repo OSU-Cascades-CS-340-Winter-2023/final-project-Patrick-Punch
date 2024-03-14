@@ -47,4 +47,3 @@ before update on item
 -- values (1, 'service', 'patricks grade', 'd');
 
 -- update item set item_description = 'A' where item_id = 1;
-
