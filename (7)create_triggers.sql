@@ -3,7 +3,7 @@ CREATE TABLE item_archive
     (
         item_id     varchar(50)     not null,
         item_type   varchar(50),
-        item_name   varchar(50),
+        item_name   varchar(300),
         item_description varchar(1000),
         item_price  float,
         item_picture    bytea,
