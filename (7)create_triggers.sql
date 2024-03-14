@@ -11,9 +11,7 @@ CREATE TABLE item_archive
         primary key(item_id, date_updated)
     );
 
-CREATE OR REPLACE FUNCTION item_update_trigger()
-RETURNS TRIGGER AS 
-$$
+
 CREATE OR REPLACE FUNCTION item_update_trigger()
 RETURNS TRIGGER AS 
 $$
