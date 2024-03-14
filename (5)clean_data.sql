@@ -42,7 +42,7 @@ from user_test
 GROUP By state_address,
           city_address
 HAVING COUNT(*) >1;
-
+go;
 --Name fixer
 --checks to see if the name is already capitalized then uses the INITCAP function 
 -- to change the first letter to a capitalized letter.
@@ -50,6 +50,7 @@ HAVING COUNT(*) >1;
 SELECT  INITCAP(first_name) as ProperFirstName, 
         INITCAP(last_name) as ProperLastName
 FROM user_test;
+go;
 Update user_test
 set first_name = INITCAP(first_name),
     last_name = INITCAP(last_name);
