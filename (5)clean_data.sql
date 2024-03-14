@@ -79,3 +79,5 @@ go;
 select services_id, services_name, services_brand, services_category
 from services_test
 where services_brand = ' ' or services_brand is null;
+
+--make a numerical checker(if needed).
