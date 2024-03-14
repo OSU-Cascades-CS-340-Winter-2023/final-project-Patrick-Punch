@@ -66,3 +66,11 @@ where product_id = ' 'OR product_id IS NULL;
 --removes the unwanted data
 DELETE from products_test
 where product_id = ' 'OR product_id IS NULL;
+go;
+--finds any services without an id
+select services_id
+from services_test
+where services_id = ' ' or services_id is null;
+--removes unwanted data 
+delete from services_test
+where services_id = ' ' or services_id is null;
