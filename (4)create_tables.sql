@@ -72,11 +72,11 @@ CREATE TABLE company
 CREATE TABLE item
     (
         item_id     varchar(50)     not null,
-        item_type   varchar(50),
         item_name   varchar(50),
-        item_description varchar(1000),
+        item_type   varchar(50),
         item_price  float,
         item_picture    bytea,
+        item_description varchar(1000),
         --key varable
         primary key(item_id)
     );
@@ -84,9 +84,9 @@ CREATE TABLE item
 CREATE TABLE employee
     (
         emp_id         varchar(50)     not null,
-        emp_email      varchar(50),
         emp_first_name varchar(50),
         emp_last_name  varchar(50),
+        emp_email      varchar(50),
         job_category   varchar(50),
         salary         int,
         street_address  varchar(100),

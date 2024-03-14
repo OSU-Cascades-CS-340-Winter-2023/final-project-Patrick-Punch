@@ -4,10 +4,10 @@
 create table user_test
     (
         usr_id      serial      not null,
-        email   varchar(50),
+        username   varchar(30),
         first_name   varchar(15), 
         last_name   varchar(15), 
-        username   varchar(30),
+        email   varchar(50),
         street_address   varchar(50), 
         city_address   varchar(15), 
         state_address   varchar(15),
