@@ -13,7 +13,7 @@ CREATE TABLE item_archive
         old_item_description varchar(1000),
         old_item_price  float,
         old_item_picture    bytea,
-        date_updated    date,
+        date_updated    timestamp,
         primary key(item_id, date_updated)
     );
 
