@@ -4,10 +4,14 @@
 
 /*The result will be the date, the number of items with discounts on the current day, the number of items with
 discounts on the current day that were not discounted the previous day.*/
-CREATE VIEW daily_discounts AS
-SELECT CURRENT_DATE AS date, COUNT(*) AS num_discounts_today, COUNT(*) AS num_new_discounts_today
-FROM company_item
-WHERE is_discounted = true;
+create view daily_discounts as
+select CURRENT_DATE as date, COUNT(*) as active_discounted_items,  
+    (select COUNT(*) from company_item as c
+    join discount as d 
+    on d.discount_id = c.discount_id
+    where d.discount_start_date = current_date) as todays_new_discount_items
+from company_item
+where is_discounted = true;
 
 
 /*Create a view that returns a sorted list of products that are discounted*/
