@@ -38,7 +38,6 @@ SELECT INITCAP(state_address) AS ProperState_address
 FROM user_test;
 UPDATE user_test
 SET state_address = INITCAP(state_address);
-ALTER TABLE user_test ADD CONSTRAINT unique_state UNIQUE (state_address);
 SELECT state_address, COUNT(*)
 FROM user_test
 GROUP BY state_address
@@ -48,7 +47,6 @@ SELECT INITCAP(city_address) AS ProperCity_address
 FROM user_test;
 UPDATE user_test
 SET city_address = INITCAP(city_address);
--- ALTER TABLE user_test ADD CONSTRAINT unique_city UNIQUE (city_address); Not needed
 SELECT city_address, COUNT(*)
 FROM user_test
 GROUP BY city_address
