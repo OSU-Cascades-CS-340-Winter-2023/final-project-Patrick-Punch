@@ -1,87 +1,51 @@
--- Create a random item from current items
+-- add random prices to items
+UPDATE item
+SET item_price = FLOOR(RANDOM() * (100 - 10 + 1) + 10) + 0.99
+WHERE item_price IS null;
+
+-- add 5 random companies
+INSERT INTO company (company_id, company_name)
+SELECT
+    company_id,
+    'Company ' || company_id
+FROM
+    generate_series(1, 5) AS company_id;
+
+-- add 5 discounts
+INSERT INTO discount (discount_id, discount_type, discount_amount, discount_description, discount_start_date, discount_end_date)
+VALUES (1, 'percentage', 10, null, CURRENT_DATE, CURRENT_DATE),
+       (2, 'percentage', 20, null, CURRENT_DATE, CURRENT_DATE),
+       (3, 'percentage', 30, null, CURRENT_DATE, CURRENT_DATE),
+       (4, 'percentage', 40, null, CURRENT_DATE, CURRENT_DATE),
+       (5, 'percentage', 50, null, CURRENT_DATE, CURRENT_DATE);
+
+-- add the 5 random discounts to 100 items
 WITH random_items AS (
     SELECT
-        item_name || ' ' || item_name AS new_item_name,
-        FLOOR(RANDOM() * (100 - 10 + 1) + 10) AS random_price,
-        company_id,
-        (
-        SELECT CASE WHEN NOT EXISTS (
-                SELECT 1
-                FROM item
-                WHERE item_id = (
-                    SELECT FLOOR(RANDOM() * 1000000)
-                )
-            ) THEN (
-                SELECT FLOOR(RANDOM() * 1000000)
-            )
-            ELSE (
-                SELECT FLOOR(RANDOM() * 1000000)
-            )
-            END
-        ) AS random_id, 
-        (
-        SELECT CASE WHEN NOT EXISTS ( -- We need decide if we want to create a new discount or use an existing one, probably easier to create a new one
-                SELECT 1
-                FROM discount
-                WHERE discount_id = (
-                    SELECT FLOOR(RANDOM() * 1000000)
-                )
-            ) THEN (
-                SELECT FLOOR(RANDOM() * 1000000)
-            )
-            ELSE (
-                SELECT FLOOR(RANDOM() * 1000000)
-            )
-            END
-        ) AS random_discount_id
-    FROM item
-    ORDER BY RANDOM()
-    LIMIT 2
-)
-
--- Insert the random item into the company_item table
-INSERT INTO
-    company_item (company_id, item_id, discount_id, is_discounted)
-SELECT
-    random_items.company_id,
-    random_items.random_id,
-    random_items.random_discount_id,
-    true
-FROM
-    random_items
-    LEFT JOIN company_item ON random_items.random_id = company_item.item_id
-WHERE
-    company_item.item_id IS NULL
-LIMIT
-    100;
-
-
--- Create a random discount
-WITH random_discounts AS (
-    SELECT
-        discount_id,
-        FLOOR(RANDOM() * (100 - 10 + 1) + 10) AS random_discount,
-        CURRENT_DATE AS start_date,
-        CURRENT_DATE AS end_date
+        item_id,
+        generate_series(1, 5) AS company_id,
+        generate_series(1, 5) AS discount_id
     FROM
-        discount
+        item
     ORDER BY
         RANDOM()
     LIMIT
         100
 )
 
--- Insert the random discount into the discount table
+-- add 10 random items to each company
 INSERT INTO
-    discount (discount_id, discount, start_date, end_date)
+    company_item (company_id, item_id, discount_id, is_discounted)
 SELECT
-    random_discounts.discount_id,
-    random_discounts.random_discount,
-    random_discounts.start_date,
-    random_discounts.end_date
+    random_items.company_id,
+    random_items.item_id,
+    random_items.discount_id,
+    True
 FROM
-    random_discounts
-    LEFT JOIN discount ON random_discounts.discount_id = discount.discount_id
+    random_items
+    LEFT JOIN company_item ON random_items.item_id = company_item.item_id
 WHERE
-    discount.discount_id IS NULL
+    company_item.item_id IS NULL
+LIMIT
+    10;
 
