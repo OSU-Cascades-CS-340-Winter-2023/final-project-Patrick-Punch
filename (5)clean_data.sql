@@ -6,15 +6,13 @@ SELECT email, COUNT(*)
 FROM user_test
 GROUP BY email
 HAVING COUNT(*) > 1;
-
-
-
+go;
 --Selects FROM the emails we have and checks to see 
 --if the start has proper values then checks after the @ symbol
 --!~* operator is used for case-insensitive negation of a regular expression match
 DELETE from user_test
 WHERE email !~* '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$';
-
+go;
 -- Temporarily remove the unique constraint if necessary
 -- ALTER TABLE test DROP CONSTRAINT IF EXISTS unique_usr_email;
 WITH RankedEmails AS
@@ -25,32 +23,25 @@ WITH RankedEmails AS
   )
 DELETE FROM user_test
 WHERE usr_id IN (SELECT usr_id FROM RankedEmails WHERE rn > 1);
-
-
+go;
 --adds a CONSTRAINT to the emails where all emails must be UNIQUE
 ALTER TABLE user_test ADD CONSTRAINT unique_usr_email UNIQUE (email);
 
 
 ---State/city name fixers
-
---State fixer
-SELECT INITCAP(state_address) AS ProperState_address
-FROM user_test;
-UPDATE user_test
-SET state_address = INITCAP(state_address);
-SELECT state_address, COUNT(*)
-FROM user_test
-GROUP BY state_address
-HAVING COUNT(*) > 1;
---City fixer
-SELECT INITCAP(city_address) AS ProperCity_address
-FROM user_test;
-UPDATE user_test
-SET city_address = INITCAP(city_address);
-SELECT city_address, COUNT(*)
-FROM user_test
-GROUP BY city_address
-HAVING COUNT(*) > 1;
+Select INITCAP(state_address) as ProperState_address,
+      INITCAP(city_address) as ProperCity_address
+go;
+from user_test;
+set state_address = INITCAP(state_address),
+    city_address =  INITCAP(city_address);
+--Groups the states and cities to display the count of each one after corrections.
+Select state_address, COUNT(*),
+        city_address, COUNT(*)
+from user_test
+GROUP By state_address,
+          city_address
+HAVING COUNT(*) >1;
 
 --Name fixer
 --checks to see if the name is already capitalized then uses the INITCAP function 
