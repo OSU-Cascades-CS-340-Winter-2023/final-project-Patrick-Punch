@@ -48,7 +48,7 @@ SELECT INITCAP(city_address) AS ProperCity_address
 FROM user_test;
 UPDATE user_test
 SET city_address = INITCAP(city_address);
-ALTER TABLE user_test ADD CONSTRAINT unique_city UNIQUE (city_address);
+-- ALTER TABLE user_test ADD CONSTRAINT unique_city UNIQUE (city_address); Not needed
 SELECT city_address, COUNT(*)
 FROM user_test
 GROUP BY city_address
@@ -61,3 +61,6 @@ HAVING COUNT(*) > 1;
 SELECT  INITCAP(first_name) as ProperFirstName, 
         INITCAP(last_name) as ProperLastName
 FROM user_test;
+Update user_test
+set first_name = INITCAP(first_name),
+    last_name = INITCAP(last_name);
