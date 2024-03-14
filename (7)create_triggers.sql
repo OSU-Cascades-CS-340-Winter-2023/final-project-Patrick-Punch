@@ -26,7 +26,7 @@ BEGIN
     INSERT INTO item_archive(item_id, item_type, item_name, item_description, item_price, item_picture, old_item_id, old_item_type, old_item_name, old_item_description, old_item_price, old_item_picture, date_updated)
 --changed select to values  to make it select values
 --also changed NEW. to OLD.
-    VALUES (NEW.item_id, NEW.item_type, NEW.item_name, NEW.item_description, NEW.item_price, NEW.item_picture, OLD.item_id, OLD.item_type, OLD.item_name, OLD.item_description, OLD.item_price, OLD.item_picture, CURRENT_DATE);
+    VALUES (NEW.item_id, NEW.item_type, NEW.item_name, NEW.item_description, NEW.item_price, NEW.item_picture, OLD.item_id, OLD.item_type, OLD.item_name, OLD.item_description, OLD.item_price, OLD.item_picture, CURRENT_TIMESTAMP);
     RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
