@@ -13,23 +13,27 @@ DELETE from user_test
 WHERE email !~* '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$';
 -- Temporarily remove the unique constraint if necessary
 -- ALTER TABLE test DROP CONSTRAINT IF EXISTS unique_usr_email;
+--unique email setter
 WITH RankedEmails AS
   (
+    --finds the duplicate emails and sets them to a value of rn
     SELECT usr_id, email,
            ROW_NUMBER() OVER(PARTITION BY email ORDER BY usr_id) AS rn
     FROM user_test
   )
+--removes the bad emails and then removes them if the value rn is > 1
 DELETE FROM user_test
 WHERE usr_id IN (SELECT usr_id FROM RankedEmails WHERE rn > 1);
 --adds a CONSTRAINT to the emails where all emails must be UNIQUE
 ALTER TABLE user_test ADD CONSTRAINT unique_usr_email UNIQUE (email);
 go;
-
-
 ---State/city name fixers
+-- selects the states and then makes the first letter always capital
 Select INITCAP(state_address) as ProperState_address,
       INITCAP(city_address) as ProperCity_address
 from user_test;
+--updates the values to make it not have missing capitalized letters
+update user_test
 set state_address = INITCAP(state_address),
     city_address =  INITCAP(city_address);
 --Groups the states and cities to display the count of each one after corrections.
@@ -59,6 +63,6 @@ has missing data.
 Select product_id
 from products_test
 where product_id = ' 'OR product_id IS NULL;
-
+--removes the unwanted data
 DELETE from products_test
 where product_id = ' 'OR product_id IS NULL;
