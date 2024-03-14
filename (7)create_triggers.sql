@@ -7,7 +7,7 @@ CREATE TABLE item_archive
         item_description varchar(1000),
         item_price  float,
         item_picture    bytea,
-        date_updated    date,
+        date_updated    timestamp,
         primary key(item_id, date_updated)
     );
 
@@ -20,7 +20,7 @@ BEGIN
     INSERT INTO item_archive(item_id, item_type, item_name, item_description, item_price, item_picture, date_updated)
 --changed select to values  to make it select values
 --also changed NEW. to OLD.
-    VALUES (OLD.item_id, OLD.item_type, OLD.item_name, OLD.item_description, OLD.item_price, OLD.item_picture, CURRENT_DATE);
+    VALUES (OLD.item_id, OLD.item_type, OLD.item_name, OLD.item_description, OLD.item_price, OLD.item_picture, CURRENT_TIMESTAMP);
     RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
@@ -41,4 +41,3 @@ before update on item
 -- values (1, 'service', 'patricks grade', 'd');
 
 -- update item set item_description = 'A' where item_id = 1;
-
