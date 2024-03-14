@@ -74,3 +74,7 @@ where services_id = ' ' or services_id is null;
 --removes unwanted data 
 delete from services_test
 where services_id = ' ' or services_id is null;
+--displays the services without a brand name, but what they do and the catagory of it.
+select services_id, services_name, services_brand, services_category
+from services_test
+where services_brand = ' ' or services_brand is null;
