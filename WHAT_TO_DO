@@ -18,8 +18,8 @@ need to turn in a brief data dictionary that describes the tables and their colu
 - Determining and creating necessary indices (other than primary key indices) to improve search performance. You have to explain why each index is necessary and choose the type of index.
 
 for part c
-Create a view that counts the number of products or services with discounts each day, and additional conditions as mentioned.
-Create a view that returns a sorted list of products.
+- Create a view that counts the number of products or services with discounts each day, and additional conditions as mentioned.
+- Create a view that returns a sorted list of products.
 
 ## for part d
 - [ ] Write a trigger that adds a record to an archive table whenever an item is updated.
