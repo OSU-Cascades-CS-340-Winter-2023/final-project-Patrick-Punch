@@ -22,6 +22,7 @@ CREATE INDEX idx_item_item_type ON item(item_type);
 CREATE INDEX idx_services_services_brand ON services(services_brand);
 CREATE INDEX idx_products_product_typebrand ON products(product_type, product_brand);
 -- --company data
+create index idx_employee_id_employee_job on emp_id(job_category);
 -- CREATE INDEX idx_company_location_company_id ON company_location(company_location);
 -- CREATE INDEX idx_company_item_company_id ON company_item(company_id);
 -- CREATE INDEX idx_user_company_review_company_id ON user_company_review(company_id);
