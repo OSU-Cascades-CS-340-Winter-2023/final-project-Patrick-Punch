@@ -7,6 +7,12 @@ CREATE TABLE item_archive
         item_description varchar(1000),
         item_price  float,
         item_picture    bytea,
+        old_item_id     varchar(50),
+        old_item_type   varchar(50),
+        old_item_name   varchar(300),
+        old_item_description varchar(1000),
+        old_item_price  float,
+        old_item_picture    bytea,
         date_updated    timestamp,
         primary key(item_id, date_updated)
     );
@@ -17,10 +23,10 @@ RETURNS TRIGGER AS
 $$
 BEGIN
 --added the item_archive table vales in () to the insert into.
-    INSERT INTO item_archive(item_id, item_type, item_name, item_description, item_price, item_picture, date_updated)
+    INSERT INTO item_archive(item_id, item_type, item_name, item_description, item_price, item_picture, old_item_id, old_item_type, old_item_name, old_item_description, old_item_price, old_item_picture, date_updated)
 --changed select to values  to make it select values
 --also changed NEW. to OLD.
-    VALUES (OLD.item_id, OLD.item_type, OLD.item_name, OLD.item_description, OLD.item_price, OLD.item_picture, CURRENT_TIMESTAMP);
+    VALUES (NEW.item_id, NEW.item_type, NEW.item_name, NEW.item_description, NEW.item_price, NEW.item_picture, OLD.item_id, OLD.item_type, OLD.item_name, OLD.item_description, OLD.item_price, OLD.item_picture, CURRENT_TIMESTAMP(2));
     RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
