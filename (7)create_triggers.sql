@@ -35,7 +35,6 @@ $$ LANGUAGE plpgsql;
 The VALUES clause is used with OLD.* columns to get the values before the update and CURRENT_DATE to record the update time.
 The NEW.item_price was removed, and NEW.item_price doesn't have a corresponding column in the item_archive table. (changed to OLD.item_price)
 */
-$$ LANGUAGE plpgsql;
 
 create trigger ia_update
 before update on item
