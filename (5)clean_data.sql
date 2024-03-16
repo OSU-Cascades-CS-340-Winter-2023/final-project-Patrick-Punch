@@ -42,8 +42,8 @@ Select state_address, COUNT(*),
 from user_test
 GROUP By state_address,
           city_address
-HAVING COUNT(*) >1;
-go;
+HAVING COUNT(*) >=1;
+
 --Name fixer
 --checks to see if the name is already capitalized then uses the INITCAP function 
 -- to change the first letter to a capitalized letter.
@@ -55,7 +55,7 @@ FROM user_test;
 Update user_test
 set first_name = INITCAP(first_name),
     last_name = INITCAP(last_name);
-go;
+
 /* Finds products with no id and removes it
 later update: make it skim all missing data values to then remove any row that
 has missing data.
@@ -66,7 +66,7 @@ where product_id = ' 'OR product_id IS NULL;
 --removes the unwanted data
 DELETE from products_test
 where product_id = ' 'OR product_id IS NULL;
-go;
+
 --finds any services without an id
 select services_id
 from services_test
@@ -74,10 +74,7 @@ where services_id = ' ' or services_id is null;
 --removes unwanted data 
 delete from services_test
 where services_id = ' ' or services_id is null;
-go;
 --displays the services without a brand name, but what they do and the catagory of it.
 select services_id, services_name, services_brand, services_category
 from services_test
 where services_brand = ' ' or services_brand is null;
-
---make a numerical checker(if needed).

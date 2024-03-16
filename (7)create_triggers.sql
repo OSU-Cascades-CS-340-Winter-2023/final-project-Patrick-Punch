@@ -36,7 +36,7 @@ The VALUES clause is used with OLD.* columns to get the values before the update
 The NEW.item_price was removed, and NEW.item_price doesn't have a corresponding column in the item_archive table. (changed to OLD.item_price)
 */
 
-create trigger ia_update
+create or replace trigger ia_update
 before update on item
     for each row execute function item_update_trigger();
 
@@ -45,4 +45,5 @@ before update on item
 -- insert into item(item_id, item_type, item_name, item_description) 
 -- values (1, 'service', 'patricks grade', 'd');
 
--- update item set item_description = 'A' where item_id = 1;
+update item set item_description = 'B
++' where item_id = '1';
