@@ -38,6 +38,6 @@ create table products_test
 
 \COPY services_test(services_id, services_name, services_brand, services_category) FROM 'Filepath' with (delimiter ',', format csv, header true)
 
-\COPY user_test(first_name, last_name, username, email, street_address, city_address, state_address) FROM '/Users/ppunch/desktop/OSU/cs 340/final_project/final-project-Patrick-Punch/files/users.csv' WITH (FORMAT csv, DELIMITER ',', header true)
+\COPY user_test(first_name, last_name, username, email, street_address, city_address, state_address) FROM 'Filepath' WITH (FORMAT csv, DELIMITER ',', header true)
 
 -- Patrick Filepath: /Users/ppunch/desktop/OSU/cs 340/final_project/final-project-Patrick-Punch/files/users.csv

@@ -37,4 +37,5 @@ BEFORE UPDATE ON item
 -- insert into item(item_id, item_type, item_name, item_description) 
 -- values (1, 'service', 'patricks grade', 'd');
 
--- update item set item_description = 'A' where item_id = 1;
+update item set item_description = 'B
++' where item_id = '1';
