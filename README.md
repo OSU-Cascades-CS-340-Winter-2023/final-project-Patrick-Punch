@@ -1,1 +1,1 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/ZoA0VnDa)
+-- For this project, we have the sql files organized in the order for how we built the database. Please follow the order of the files to paste the queries on your machine and build the database. 
