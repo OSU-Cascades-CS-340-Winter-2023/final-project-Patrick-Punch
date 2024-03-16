@@ -1,0 +1,1 @@
+-- For this project, we have the sql files organized in the order for how we built the database. Please follow the order of the files to paste the queries on your machine and build the database. 
