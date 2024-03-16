@@ -11,13 +11,14 @@ SELECT
 FROM
     generate_series(1, 5) AS company_id;
 
--- add 5 discounts
+-- add 5 random discounts for 2024
 INSERT INTO discount (discount_id, discount_type, discount_amount, discount_description, discount_start_date, discount_end_date)
-VALUES (1, 'percentage', 10, null, CURRENT_DATE, CURRENT_DATE),
-       (2, 'percentage', 20, null, CURRENT_DATE, CURRENT_DATE),
-       (3, 'percentage', 30, null, CURRENT_DATE, CURRENT_DATE),
-       (4, 'percentage', 40, null, CURRENT_DATE, CURRENT_DATE),
-       (5, 'percentage', 50, null, CURRENT_DATE, CURRENT_DATE);
+VALUES 
+    (1, 'percentage', 10, null, DATE '2024-01-01' + (FLOOR(RANDOM() * 365) || ' days')::INTERVAL, DATE '2024-01-01' + (FLOOR(RANDOM() * 365) || ' days')::INTERVAL),
+    (2, 'percentage', 20, null, DATE '2024-01-01' + (FLOOR(RANDOM() * 365) || ' days')::INTERVAL, DATE '2024-01-01' + (FLOOR(RANDOM() * 365) || ' days')::INTERVAL),
+    (3, 'percentage', 30, null, DATE '2024-01-01' + (FLOOR(RANDOM() * 365) || ' days')::INTERVAL, DATE '2024-01-01' + (FLOOR(RANDOM() * 365) || ' days')::INTERVAL),
+    (4, 'percentage', 40, null, DATE '2024-01-01' + (FLOOR(RANDOM() * 365) || ' days')::INTERVAL, DATE '2024-01-01' + (FLOOR(RANDOM() * 365) || ' days')::INTERVAL),
+    (5, 'percentage', 50, null, DATE '2024-01-01' + (FLOOR(RANDOM() * 365) || ' days')::INTERVAL, DATE '2024-01-01' + (FLOOR(RANDOM() * 365) || ' days')::INTERVAL);
 
 -- add the 5 random discounts to 100 items
 WITH random_items AS (

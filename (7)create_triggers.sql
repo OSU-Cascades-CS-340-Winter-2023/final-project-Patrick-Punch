@@ -28,14 +28,16 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-CREATE TRIGGER ia_update
+CREATE  or replace TRIGGER ia_update
 BEFORE UPDATE ON item
     FOR EACH ROW EXECUTE FUNCTION item_update_trigger();
 
 
 -- testing trigger
--- insert into item(item_id, item_type, item_name, item_description) 
--- values (1, 'service', 'patricks grade', 'd');
 
-update item set item_description = 'B
-+' where item_id = '1';
+INSERT INTO item (item_id, item_type, item_name, item_description, item_price)
+VALUES ('1', 'Tool', 'Hammer', 'A tool used for pounding or extracting nails', 25.75);
+
+UPDATE item
+SET item_description = 'A heavy tool used for pounding nails into surfaces', item_price = 26.00
+WHERE item_id = '1';
